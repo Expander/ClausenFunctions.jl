@@ -23,8 +23,6 @@ function cl2(x::Float64)::Float64
         return 0.0
     end
 
-    h::Float64 = 0.0
-
     if x < 0.5*pi
         P = (
             2.7951565822419270e-02, -8.8865360514541522e-04,
@@ -39,7 +37,7 @@ function cl2(x::Float64)::Float64
         z2 = z*z
         p = P[1] + z * P[2] + z2 * (P[3] + z * P[4])
         q = Q[1] + z * Q[2] + z2 * (Q[3] + z * Q[4])
-        h = x*(1.0 - log(x) + y*p/q/2.0)
+        sgn*x*(1.0 - log(x) + y*p/q/2.0)
     else
         P = (
             6.4005702446195512e-01, -2.0641655351338783e-01,
@@ -57,8 +55,6 @@ function cl2(x::Float64)::Float64
         z4 = z2*z2
         p = P[1] + z * P[2] + z2 * (P[3] + z * P[4]) + z4 * (P[5] + z * P[6])
         q = Q[1] + z * Q[2] + z2 * (Q[3] + z * Q[4]) + z4 * (Q[5] + z * Q[6])
-        h = y*p/q
+        sgn*y*p/q
     end
-
-    sgn*h
 end

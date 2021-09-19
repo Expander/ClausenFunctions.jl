@@ -1,3 +1,17 @@
+"""
+    cl2(x::Float64)::Float64
+
+Returns Clausen function Cl_2(x) of a real number `x` of type `Float64`.
+
+Author: Alexander Voigt
+
+License: MIT
+
+# Example
+```julia
+cl2(1.0)
+```
+"""
 function cl2(x::Float64)::Float64
     pi2 = 2.0*pi
     pi28 = pi*pi/8.0

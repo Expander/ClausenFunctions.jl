@@ -1,5 +1,7 @@
 module Clausen
 
-greet() = print("Hello World!")
+include("Cl2.jl")
+
+export cl2
 
 end

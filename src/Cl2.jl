@@ -13,7 +13,6 @@ cl2(1.0)
 ```
 """
 function cl2(x::Float64)::Float64
-    pi2 = 2.0*pi
     pi28 = pi*pi/8.0
     sgn = 1.0
 
@@ -22,8 +21,8 @@ function cl2(x::Float64)::Float64
         sgn = -1.0
     end
 
-    if x >= pi2
-        x = mod(x, pi2)
+    if x >= 2.0*pi
+        x = mod2pi(x)
     end
 
     if x > pi

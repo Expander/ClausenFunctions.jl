@@ -1,7 +1,9 @@
 """
     cl2(x::Float64)::Float64
 
-Returns Clausen function Cl_2(x) of a real number `x` of type `Float64`.
+Returns the value of the Clausen function ``\\mathrm{Cl}_2(x)`` for a
+real angle `x` of type `Float64`.  The Clausen function is defined as
+```\\mathrm{Cl}_2(x) = -\\int_0^x \\log|2\\sin(t/2)| dt```
 
 Author: Alexander Voigt
 

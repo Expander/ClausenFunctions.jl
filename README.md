@@ -25,7 +25,7 @@ Citation
     author       = {{Alexander Voigt}},
     title        = {{Clausen.jl}},
     year         = "2021",
-    version      = {0.1.0},
+    version      = {1.0.0},
     url          = {https://github.com/Expander/Clausen.jl},
     note         = "[License: MIT]"
 }

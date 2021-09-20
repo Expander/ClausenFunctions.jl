@@ -26,8 +26,8 @@ function cl2(x::Float64)::Float64
     end
 
     if x > pi
-        p0::Float64 = 6.28125
-        p1::Float64 = 0.0019353071795864769253
+        p0 = 6.28125
+        p1 = 0.0019353071795864769253
         x = (p0 - x) + p1
         sgn = -sgn
     end

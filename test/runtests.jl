@@ -1,6 +1,6 @@
 using Test
 using DelimitedFiles
-import Clausen
+import ClausenFunctions
 
 include("Common.jl")
 

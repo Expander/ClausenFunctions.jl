@@ -1,17 +1,17 @@
-Clausen.jl
+ClausenFunctions.jl
 ==========
 
-[![test](https://github.com/Expander/Clausen.jl/actions/workflows/build.yml/badge.svg)](https://github.com/Expander/Clausen.jl/actions/workflows/build.yml)
+[![test](https://github.com/Expander/ClausenFunctions.jl/actions/workflows/build.yml/badge.svg)](https://github.com/Expander/ClausenFunctions.jl/actions/workflows/build.yml)
 
-The Clausen.jl package provides Julia implementations of the Clausen
-functions.
+The ClausenFunctions.jl package provides Julia implementations of the
+Clausen functions.
 
 
 Example
 -------
 
 ```.jl
-using Clausen
+using ClausenFunctions
 
 cl2(1.0)
 ```
@@ -21,12 +21,12 @@ Citation
 --------
 
 ~~~.bibtex
-@software{Clausen.jl,
+@software{ClausenFunctions.jl,
     author       = {{Alexander Voigt}},
-    title        = {{Clausen.jl}},
+    title        = {{ClausenFunctions.jl}},
     year         = "2021",
     version      = {1.0.0},
-    url          = {https://github.com/Expander/Clausen.jl},
+    url          = {https://github.com/Expander/ClausenFunctions.jl},
     note         = "[License: MIT]"
 }
 ~~~
@@ -35,4 +35,4 @@ Citation
 Copying
 -------
 
-Clausen.jl is licenced under the MIT License.
+ClausenFunctions.jl is licenced under the MIT License.

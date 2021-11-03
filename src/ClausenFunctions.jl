@@ -1,4 +1,4 @@
-module Clausen
+module ClausenFunctions
 
 include("Cl2.jl")
 

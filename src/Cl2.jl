@@ -5,7 +5,7 @@ Returns the value of the Clausen function ``\\mathrm{Cl}_2(x)`` for a
 real angle `x` of type `Float64`.  The Clausen function is defined as
 
 ```math
-\mathrm{Cl}_2(x) = -\int_0^x \log|2\sin(t/2)| dt
+\\mathrm{Cl}_2(x) = -\\int_0^x \\log|2\\sin(t/2)| dt
 ```
 
 Author: Alexander Voigt

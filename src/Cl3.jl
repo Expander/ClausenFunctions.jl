@@ -3,7 +3,7 @@
 
 Returns the value of the Clausen function ``\\mathrm{Cl}_3(x)`` for a
 real angle `x` of type `Float64`.  This function is defined as
-```\\mathrm{Cl}_3(x) = \\re \\mathrm{Li}_3(e^{ix})```
+```\\mathrm{Cl}_3(x) = \\Re \\mathrm{Li}_3(e^{ix})```
 
 Author: Alexander Voigt
 

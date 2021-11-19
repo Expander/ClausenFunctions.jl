@@ -1,11 +1,11 @@
 """
     cl3(x::Float64)::Float64
 
-Returns the value of the Clausen function ``\\mathrm{Cl}_3(x)`` for a
-real angle `x` of type `Float64`.  This function is defined as
+Returns the value of the Clausen function ``\\operatorname{Cl}_3(x)``
+for a real angle `x` of type `Float64`.  This function is defined as
 
 ```math
-\\mathrm{Cl}_3(x) = \\Re[\\mathrm{Li}_3(e^{ix})] = \\sum_{k=1}^\\infty \\frac{\\cos(kx)}{k^3}
+\\operatorname{Cl}_3(x) = \\Re[\\operatorname{Li}_3(e^{ix})] = \\sum_{k=1}^\\infty \\frac{\\cos(kx)}{k^3}
 ```
 
 Author: Alexander Voigt

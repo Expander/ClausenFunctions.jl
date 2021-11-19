@@ -26,10 +26,10 @@ Citation
 @software{ClausenFunctions.jl,
     author       = {{Alexander Voigt}},
     title        = {{ClausenFunctions.jl}},
-    year         = "2021",
+    year         = {2021},
     version      = {1.2.0},
     url          = {https://github.com/Expander/ClausenFunctions.jl},
-    note         = "[License: MIT]"
+    note         = {[License: MIT]}
 }
 ~~~
 

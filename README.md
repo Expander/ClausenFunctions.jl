@@ -28,8 +28,8 @@ Citation
 @software{ClausenFunctions.jl,
     author       = {{Alexander Voigt}},
     title        = {{ClausenFunctions.jl}},
-    year         = {2021},
-    version      = {1.3.0},
+    year         = {2022},
+    version      = {1.4.0},
     url          = {https://github.com/Expander/ClausenFunctions.jl},
     note         = {[License: MIT]}
 }

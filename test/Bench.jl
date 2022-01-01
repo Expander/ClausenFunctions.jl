@@ -40,3 +40,12 @@ map(ClausenFunctions.cl5, data) # trigger compilation
 time_cl5(data)                  # trigger compilation
 time_cl5(data)
 time_cl5(data)
+
+println("Benchmarking cl6::Float64")
+
+time_cl6(data) = @time map(ClausenFunctions.cl6, data)
+
+map(ClausenFunctions.cl6, data) # trigger compilation
+time_cl6(data)                  # trigger compilation
+time_cl6(data)
+time_cl6(data)

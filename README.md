@@ -16,6 +16,7 @@ using ClausenFunctions
 cl2(1.0)
 cl3(1.0)
 cl4(1.0)
+cl5(1.0)
 ```
 
 

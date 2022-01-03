@@ -123,7 +123,7 @@ function cl(n::UInt64, x::Float64)::Float64
     sum = zero(Float64)
 
     for i in 0:(n - 2)
-       sum += (-1)^i*binomial(n - 2, i)*x^i*ncal(n - 2 - i, x)
+       sum += one(Float64)*(-1)^i*binomial(n - 2, i)*x^i*ncal(n - 2 - i, x)
     end
 
     # Eq.(2.8), (2.13)

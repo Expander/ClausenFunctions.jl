@@ -11,7 +11,10 @@
             cl  = ClausenFunctions.cl(UInt64(n), x)
             clm = sgn*ClausenFunctions.cl(UInt64(n), -x)
 
+            # println("Cl($(n), $(x)): $(cl) == $(expected)")
+
             @test cl == clm
+            @test is_equal(cl, expected, 1e-10)
         end
 
     end

@@ -66,6 +66,17 @@ function pcal(k::UInt64, x::Float64)
     sum
 end
 
+# returns sum in Eq.(2.13)
+function nsum(n::UInt64, x::Float64)
+    sum = zero(Float64)
+
+    for i in 0:(n - 2)
+       sum += one(Float64)*(-1)^i*binomial(n - 2, i)*x^i*ncal(n - 2 - i, x)
+    end
+
+    sum
+end
+
 """
     cl(n::UInt64, x::Float64)::Float64
 
@@ -106,14 +117,7 @@ function cl(n::UInt64, x::Float64)::Float64
         return zero(Float64)
     end
 
-    # sum in Eq.(2.8), (2.13)
-    sum = zero(Float64)
-
-    for i in 0:(n - 2)
-       sum += one(Float64)*(-1)^i*binomial(n - 2, i)*x^i*ncal(n - 2 - i, x)
-    end
-
-    # Eq.(2.8), (2.13)
+    # Eq.(2.13)
     sgn*((-1)^fld(n + 1, 2.0)*x^(n - 1)/factorial(n - 1)*log(2*sin(x/2))
-         + (-1)^(fld(n, 2.0) + 1)/factorial(n - 2)*sum + pcal(n, x))
+         + (-1)^(fld(n, 2.0) + 1)/factorial(n - 2)*nsum(n, x) + pcal(n, x))
 end

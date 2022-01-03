@@ -1,3 +1,29 @@
+function range_reduce(n::UInt64, x::Float64)
+    sgn = 1.0
+
+    if x < 0.0
+        x = -x
+        sgn = -1.0
+    end
+
+    if x >= 2.0*pi
+        x = mod2pi(x)
+    end
+
+    if x > pi
+        p0 = 6.28125
+        p1 = 0.0019353071795864769253
+        x = (p0 - x) + p1
+        sgn = -sgn
+    end
+
+    if iseven(n)
+        (x, sgn)
+    else
+        (x, 1.0)
+    end
+end
+
 """
     cl6(x::Float64)::Float64
 
@@ -20,5 +46,11 @@ cl(10, 1.0)
 ```
 """
 function cl(n::UInt64, x::Float64)::Float64
+    if n < 2
+        throw("cl(n,x) undefined for n < 2")
+    end
+
+    (x, sgn) = range_reduce(n, x)
+
     0.0
 end

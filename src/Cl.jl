@@ -29,14 +29,14 @@ end
 
 # returns N_n(x) from Eq.(2.11)
 function ncal(n::UInt64, x::Float64)
-    # B_{2k}/(2k)! where B_{2k} are the even Bernoulli numbers
-    b2(k) = 2*(-1)^(k + 1)*SpecialFunctions.zeta(2*k)/(2*pi)^(2*k)
+    # (-1)^k B_{2k}/(2k)! where B_{2k} are the even Bernoulli numbers
+    b2(k) = 2*(-1)^(2*k + 1)*SpecialFunctions.zeta(2*k)/(2*pi)^(2*k)
 
     sum = zero(Float64)
     k = one(UInt64)
 
     while k < typemax(UInt64)
-        term = (-1)^k*b2(k)*x^(2*k + n + 1)/((2*k + n + 1))
+        term = b2(k)*x^(2*k + n + 1)/(2*k + n + 1)
         old_sum = sum
         sum += term
         sum == old_sum && break

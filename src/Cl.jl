@@ -71,7 +71,7 @@ function nsum(n::UInt64, x::Float64)
     sum = zero(Float64)
 
     for i in zero(UInt64):(n - 2)
-       sum += one(Float64)*(-1)^i*binomial(n - 2, i)*x^i*ncal(n - 2 - i, x)
+       sum += binomial(n - 2, i)*(-x)^i*ncal(n - 2 - i, x)
     end
 
     sum

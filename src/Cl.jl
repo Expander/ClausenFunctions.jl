@@ -25,6 +25,15 @@ function range_reduce(n::UInt64, x::Float64)
     end
 end
 
+# Eq.(2.11)
+function ncal(n::UInt64, x::Float64)
+    0.0
+end
+
+function pcal(n::UInt64, x::Float64)
+    0.0
+end
+
 """
     cl6(x::Float64)::Float64
 
@@ -57,5 +66,20 @@ function cl(n::UInt64, x::Float64)::Float64
 
     (x, sgn) = range_reduce(n, x)
 
-    0.0
+    if iseven(n)
+        if x == 0.0 || x == pi
+            return 0.0
+        end
+    else
+        if x == 0.0
+            return 0.0 # @todo(alex): return zeta(x)
+        end
+    end
+
+    # sum in Eq.(2.8), (2.13)
+    sum = 0.0 # @todo(alex): implement sum
+
+    # Eq.(2.8), (2.13)
+    sgn*(-1)^fld(n + 1, 2.0)*x^(n - 1)/factorial(n - 1)*log(2*sin(x/2)) +
+    (-1)^(fld(n, 2.0) + 1)/factorial(n - 2)*sum + pcal(n, x)
 end

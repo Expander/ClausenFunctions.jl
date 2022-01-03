@@ -29,7 +29,7 @@ end
     cl6(x::Float64)::Float64
 
 Returns the value of the Clausen function ``\\operatorname{Cl}_n(x)``
-for positive integer `n` and a real angle `x` of type `Float64`.  This
+for integer `n > 1` and a real angle `x` of type `Float64`.  This
 function is defined as
 
 ```math

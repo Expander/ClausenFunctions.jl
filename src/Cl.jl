@@ -27,21 +27,9 @@ function range_reduce(n::UInt64, x::Float64)
     end
 end
 
-# bernoulli numbers
-function bernoulli2(n::UInt64)
-    if n > 35
-        throw(DomainError(n, "If n > 35, then the numerator needs Int128 at least, and worse, so this code is not the code you want. Try using bernoulli(n, 0.0) to get a floating point approximation to the result."))
-    end
-
-    # Denominator of Bernoulli number B_n
-    #   http://oeis.org/A027642
-    D = [2, 6, 1, 30, 1, 42, 1, 30, 1, 66, 1, 2730, 1, 6, 1, 510, 1, 798, 1, 330, 1, 138, 1, 2730, 1, 6, 1, 870, 1, 14322, 1, 510, 1, 6, 1, 1919190, 1, 6, 1, 13530, 1, 1806, 1, 690, 1, 282, 1, 46410, 1, 66, 1, 1590, 1, 798, 1, 870, 1, 354, 1, 56786730]
-
-    # Numerator of Bernoulli number B_n (storing 62 of these because they are easy)
-    #   http://oeis.org/A027641
-    N = [-1, 1, 0, -1, 0, 1, 0, -1, 0, 5, 0, -691, 0, 7, 0, -3617, 0, 43867, 0, -174611, 0, 854513, 0, -236364091, 0, 8553103, 0, -23749461029, 0, 8615841276005, 0, -7709321041217, 0, 2577687858367, 1]
-
-    N[n] // D[n]
+# returns B_{2k}/(2k)! where B_{2k} are the even Bernoulli numbers
+function b2(k::UInt64)
+    2*(-1)^(k + 1)*SpecialFunctions.zeta(2*k)/(2*pi)^(2*k)
 end
 
 # Eq.(2.11)
@@ -49,8 +37,8 @@ function ncal(n::UInt64, x::Float64)
     sum = zero(Float64)
     k = one(UInt64)
 
-    while k < 17
-        term = (-1)^k*bernoulli2(2*k)*x^(2*k + n + 1)/((2*k + n + 1)*factorial(big(2*k)))
+    while k < typemax(UInt64)
+        term = (-1)^k*b2(k)*x^(2*k + n + 1)/((2*k + n + 1))
         old_sum = sum
         sum += term
         sum == old_sum && break

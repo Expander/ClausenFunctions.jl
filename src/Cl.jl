@@ -27,13 +27,11 @@ function range_reduce(n::UInt64, x::Float64)
     end
 end
 
-# returns B_{2k}/(2k)! where B_{2k} are the even Bernoulli numbers
-function b2(k::UInt64)
-    2*(-1)^(k + 1)*SpecialFunctions.zeta(2*k)/(2*pi)^(2*k)
-end
-
 # Eq.(2.11)
 function ncal(n::UInt64, x::Float64)
+    # B_{2k}/(2k)! where B_{2k} are the even Bernoulli numbers
+    b2(k) = 2*(-1)^(k + 1)*SpecialFunctions.zeta(2*k)/(2*pi)^(2*k)
+
     sum = zero(Float64)
     k = one(UInt64)
 

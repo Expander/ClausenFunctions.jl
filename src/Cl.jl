@@ -84,14 +84,12 @@ function ncal(n::UInt64, x::Float64)
          -2.7084630535382438e-321,-6.8606170609008831e-323)
 
     sum = zero(Float64)
-    k = one(UInt64)
 
-    while k < length(B)
+    for k in one(UInt64):length(B)
         term = B[k]*x^(2*k + n + 1)/(2*k + n + 1)
         old_sum = sum
         sum += term
         sum == old_sum && break
-        k += 1
     end
 
     (x^(n + 1)/(n + 1) + sum)/(n + 1)

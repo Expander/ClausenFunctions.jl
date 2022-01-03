@@ -117,7 +117,9 @@ function cl(n::UInt64, x::Float64)::Float64
         return zero(Float64)
     end
 
+    fn2 = factorial(n - 2)
+
     # Eq.(2.13)
-    sgn*((-1)^fld(n + 1, 2.0)*x^(n - 1)/factorial(n - 1)*log(2*sin(x/2))
-         + (-1)^(fld(n, 2.0) + 1)/factorial(n - 2)*nsum(n, x) + pcal(n, x))
+    sgn*((-1)^fld(n + 1, 2.0)*x^(n - 1)/(fn2*(n - 1))*log(2*sin(x/2))
+         + (-1)^(fld(n, 2.0) + 1)/fn2*nsum(n, x) + pcal(n, x))
 end

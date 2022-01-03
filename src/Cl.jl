@@ -47,7 +47,7 @@ function ncal(n::UInt64, x::Float64)
 end
 
 # returns Cl(n, 0)
-function cl0(n::UInt64)
+function cln0(n::UInt64)
     if iseven(n)
         zero(Float64)
     else
@@ -59,7 +59,7 @@ function pcal(k::UInt64, x::Float64)
     sum = zero(Float64)
 
     for i in 2:k
-       sum += (-1)^(fld(k - 1, 2.0) + fld(i - 1, 2.0))*x^(k - i)/factorial(k - i)*cl0(i)
+       sum += (-1)^(fld(k - 1, 2.0) + fld(i - 1, 2.0))*x^(k - i)/factorial(k - i)*cln0(i)
     end
 
     sum
@@ -98,7 +98,7 @@ function cl(n::UInt64, x::Float64)::Float64
     (x, sgn) = range_reduce(n, x)
 
     if x == zero(Float64)
-        return cl0(n)
+        return cln0(n)
     end
 
     if iseven(n) && x == pi

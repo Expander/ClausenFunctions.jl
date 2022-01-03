@@ -1,3 +1,5 @@
+import SpecialFunctions
+
 # returns (x, sign) with x in [0,pi]
 function range_reduce(n::UInt64, x::Float64)
     sgn = one(Float64)
@@ -63,7 +65,7 @@ function cl0(n::UInt64)
     if iseven(n)
         zero(Float64)
     else
-        zero(Float64) # @todo(alex): return zeta(n)
+        SpecialFunctions.zeta(n)
     end
 end
 

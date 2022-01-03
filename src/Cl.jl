@@ -58,7 +58,7 @@ end
 function pcal(k::UInt64, x::Float64)
     sum = zero(Float64)
 
-    for i in 2:k
+    for i in 3:2:k
        sum += (-1)^(fld(k - 1, 2.0) + fld(i - 1, 2.0))*x^(k - i)/factorial(k - i)*cln0(i)
     end
 

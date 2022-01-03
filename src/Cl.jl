@@ -1,3 +1,4 @@
+# returns (x, sign) with x in [0,pi]
 function range_reduce(n::UInt64, x::Float64)
     sgn = 1.0
 

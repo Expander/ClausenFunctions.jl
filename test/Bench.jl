@@ -49,3 +49,18 @@ map(ClausenFunctions.cl6, data) # trigger compilation
 time_cl6(data)                  # trigger compilation
 time_cl6(data)
 time_cl6(data)
+
+println("Benchmarking cl::Float64")
+
+time_cl(k, data) = @time map(x -> ClausenFunctions.cl(k, x), data)
+
+n = 100_000
+data = (x_max - x_min)*rand(Float64, n) + x_min*ones(n)
+
+for k in UInt64(2):UInt64(6)
+    println("Benchmarking cl($(k),x)::Float64")
+    map(x -> ClausenFunctions.cl(k, x), data) # trigger compilation
+    time_cl(k, data)            # trigger compilation
+    time_cl(k, data)
+    time_cl(k, data)
+end

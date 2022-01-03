@@ -27,7 +27,7 @@ function range_reduce(n::UInt64, x::Float64)
     end
 end
 
-# Eq.(2.11)
+# returns N_n(x) from Eq.(2.11)
 function ncal(n::UInt64, x::Float64)
     # B_{2k}/(2k)! where B_{2k} are the even Bernoulli numbers
     b2(k) = 2*(-1)^(k + 1)*SpecialFunctions.zeta(2*k)/(2*pi)^(2*k)
@@ -55,6 +55,7 @@ function cln0(n::UInt64)
     end
 end
 
+# returns P_k(x)
 function pcal(k::UInt64, x::Float64)
     sum = zero(Float64)
 

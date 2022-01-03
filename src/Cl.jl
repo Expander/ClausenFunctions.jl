@@ -37,6 +37,10 @@ function is defined as
 \\operatorname{Cl}_n(x) &= \\Re[\\operatorname{Li}_n(e^{ix})] = \\sum_{k=1}^\\infty \\frac{\\cos(kx)}{k^n}, \\qquad n~\\text{odd}
 ```
 
+The implementation follows the approach presented in [Jiming Wu,
+Xiaoping Zhang, Dongjie Liu, "An efficient calculation of the Clausen
+functions Cl_n(0)(n >= 2)"].
+
 Author: Alexander Voigt
 
 License: MIT

@@ -8,7 +8,10 @@
             expected = row[2]
             sgn      = -(-1)^n
 
-            @test is_equal(ClausenFunctions.cl(UInt64(n), x), sgn*ClausenFunctions.cl(UInt64(n), -x), 1e-14)
+            cl  = ClausenFunctions.cl(UInt64(n), x)
+            clm = sgn*ClausenFunctions.cl(UInt64(n), -x)
+
+            @test cl == clm
         end
 
     end

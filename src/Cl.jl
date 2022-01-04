@@ -1,12 +1,12 @@
 import SpecialFunctions
 
 # returns (x, sign) with x in [0,pi]
-function range_reduce(n::UInt64, x::Float64)
-    sgn = one(Float64)
+function range_reduce(n::Int64, x::Float64)
+    sgn = one(x)
 
-    if x < zero(Float64)
+    if x < zero(x)
         x = -x
-        sgn = -one(Float64)
+        sgn = -one(x)
     end
 
     if x >= 2.0*pi
@@ -23,12 +23,12 @@ function range_reduce(n::UInt64, x::Float64)
     if iseven(n)
         (x, sgn)
     else
-        (x, one(Float64))
+        (x, one(x))
     end
 end
 
 # returns N_n(x) from Eq.(2.11)
-function ncal(n::UInt64, x::Float64)
+function ncal(n::Int64, x::Float64)
     # (-1)^k B_{2k}/(2k)! where B_{2k} are the even Bernoulli numbers
     # B(k) = 2*(-1)^(2*k + 1)*SpecialFunctions.zeta(2*k)/(2*pi)^(2*k)
     B = (-0.083333333333333333,-0.0013888888888888889,-0.000033068783068783069,-8.2671957671957672e-7,
@@ -83,9 +83,9 @@ function ncal(n::UInt64, x::Float64)
          -6.5790299364809836e-315,-1.6664877509565689e-316,-4.2212627863094242e-318,-1.069258354935559e-319,
          -2.7084630535382438e-321,-6.8606170609008831e-323)
 
-    sum = zero(Float64)
+    sum = zero(x)
 
-    for k in one(UInt64):length(B)
+    for k in one(n):length(B)
         term = B[k]*x^(2*k + n + 1)/(2*k + n + 1)
         old_sum = sum
         sum += term
@@ -96,7 +96,7 @@ function ncal(n::UInt64, x::Float64)
 end
 
 # returns Cl(n, 0)
-function cln0(n::UInt64)
+function cln0(n::Int64)::Float64
     if iseven(n)
         zero(Float64)
     else
@@ -105,8 +105,8 @@ function cln0(n::UInt64)
 end
 
 # returns P_k(x)
-function pcal(k::UInt64, x::Float64)
-    sum = zero(Float64)
+function pcal(k::Int64, x::Float64)
+    sum = zero(x)
 
     for i in 3:2:k
        sum += (-1)^(fld(k - 1, 2.0) + fld(i - 1, 2.0))*x^(k - i)/factorial(k - i)*cln0(i)
@@ -116,10 +116,10 @@ function pcal(k::UInt64, x::Float64)
 end
 
 # returns sum in Eq.(2.13)
-function nsum(n::UInt64, x::Float64)
-    sum = zero(Float64)
+function nsum(n::Int64, x::Float64)
+    sum = zero(x)
 
-    for i in zero(UInt64):(n - 2)
+    for i in zero(n):(n - 2)
        sum += binomial(n - 2, i)*(-x)^i*ncal(n - 2 - i, x)
     end
 
@@ -127,7 +127,7 @@ function nsum(n::UInt64, x::Float64)
 end
 
 """
-    cl(n::UInt64, x::Float64)::Float64
+    cl(n::Int64, x::Float64)::Float64
 
 Returns the value of the Clausen function ``\\operatorname{Cl}_n(x)``
 for integer `n > 1` and a real angle `x` of type `Float64`.  This
@@ -151,19 +151,19 @@ License: MIT
 cl(10, 1.0)
 ```
 """
-function cl(n::UInt64, x::Float64)::Float64
+function cl(n::Int64, x::Float64)::Float64
     if n < 2
         throw("cl(n,x) undefined for n < 2")
     end
 
     (x, sgn) = range_reduce(n, x)
 
-    if x == zero(Float64)
+    if x == zero(x)
         return cln0(n)
     end
 
     if iseven(n) && x == pi
-        return zero(Float64)
+        return zero(x)
     end
 
     fn2 = factorial(n - 2)

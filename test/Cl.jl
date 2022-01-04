@@ -8,8 +8,8 @@
             expected = row[2]
             sgn      = -(-1)^n
 
-            cl  = ClausenFunctions.cl(UInt64(n), x)
-            clm = sgn*ClausenFunctions.cl(UInt64(n), -x)
+            cl  = ClausenFunctions.cl(n, x)
+            clm = sgn*ClausenFunctions.cl(n, -x)
 
             # println("Cl($(n), $(x)): $(cl) == $(expected)")
 

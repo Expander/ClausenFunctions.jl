@@ -137,6 +137,29 @@ function nsum(n::Integer, x::Float64)
     sum
 end
 
+# returns Cl(n,x) using the naive series expansion
+function cl_series(n::Integer, x::Float64)::Float64
+    sum = zero(x)
+
+    if iseven(n)
+        for k in 1:typemax(Int64)
+            term = sin(k*x)/Float64(k)^n
+            old_sum = sum
+            sum += term
+            sum == old_sum && break
+        end
+    else
+        for k in 1:typemax(Int64)
+            term = cos(k*x)/Float64(k)^n
+            old_sum = sum
+            sum += term
+            sum == old_sum && break
+        end
+    end
+
+    sum
+end
+
 """
     cl(n::Integer, x::Float64)::Float64
 
@@ -181,9 +204,13 @@ function cl(n::Integer, x::Float64)::Float64
         return zero(x)
     end
 
-    fn2 = factorial(n - 2)
+    if n < 15
+        fn2 = factorial(n - 2)
 
-    # Eq.(2.13)
-    sgn*((-1)^floor(n/2 + 0.5)*x^(n - 1)/(fn2*(n - 1))*log(2*sin(x/2))
-         + (-1)^(floor(n/2) + 1)/fn2*nsum(n, x) + pcal(n, x))
+        # Eq.(2.13)
+        sgn*((-1)^floor(n/2 + 0.5)*x^(n - 1)/(fn2*(n - 1))*log(2*sin(x/2))
+             + (-1)^(floor(n/2) + 1)/fn2*nsum(n, x) + pcal(n, x))
+    else
+        sgn*cl_series(n, x)
+    end
 end

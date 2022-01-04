@@ -1,5 +1,5 @@
 @testset "cl" begin
-    for n in 2:6
+    for n in [2, 3, 4, 5, 6, 1000, 1001, 1_000_000]
         data = open(readdlm, joinpath(@__DIR__, "data", "Cl$(n).txt"))
 
         for r in 1:size(data, 1)

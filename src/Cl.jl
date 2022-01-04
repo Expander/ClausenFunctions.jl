@@ -85,9 +85,10 @@ end
 function ncal(n::Int64, x::Float64)
     sum = zero(x)
     xn = x^(n + 1)
+    x2 = x*x
 
     for k in one(n):length(B)
-        xn *= x*x
+        xn *= x2
         term = B[k]*xn/(2*k + n + 1)
         old_sum = sum
         sum += term

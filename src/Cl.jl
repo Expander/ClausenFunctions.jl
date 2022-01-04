@@ -140,13 +140,11 @@ end
 # returns Cl(n,x) using the naive series expansion
 function cl_series(n::Integer, x::Float64)
     f(x) = iseven(n) ? sin(x) : cos(x)
-    sum = zero(x)
+    kmax = ceil(Int64, 1/(eps(x)^(1/n)))
+    sum = f(x)
 
-    for k in 1:typemax(Int64)
-        term = f(k*x)/Float64(k)^n
-        old_sum = sum
-        sum += term
-        sum == old_sum && break
+    for k in 2:kmax
+        sum += f(k*x)/Float64(k)^n
     end
 
     sum
@@ -196,7 +194,7 @@ function cl(n::Integer, x::Float64)::Float64
         return zero(x)
     end
 
-    if n < 17
+    if n < 10
         fn2 = factorial(n - 2)
 
         # Eq.(2.13)

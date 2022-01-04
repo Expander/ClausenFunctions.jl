@@ -139,22 +139,14 @@ end
 
 # returns Cl(n,x) using the naive series expansion
 function cl_series(n::Integer, x::Float64)::Float64
+    f(x) = iseven(n) ? sin(x) : cos(x)
     sum = zero(x)
 
-    if iseven(n)
-        for k in 1:typemax(Int64)
-            term = sin(k*x)/Float64(k)^n
-            old_sum = sum
-            sum += term
-            sum == old_sum && break
-        end
-    else
-        for k in 1:typemax(Int64)
-            term = cos(k*x)/Float64(k)^n
-            old_sum = sum
-            sum += term
-            sum == old_sum && break
-        end
+    for k in 1:typemax(Int64)
+        term = f(k*x)/Float64(k)^n
+        old_sum = sum
+        sum += term
+        sum == old_sum && break
     end
 
     sum

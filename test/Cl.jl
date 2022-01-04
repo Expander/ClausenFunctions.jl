@@ -14,7 +14,7 @@
             # println("Cl($(n), $(x)): $(cl) == $(expected)")
 
             @test cl == clm
-            @test is_equal(cl, expected, 1e-14)
+            @test cl ≈ expected atol=1e-14
         end
 
     end

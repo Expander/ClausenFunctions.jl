@@ -6,9 +6,9 @@
         x        = row[1]
         expected = row[2]
 
-        @test is_equal(ClausenFunctions.cl6(x), expected, 1e-14)
-        @test is_equal(ClausenFunctions.cl6(-x), -expected, 1e-14)
-        @test is_equal(ClausenFunctions.cl6(x - 2.0*pi), expected, 1e-13)
-        @test is_equal(ClausenFunctions.cl6(x + 2.0*pi), expected, 1e-13)
+        @test ClausenFunctions.cl6(x) ≈ expected atol=1e-14
+        @test ClausenFunctions.cl6(-x) ≈ -expected atol=1e-14
+        @test ClausenFunctions.cl6(x - 2.0*pi) ≈ expected atol=1e-13
+        @test ClausenFunctions.cl6(x + 2.0*pi) ≈ expected atol=1e-13
     end
 end

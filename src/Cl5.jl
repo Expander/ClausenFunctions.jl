@@ -13,8 +13,9 @@ Author: Alexander Voigt
 License: MIT
 
 # Example
-```julia
-cl5(1.0)
+```jldoctest; setup = :(using ClausenFunctions), output = false
+julia> cl5(1.0)
+0.5228208076420943
 ```
 """
 function cl5(x::Float64)::Float64

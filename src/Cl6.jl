@@ -13,8 +13,9 @@ Author: Alexander Voigt
 License: MIT
 
 # Example
-```julia
-cl6(1.0)
+```jldoctest; setup = :(using ClausenFunctions), output = false
+julia> cl6(1.0)
+0.855629273183937
 ```
 """
 function cl6(x::Float64)::Float64

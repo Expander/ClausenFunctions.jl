@@ -153,15 +153,17 @@ function is defined as
 
 The implementation follows the approach presented in [Jiming Wu,
 Xiaoping Zhang, Dongjie Liu, "An efficient calculation of the Clausen
-functions Cl_n(0)(n >= 2)"].
+functions Cl_n(0)(n >= 2)", Bit Numer Math 50, 193-206
+(2010) [https://doi.org/10.1007/s10543-009-0246-8](https://doi.org/10.1007/s10543-009-0246-8)].
 
 Author: Alexander Voigt
 
 License: MIT
 
 # Example
-```julia
-cl(10, 1.0)
+```jldoctest; setup = :(using ClausenFunctions), output = false
+julia> cl(10, 1.0)
+0.8423605391686303
 ```
 """
 function cl(n::Integer, x::Float64)::Float64

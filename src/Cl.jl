@@ -112,7 +112,7 @@ function pcal(k::Int64, x::Float64)
     x2 = x*x
 
     for i in 3:2:k
-        sum = x2*sum + (-1)^(fld(k - 1, 2.0) + fld(i - 1, 2.0))/factorial(k - i)*cln0(i)
+        sum = x2*sum + (-1)^(floor(k/2 - 0.5) + floor(i/2 - 0.5))/factorial(k - i)*cln0(i)
     end
 
     if iseven(k)
@@ -178,6 +178,6 @@ function cl(n::Int64, x::Float64)::Float64
     fn2 = factorial(n - 2)
 
     # Eq.(2.13)
-    sgn*((-1)^fld(n + 1, 2.0)*x^(n - 1)/(fn2*(n - 1))*log(2*sin(x/2))
-         + (-1)^(fld(n, 2.0) + 1)/fn2*nsum(n, x) + pcal(n, x))
+    sgn*((-1)^floor(n/2 + 0.5)*x^(n - 1)/(fn2*(n - 1))*log(2*sin(x/2))
+         + (-1)^(floor(n/2) + 1)/fn2*nsum(n, x) + pcal(n, x))
 end

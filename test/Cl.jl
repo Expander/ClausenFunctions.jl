@@ -18,4 +18,8 @@
         end
 
     end
+
+    @test_throws DomainError ClausenFunctions.cl(1, 1.0)
+    @test_throws DomainError ClausenFunctions.cl(0, 1.0)
+    @test_throws DomainError ClausenFunctions.cl(-1, 1.0)
 end

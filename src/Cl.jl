@@ -168,7 +168,7 @@ julia> cl(10, 1.0)
 """
 function cl(n::Integer, x::Float64)::Float64
     if n < 2
-        throw("cl(n,x) undefined for n < 2")
+        throw(DomainError(n, "cl(n,x) undefined for n < 2"))
     end
 
     (x, sgn) = range_reduce(n, x)

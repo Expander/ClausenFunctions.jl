@@ -55,7 +55,7 @@ const B = (-0.083333333333333333,-0.0013888888888888889,-0.000033068783068783069
            -2.7084630535382438e-321,-6.8606170609008831e-323)
 
 # returns (x, sign) with x in [0,pi]
-function range_reduce(n::Int64, x::Float64)
+function range_reduce(n::Integer, x::Float64)
     sgn = one(x)
 
     if x < zero(x)
@@ -82,7 +82,7 @@ function range_reduce(n::Int64, x::Float64)
 end
 
 # returns N_n(x) from Eq.(2.11)
-function ncal(n::Int64, x::Float64)
+function ncal(n::Integer, x::Float64)
     sum = zero(x)
     xn = x^(n + 1)
     x2 = x*x
@@ -99,7 +99,7 @@ function ncal(n::Int64, x::Float64)
 end
 
 # returns Cl(n, 0)
-function cln0(n::Int64)::Float64
+function cln0(n::Integer)::Float64
     if iseven(n)
         zero(Float64)
     else
@@ -108,7 +108,7 @@ function cln0(n::Int64)::Float64
 end
 
 # returns P_k(x)
-function pcal(k::Int64, x::Float64)
+function pcal(k::Integer, x::Float64)
     sum = zero(x)
     x2 = x*x
     fl = floor(k/2 - 0.5)
@@ -125,7 +125,7 @@ function pcal(k::Int64, x::Float64)
 end
 
 # returns sum in Eq.(2.13)
-function nsum(n::Int64, x::Float64)
+function nsum(n::Integer, x::Float64)
     sum = zero(x)
     xn = one(x)
 
@@ -138,7 +138,7 @@ function nsum(n::Int64, x::Float64)
 end
 
 """
-    cl(n::Int64, x::Float64)::Float64
+    cl(n::Integer, x::Float64)::Float64
 
 Returns the value of the Clausen function ``\\operatorname{Cl}_n(x)``
 for integer ``n > 1`` and a real angle ``x`` of type `Float64`.  This
@@ -162,7 +162,7 @@ License: MIT
 cl(10, 1.0)
 ```
 """
-function cl(n::Int64, x::Float64)::Float64
+function cl(n::Integer, x::Float64)::Float64
     if n < 2
         throw("cl(n,x) undefined for n < 2")
     end

@@ -54,7 +54,7 @@ println("Benchmarking cl::Float64")
 
 time_cl(k, data) = @time map(x -> ClausenFunctions.cl(k, x), data)
 
-n = 100_000
+n = 1_000_000
 data = (x_max - x_min)*rand(Float64, n) + x_min*ones(n)
 
 for k in 2:6

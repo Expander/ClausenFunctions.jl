@@ -109,9 +109,14 @@ end
 # returns P_k(x)
 function pcal(k::Int64, x::Float64)
     sum = zero(x)
+    x2 = x*x
 
     for i in 3:2:k
-        sum += (-1)^(fld(k - 1, 2.0) + fld(i - 1, 2.0))*x^(k - i)/factorial(k - i)*cln0(i)
+        sum = x2*sum + (-1)^(fld(k - 1, 2.0) + fld(i - 1, 2.0))/factorial(k - i)*cln0(i)
+    end
+
+    if iseven(k)
+        sum *= x
     end
 
     sum

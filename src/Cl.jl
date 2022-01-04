@@ -196,7 +196,7 @@ function cl(n::Integer, x::Float64)::Float64
         return zero(x)
     end
 
-    if n < 15
+    if n < 17
         fn2 = factorial(n - 2)
 
         # Eq.(2.13)

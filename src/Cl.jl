@@ -84,9 +84,11 @@ end
 # returns N_n(x) from Eq.(2.11)
 function ncal(n::Int64, x::Float64)
     sum = zero(x)
+    xn = x^(n + 1)
 
     for k in one(n):length(B)
-        term = B[k]*x^(2*k + n + 1)/(2*k + n + 1)
+        xn *= x*x
+        term = B[k]*xn/(2*k + n + 1)
         old_sum = sum
         sum += term
         sum == old_sum && break
@@ -109,7 +111,7 @@ function pcal(k::Int64, x::Float64)
     sum = zero(x)
 
     for i in 3:2:k
-       sum += (-1)^(fld(k - 1, 2.0) + fld(i - 1, 2.0))*x^(k - i)/factorial(k - i)*cln0(i)
+        sum += (-1)^(fld(k - 1, 2.0) + fld(i - 1, 2.0))*x^(k - i)/factorial(k - i)*cln0(i)
     end
 
     sum
@@ -118,9 +120,11 @@ end
 # returns sum in Eq.(2.13)
 function nsum(n::Int64, x::Float64)
     sum = zero(x)
+    xn = one(x)
 
     for i in zero(n):(n - 2)
-       sum += binomial(n - 2, i)*(-x)^i*ncal(n - 2 - i, x)
+        sum += binomial(n - 2, i)*xn*ncal(n - 2 - i, x)
+        xn *= -x
     end
 
     sum

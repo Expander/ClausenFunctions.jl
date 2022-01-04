@@ -138,7 +138,7 @@ function nsum(n::Integer, x::Float64)
 end
 
 # returns Cl(n,x) using the naive series expansion
-function cl_series(n::Integer, x::Float64)::Float64
+function cl_series(n::Integer, x::Float64)
     f(x) = iseven(n) ? sin(x) : cos(x)
     sum = zero(x)
 

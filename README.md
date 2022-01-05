@@ -13,11 +13,13 @@ Example
 ```.jl
 using ClausenFunctions
 
+cl1(1.0)
 cl2(1.0)
 cl3(1.0)
 cl4(1.0)
 cl5(1.0)
 cl6(1.0)
+cl(10,1.0)
 ```
 
 

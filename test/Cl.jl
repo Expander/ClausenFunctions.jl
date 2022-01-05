@@ -11,8 +11,6 @@
             cl  = ClausenFunctions.cl(n, x)
             clm = sgn*ClausenFunctions.cl(n, -x)
 
-            # println("Cl($(n), $(x)): $(cl) == $(expected)")
-
             @test cl == clm
             @test cl ≈ expected atol=1e-14
         end

@@ -37,5 +37,7 @@ function cl1(x::Float64)::Float64
         return Inf
     end
 
-    real(-log(one(x) - exp(x*im)))
+    (s, c) = sincos(x)
+
+    -log((one(x) - c)^2 + s^2)/2
 end

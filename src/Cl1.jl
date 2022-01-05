@@ -19,19 +19,7 @@ julia> cl1(1.0)
 ```
 """
 function cl1(x::Float64)::Float64
-    if x < zero(x)
-        x = -x
-    end
-
-    if x >= 2.0*pi
-        x = mod2pi(x)
-    end
-
-    if x > pi
-        p0 = 6.28125
-        p1 = 0.0019353071795864769253
-        x = (p0 - x) + p1
-    end
+    x = range_reduce_odd(x)
 
     if x == zero(x)
         return Inf

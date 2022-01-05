@@ -22,21 +22,9 @@ function cl5(x::Float64)::Float64
     zeta5 = 1.0369277551433699
     pi28 = pi*pi/8.0
 
-    if x < 0.0
-        x = -x
-    end
+    x = range_reduce_odd(x)
 
-    if x >= 2.0*pi
-        x = mod2pi(x)
-    end
-
-    if x > pi
-        p0 = 6.28125
-        p1 = 0.0019353071795864769253
-        x = (p0 - x) + p1
-    end
-
-    if x == 0.0
+    if x == zero(x)
         return zeta5
     end
 

@@ -21,26 +21,11 @@ julia> cl4(1.0)
 function cl4(x::Float64)::Float64
     zeta3 = 1.2020569031595943
     pi28 = pi*pi/8.0
-    sgn = 1.0
 
-    if x < 0.0
-        x = -x
-        sgn = -1.0
-    end
+    (x, sgn) = range_reduce_even(x)
 
-    if x >= 2.0*pi
-        x = mod2pi(x)
-    end
-
-    if x > pi
-        p0 = 6.28125
-        p1 = 0.0019353071795864769253
-        x = (p0 - x) + p1
-        sgn = -sgn
-    end
-
-    if x == 0.0 || x == pi
-        return 0.0
+    if x == zero(x) || x == pi
+        return zero(x)
     end
 
     if x < 0.5*pi

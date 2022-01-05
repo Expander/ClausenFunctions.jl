@@ -2,7 +2,7 @@ import ClausenFunctions
 
 n = 10_000_000
 x_min = 0.0
-x_max = 6.5
+x_max = pi
 data = (x_max - x_min)*rand(Float64, n) + x_min*ones(n)
 
 println("Benchmarking cl2::Float64")

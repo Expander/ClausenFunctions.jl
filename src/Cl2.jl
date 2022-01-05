@@ -2,7 +2,7 @@
     cl2(x::Float64)::Float64
 
 Returns the value of the Clausen function ``\\operatorname{Cl}_2(x)``
-for a real angle `x` of type `Float64`.  The Clausen function is
+for a real angle ``x`` of type `Float64`.  The Clausen function is
 defined as
 
 ```math

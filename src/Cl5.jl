@@ -2,7 +2,7 @@
     cl5(x::Float64)::Float64
 
 Returns the value of the Clausen function ``\\operatorname{Cl}_5(x)``
-for a real angle `x` of type `Float64`.  This function is defined as
+for a real angle ``x`` of type `Float64`.  This function is defined as
 
 ```math
 \\operatorname{Cl}_5(x) = \\Re[\\operatorname{Li}_5(e^{ix})] = \\sum_{k=1}^\\infty \\frac{\\cos(kx)}{k^5}

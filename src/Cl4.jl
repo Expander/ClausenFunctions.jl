@@ -2,7 +2,7 @@
     cl4(x::Float64)::Float64
 
 Returns the value of the Clausen function ``\\operatorname{Cl}_4(x)``
-for a real angle `x` of type `Float64`.  This function is defined as
+for a real angle ``x`` of type `Float64`.  This function is defined as
 
 ```math
 \\operatorname{Cl}_4(x) = \\Im[\\operatorname{Li}_4(e^{ix})] = \\sum_{k=1}^\\infty \\frac{\\sin(kx)}{k^4}

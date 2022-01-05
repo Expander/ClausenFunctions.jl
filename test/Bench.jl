@@ -2,8 +2,17 @@ import ClausenFunctions
 
 n = 10_000_000
 x_min = 0.0
-x_max = 6.5
+x_max = pi
 data = (x_max - x_min)*rand(Float64, n) + x_min*ones(n)
+
+println("Benchmarking cl1::Float64")
+
+time_cl1(data) = @time map(ClausenFunctions.cl1, data)
+
+map(ClausenFunctions.cl1, data) # trigger compilation
+time_cl1(data)                  # trigger compilation
+time_cl1(data)
+time_cl1(data)
 
 println("Benchmarking cl2::Float64")
 
@@ -49,3 +58,18 @@ map(ClausenFunctions.cl6, data) # trigger compilation
 time_cl6(data)                  # trigger compilation
 time_cl6(data)
 time_cl6(data)
+
+println("Benchmarking cl::Float64")
+
+time_cl(k, data) = @time map(x -> ClausenFunctions.cl(k, x), data)
+
+n = 1_000_000
+data = (x_max - x_min)*rand(Float64, n) + x_min*ones(n)
+
+for k in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 1000, 1001, 1_000_000]
+    println("Benchmarking cl($(k),x)::Float64")
+    map(x -> ClausenFunctions.cl(k, x), data) # trigger compilation
+    time_cl(k, data)            # trigger compilation
+    time_cl(k, data)
+    time_cl(k, data)
+end

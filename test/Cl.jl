@@ -1,5 +1,5 @@
 @testset "cl" begin
-    for n in [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 1000, 1001, 1_000_000]
+    for n in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 1000, 1001, 1_000_000]
         data = open(readdlm, joinpath(@__DIR__, "data", "Cl$(n).txt"))
 
         for r in 1:size(data, 1)
@@ -17,7 +17,7 @@
 
     end
 
-    @test_throws DomainError ClausenFunctions.cl(1, 1.0)
     @test_throws DomainError ClausenFunctions.cl(0, 1.0)
     @test_throws DomainError ClausenFunctions.cl(-1, 1.0)
+    @test_throws DomainError ClausenFunctions.cl(-2, 1.0)
 end

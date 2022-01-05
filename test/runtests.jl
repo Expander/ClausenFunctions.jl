@@ -2,6 +2,7 @@ using Test
 using DelimitedFiles
 import ClausenFunctions
 
+include("Cl1.jl")
 include("Cl2.jl")
 include("Cl3.jl")
 include("Cl4.jl")

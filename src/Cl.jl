@@ -176,7 +176,7 @@ License: MIT
 # Example
 ```jldoctest; setup = :(using ClausenFunctions), output = false
 julia> cl(10, 1.0)
-0.8423605391686303
+0.8423605391686301
 ```
 """
 function cl(n::Integer, x::Float64)::Float64

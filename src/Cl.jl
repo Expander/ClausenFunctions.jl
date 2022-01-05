@@ -81,23 +81,6 @@ function range_reduce(n::Integer, x::Float64)
     end
 end
 
-# returns N_n(x) from Eq.(2.11)
-function ncal(n::Integer, x::Float64)
-    sum = zero(x)
-    xn = x^(n + 3)
-    x2 = x*x
-
-    for k in one(n):length(B)
-        term = B[k]*xn/(2*k + n + 1)
-        old_sum = sum
-        sum += term
-        sum == old_sum && break
-        xn *= x2
-    end
-
-    (x^(n + 1)/(n + 1) + sum)/(n + 1)
-end
-
 # returns Cl(n, 0)
 function cln0(n::Integer)::Float64
     if iseven(n)
@@ -122,6 +105,23 @@ function pcal(k::Integer, x::Float64)
     end
 
     sum
+end
+
+# returns N_n(x) from Eq.(2.11)
+function ncal(n::Integer, x::Float64)
+    sum = zero(x)
+    xn = x^(n + 3)
+    x2 = x*x
+
+    for k in one(n):length(B)
+        term = B[k]*xn/(2*k + n + 1)
+        old_sum = sum
+        sum += term
+        sum == old_sum && break
+        xn *= x2
+    end
+
+    (x^(n + 1)/(n + 1) + sum)/(n + 1)
 end
 
 # returns sum in Eq.(2.13)

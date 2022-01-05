@@ -54,33 +54,6 @@ const B = (-0.083333333333333333,-0.0013888888888888889,-0.000033068783068783069
            -6.5790299364809836e-315,-1.6664877509565689e-316,-4.2212627863094242e-318,-1.069258354935559e-319,
            -2.7084630535382438e-321,-6.8606170609008831e-323)
 
-# returns (x, sign) with x in [0,pi]
-function range_reduce(n::Integer, x::Float64)
-    sgn = one(x)
-
-    if x < zero(x)
-        x = -x
-        sgn = -one(x)
-    end
-
-    if x >= 2.0*pi
-        x = mod2pi(x)
-    end
-
-    if x > pi
-        p0 = 6.28125
-        p1 = 0.0019353071795864769253
-        x = (p0 - x) + p1
-        sgn = -sgn
-    end
-
-    if iseven(n)
-        (x, sgn)
-    else
-        (x, one(x))
-    end
-end
-
 # returns Cl(n, 0)
 function cln0(n::Integer)::Float64
     if iseven(n)

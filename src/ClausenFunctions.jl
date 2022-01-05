@@ -1,5 +1,6 @@
 module ClausenFunctions
 
+include("range_reduction.jl")
 include("Cl1.jl")
 include("Cl2.jl")
 include("Cl3.jl")

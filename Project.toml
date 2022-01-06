@@ -5,6 +5,7 @@ version = "1.5.0"
 
 [compat]
 julia = "1.0"
+SpecialFunctions = "0 - 2"
 
 [deps]
 SpecialFunctions = "276daf66-3868-5448-9aa4-cd146d93841b"

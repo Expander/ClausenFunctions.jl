@@ -13,14 +13,20 @@ Example
 ```.jl
 using ClausenFunctions
 
-cl1(1.0)
-cl2(1.0)
-cl3(1.0)
-cl4(1.0)
-cl5(1.0)
-cl6(1.0)
-cl(10, 1.0)
+cl1(1.0)     # Standard Clausen function Cl_1(x)
+cl2(1.0)     # Standard Clausen function Cl_2(x)
+cl3(1.0)     # Standard Clausen function Cl_3(x)
+cl4(1.0)     # Standard Clausen function Cl_4(x)
+cl5(1.0)     # Standard Clausen function Cl_5(x)
+cl6(1.0)     # Standard Clausen function Cl_6(x)
+cl(10, 1.0)  # Standard Clausen function Cl_n(x) for integer n > 0
 ```
+
+
+Documentation
+-------------
+
+[https://docs.juliahub.com/ClausenFunctions/](https://docs.juliahub.com/ClausenFunctions/)
 
 
 Citation

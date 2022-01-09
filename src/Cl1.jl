@@ -8,6 +8,9 @@ for a real angle ``x`` of type `Float64`.  This function is defined as
 \\operatorname{Cl}_1(x) = \\Re[\\operatorname{Li}_1(e^{ix})] = \\Re[-\\log(1 - e^{ix})]
 ```
 
+Note: ``\\operatorname{Cl}_1(x)`` is not defined for ``x=2n\\pi`` with
+``n\\in\\mathbb{Z}``.
+
 Author: Alexander Voigt
 
 License: MIT

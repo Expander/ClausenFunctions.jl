@@ -127,7 +127,7 @@ end
     cl(n::Integer, x::Float64)::Float64
 
 Returns the value of the Clausen function ``\\operatorname{Cl}_n(x)``
-for integer ``n > 1`` and a real angle ``x`` of type `Float64`.  This
+for integers ``n > 0`` and a real angle ``x`` of type `Float64`.  This
 function is defined as
 
 ```math
@@ -136,6 +136,9 @@ function is defined as
 \\operatorname{Cl}_n(x) &= \\Re[\\operatorname{Li}_n(e^{ix})] = \\sum_{k=1}^\\infty \\frac{\\cos(kx)}{k^n}, \\qquad \\text{for}~n~\\text{odd}.
 \\end{aligned}
 ```
+
+Note: ``\\operatorname{Cl}_1(x)`` is not defined for ``x=2n\\pi`` with
+``n\\in\\mathbb{Z}``.
 
 The implementation follows the approach presented in [Jiming Wu,
 Xiaoping Zhang, Dongjie Liu, "An efficient calculation of the Clausen

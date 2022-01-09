@@ -28,7 +28,5 @@ function cl1(x::Float64)::Float64
         return Inf
     end
 
-    (s, c) = sincos(x)
-
-    -log((one(x) - c)^2 + s^2)/2
+    -log(2.0*sin(0.5*x))
 end

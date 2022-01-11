@@ -37,7 +37,7 @@ Citation
     author       = {{Alexander Voigt}},
     title        = {{ClausenFunctions.jl}},
     year         = {2022},
-    version      = {1.6.0},
+    version      = {1.7.0},
     url          = {https://github.com/Expander/ClausenFunctions.jl},
     note         = {[License: MIT]}
 }

@@ -166,8 +166,8 @@ function cl(n::Integer, x::Float64)::Float64
 
     (x, sgn) = range_reduce(n, x)
 
-    if x == zero(x)
-        return cln0(n)
+    if x == zero(x) && iseven(n)
+        return zero(x)
     end
 
     if iseven(n) && x == pi
@@ -177,9 +177,11 @@ function cl(n::Integer, x::Float64)::Float64
     if n < 10
         fn2 = factorial(n - 2)
 
+        # first line in Eq.(2.13)
+        term1 = x == zero(x) ? zero(x) : (-1)^floor(n/2 + 0.5)*x^(n - 1)/(fn2*(n - 1))*log(2*sin(x/2))
+
         # Eq.(2.13)
-        sgn*((-1)^floor(n/2 + 0.5)*x^(n - 1)/(fn2*(n - 1))*log(2*sin(x/2))
-             + (-1)^(floor(n/2) + 1)/fn2*nsum(n, x) + pcal(n, x))
+        sgn*(term1 + (-1)^(floor(n/2) + 1)/fn2*nsum(n, x) + pcal(n, x))
     else
         sgn*cl_series(n, x)
     end

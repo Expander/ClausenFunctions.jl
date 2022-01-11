@@ -169,11 +169,7 @@ function cl(n::Integer, x::Float64)::Float64
 
     (x, sgn) = range_reduce(n, x)
 
-    if x == zero(x) && iseven(n)
-        return zero(x)
-    end
-
-    if iseven(n) && x == pi
+    if iseven(n) && (x == zero(x) || x == pi)
         return zero(x)
     end
 

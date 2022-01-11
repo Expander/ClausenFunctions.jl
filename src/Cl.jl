@@ -113,7 +113,7 @@ end
 # returns Cl(n,x) using the naive series expansion
 function cl_series(n::Integer, x::Float64)
     f(x) = iseven(n) ? sin(x) : cos(x)
-    kmax = ceil(Int64, eps(x)^(-inv(n)))
+    kmax = ceil(Int64, eps(Float64)^(-inv(n)))
     sum = f(x)
 
     for k in 2:kmax

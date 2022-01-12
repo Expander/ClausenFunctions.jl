@@ -70,10 +70,11 @@ end
 function pcal(k::Integer, x::Float64)
     sum = zero(x)
     x2 = x*x
-    fl = floor(k/2 - 0.5)
+    fl = (k - 1)÷2
 
     for i in 3:2:k
-        sum = x2*sum + (-1)^(fl + floor(i/2 - 0.5))/factorial(k - i)*cln0(i)
+        sgn = iseven(fl + (i - 1)÷2) ? 1.0 : -1.0
+        sum = x2*sum + sgn*cln0(i)/factorial(k - i)
     end
 
     if iseven(k)

@@ -75,15 +75,6 @@ const zeta = (
     1.0040773561979443, 1.0020083928260822, 1.0009945751278181
 )
 
-# returns Cl(n, 0)
-function cln0(n::Integer)::Float64
-    if iseven(n)
-        zero(Float64)
-    else
-        zeta[n - 1]
-    end
-end
-
 # returns P_k(x)
 function pcal(k::Integer, x::Float64)
     sum = zero(x)
@@ -92,7 +83,7 @@ function pcal(k::Integer, x::Float64)
 
     for i in 3:2:k
         sgn = iseven(fl + (i - 1)÷2) ? 1.0 : -1.0
-        sum = x2*sum + sgn*cln0(i)/factorial(k - i)
+        sum = x2*sum + sgn*zeta[i - 1]/factorial(k - i)
     end
 
     if iseven(k)

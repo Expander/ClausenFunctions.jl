@@ -87,18 +87,18 @@ end
 # returns N_n(x) from Eq.(2.11)
 function ncal(n::Integer, x::Float64)
     sum = zero(x)
-    xn = x^(n + 3)
+    xn1 = x^(n + 1)
     x2 = x*x
+    xn = xn1*x2 # x^(n + 3)
 
     for k in one(n):length(B)
-        term = B[k]*xn/(2*k + n + 1)
         old_sum = sum
-        sum += term
+        sum += B[k]*xn/(2*k + n + 1)
         sum == old_sum && break
         xn *= x2
     end
 
-    (x^(n + 1)/(n + 1) + sum)/(n + 1)
+    (xn1/(n + 1) + sum)/(n + 1)
 end
 
 # returns sum in Eq.(2.13)

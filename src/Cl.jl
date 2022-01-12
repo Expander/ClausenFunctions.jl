@@ -177,13 +177,20 @@ function cl(n::Integer, x::Float64)::Float64
     if n < 10
         fn2 = factorial(n - 2)
 
+        sign1 = iseven((n + 1)÷2) ? 1.0 : -1.0;
+
         # first line in Eq.(2.13)
         term1 = x == zero(x) ?
                      zero(x) :
-                     (-1)^floor(n/2 + 0.5)*x^(n - 1)/(fn2*(n - 1))*log(2*sin(x/2))
+                     sign1*x^(n - 1)/(fn2*(n - 1))*log(2*sin(x/2))
+
+        sign2 = iseven(n÷2) ? 1.0 : -1.0
+
+        # second line in Eq.(2.13)
+        term2 = pcal(n, x) - sign2/fn2*nsum(n, x)
 
         # Eq.(2.13)
-        sgn*(term1 + (-1)^(floor(n/2) + 1)/fn2*nsum(n, x) + pcal(n, x))
+        sgn*(term1 + term2)
     else
         sgn*cl_series(n, x)
     end

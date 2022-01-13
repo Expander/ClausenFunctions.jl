@@ -81,7 +81,11 @@ function sl(n::Integer, x::Float64)::Float64
             coeff[1] = iseven(k) ? zeta[k - 1] : 0.0
         end
 
-        sgn*horner(x, coeff)
+        if VERSION >= v"1.4"
+            sgn*evalpoly(x, coeff)
+        else
+            sgn*horner(x, coeff)
+        end
     else
         sgn*sl_series(n, x)
     end

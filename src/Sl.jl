@@ -5,6 +5,17 @@ const zeta = (
     1.0040773561979443, 1.0020083928260822
 )
 
+# evaluate polynomial using Horner's method
+function horner(x::Float64, coeffs)
+    sum = coeffs[end]
+
+    for i in length(coeffs)-1:-1:1
+        sum = x*sum + coeffs[i]
+    end
+
+    sum
+end
+
 # returns Sl(n,x) using the naive series expansion
 function sl_series(n::Integer, x::Float64)
     f(x) = iseven(n) ? cos(x) : sin(x)
@@ -70,7 +81,7 @@ function sl(n::Integer, x::Float64)::Float64
             coeff[1] = iseven(k) ? zeta[k - 1] : 0.0
         end
 
-        sgn*evalpoly(x, coeff)
+        sgn*horner(x, coeff)
     else
         sgn*sl_series(n, x)
     end

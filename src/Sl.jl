@@ -5,6 +5,19 @@ const zeta = (
     1.0040773561979443, 1.0020083928260822
 )
 
+# returns Sl(n,x) using the naive series expansion
+function sl_series(n::Integer, x::Float64)
+    f(x) = iseven(n) ? cos(x) : sin(x)
+    kmax = ceil(Int64, eps(Float64)^(-inv(n)))
+    sum = f(x)
+
+    for k in 2:kmax
+        sum += f(k*x)/Float64(k)^n
+    end
+
+    sum
+end
+
 """
     sl(n::Integer, x::Float64)::Float64
 

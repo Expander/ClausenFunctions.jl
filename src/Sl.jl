@@ -64,7 +64,7 @@ function sl(n::Integer, x::Float64)::Float64
     (x, sgn) = range_reduce(n + 1, x)
 
     if n < 10
-        coeff = zeros(Float64, n + 1);
+        coeff = zeros(Float64, n + 1)
 
         # initialize for n = 1
         coeff[1] = 0.5*pi # coefficient of x^0

@@ -74,8 +74,8 @@ function sl(n::Integer, x::Float64)::Float64
         for k in 2:n
             sign_flip = iseven(k) ? -1.0 : 1.0
             # integration
-            for i in (k + 1):-1:2
-                coeff[i] = sign_flip*coeff[i - 1]/(i - 1)
+            for i in k:-1:1
+                coeff[i + 1] = sign_flip*coeff[i]/i
             end
             # integration constant
             coeff[1] = iseven(k) ? zeta[k - 1] : 0.0

@@ -20,6 +20,7 @@ cl4(1.0)     # Standard Clausen function Cl_4(x)
 cl5(1.0)     # Standard Clausen function Cl_5(x)
 cl6(1.0)     # Standard Clausen function Cl_6(x)
 cl(10, 1.0)  # Standard Clausen function Cl_n(x) for integer n > 0
+sl(10, 1.0)  # Glaisher-Clausen function Sl_n(x) for integer n > 0
 ```
 
 

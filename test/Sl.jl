@@ -13,7 +13,7 @@
         @test ≈(ClausenFunctions.sl(1, x), Sl1(x), atol=1e-14)
         @test ≈(ClausenFunctions.sl(2, x), Sl2(x), atol=1e-14)
         @test ≈(ClausenFunctions.sl(3, x), Sl3(x), atol=1e-14)
-        @test ≈(ClausenFunctions.sl(4, x), Sl4(x), atol=1e-13)
+        @test ≈(ClausenFunctions.sl(4, x), Sl4(x), atol=1e-14)
     end
 
     @test_throws DomainError ClausenFunctions.sl(0, 1.0)

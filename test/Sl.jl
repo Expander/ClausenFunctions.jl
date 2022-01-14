@@ -16,7 +16,7 @@
         @test ≈(ClausenFunctions.sl(4, x), Sl4(x), atol=1e-13)
     end
 
-    for n in 1:31
+    for n in vcat(collect(1:31), [1000, 1001])
         data = open(readdlm, joinpath(@__DIR__, "data", "Sl$(n).txt"))
 
         for r in 1:size(data, 1)

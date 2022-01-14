@@ -25,6 +25,9 @@ Returns the value of the Glaisher-Clausen function
 \\end{aligned}
 ```
 
+Note: We set ``\\operatorname{Sl}_1(0) = 0`` for consistency with the
+series expansion.
+
 Author: Alexander Voigt
 
 License: MIT
@@ -42,6 +45,7 @@ function sl(n::Integer, x::Float64)::Float64
 
     (x, sgn) = range_reduce(n + 1, x)
 
+    n ==  1 && x == zero(Float64) && return zero(Float64)
     n ==  1 && return sgn*(pi/2 - x/2)
     n ==  2 && return sgn*(pi^2/6 + (-1/2*pi + x/4)*x)
     n ==  3 && return sgn*(x*(pi^2/6 + (-1/4*pi + x/12)*x))

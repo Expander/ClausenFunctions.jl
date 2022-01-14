@@ -1,4 +1,4 @@
-@testset "cl" begin
+@testset "sl" begin
     Sl1(x) = 0.5*(pi - x)
     Sl2(x) = pi^2/6 - pi/2*x + x^2/4
     Sl3(x) = pi^2/6*x - pi/4*x^2 + x^3/12
@@ -14,6 +14,19 @@
         @test ≈(ClausenFunctions.sl(2, x), Sl2(x), atol=1e-14)
         @test ≈(ClausenFunctions.sl(3, x), Sl3(x), atol=1e-14)
         @test ≈(ClausenFunctions.sl(4, x), Sl4(x), atol=1e-13)
+    end
+
+    for n in 1:31
+        data = open(readdlm, joinpath(@__DIR__, "data", "Sl$(n).txt"))
+
+        for r in 1:size(data, 1)
+            row      = data[r, :]
+            x        = row[1]
+            expected = row[2]
+
+            @test ClausenFunctions.sl(n, x) == (-1)^n*ClausenFunctions.sl(n, -x)
+            @test ClausenFunctions.sl(n, x) ≈ expected atol=1e-14
+        end
     end
 
     @test_throws DomainError ClausenFunctions.sl(0, 1.0)

@@ -167,21 +167,19 @@ julia> cl(10, 1.0)
 ```
 """
 function cl(n::Integer, x::Float64)::Float64
-    if n < 1
-        throw(DomainError(n, "cl(n,x) undefined for n < 1"))
-    end
-
-    if n == 1
-        return cl1(x)
-    end
+    n < 1  && throw(DomainError(n, "cl(n,x) undefined for n < 1"))
+    n == 1 && return cl1(x)
+    n == 2 && return cl2(x)
+    n == 3 && return cl3(x)
+    n == 4 && return cl4(x)
+    n == 5 && return cl5(x)
+    n == 6 && return cl6(x)
 
     (x, sgn) = range_reduce(n, x)
 
     if iseven(n) && (x == zero(x) || x == pi)
-        return zero(x)
-    end
-
-    if n < 10
+        zero(x)
+    elseif n < 10
         sign1 = iseven((n + 1)÷2) ? 1.0 : -1.0;
 
         # first line in Eq.(2.13)
@@ -196,7 +194,7 @@ function cl(n::Integer, x::Float64)::Float64
 
         # Eq.(2.13)
         sgn*(term1 + term2)
-    else
+    else # n >= 10
         sgn*cl_series(n, x)
     end
 end

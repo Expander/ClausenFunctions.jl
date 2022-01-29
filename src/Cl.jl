@@ -66,12 +66,24 @@ const binomial_coeffs = (
     (1, 7, 21, 35,  35,  21,  7,  1)
 )
 
+# 1/n! for integer n = 0, 1, 2, ...
+const inverse_factorials = (
+    1.0,    1.0,     0.5   , 1.6666666666666667e-001, 4.1666666666666667e-002,
+    8.3333333333333333e-003, 1.3888888888888889e-003, 1.9841269841269841e-004,
+    2.4801587301587302e-005
+)
+
 # zeta(n) for n = 2,...,9
 const zeta = (
     1.6449340668482264, 1.2020569031595943, 1.0823232337111382,
     1.0369277551433699, 1.0173430619844491, 1.0083492773819228,
     1.0040773561979443, 1.0020083928260822
 )
+
+# returns 1/n!
+function inverse_factorial(n::Integer)
+    inverse_factorials[n + 1]
+end
 
 # returns P_k(x)
 function pcal(k::Integer, x::Float64)
@@ -81,7 +93,7 @@ function pcal(k::Integer, x::Float64)
 
     for i in 3:2:k
         sgn = iseven(fl + (i - 1)÷2) ? 1.0 : -1.0
-        sum = x2*sum + sgn*zeta[i - 1]/factorial(k - i)
+        sum = x2*sum + sgn*zeta[i - 1]*inverse_factorial(k - i)
     end
 
     if iseven(k)
@@ -185,12 +197,12 @@ function cl(n::Integer, x::Float64)::Float64
         # first line in Eq.(2.13)
         term1 = x == zero(x) ?
                      zero(x) :
-                     sign1*x^(n - 1)/(factorial(n - 1))*log(2*sin(x/2))
+                     sign1*x^(n - 1)*inverse_factorial(n - 1)*log(2*sin(x/2))
 
         sign2 = iseven(n÷2) ? 1.0 : -1.0
 
         # second line in Eq.(2.13)
-        term2 = pcal(n, x) - sign2/factorial(n - 2)*nsum(n, x)
+        term2 = pcal(n, x) - sign2*inverse_factorial(n - 2)*nsum(n, x)
 
         # Eq.(2.13)
         sgn*(term1 + term2)

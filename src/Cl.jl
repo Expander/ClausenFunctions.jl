@@ -90,18 +90,18 @@ function zeta(n::Integer)
     zetas[n - 1]
 end
 
-# returns P_k(x)
-function pcal(k::Integer, x::Float64)
+# returns P_n(x)
+function pcal(n::Integer, x::Float64)
     sum = zero(x)
     x2 = x*x
-    fl = (k - 1)÷2
+    fl = (n - 1)÷2
 
-    for i in 3:2:k
+    for i in 3:2:n
         sgn = iseven(fl + (i - 1)÷2) ? 1.0 : -1.0
-        sum = x2*sum + sgn*zeta(i)*inverse_factorial(k - i)
+        sum = x2*sum + sgn*zeta(i)*inverse_factorial(n - i)
     end
 
-    if iseven(k)
+    if iseven(n)
         sum *= x
     end
 

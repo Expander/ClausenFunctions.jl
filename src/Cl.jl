@@ -80,6 +80,11 @@ const zetas = (
     1.0040773561979443, 1.0020083928260822
 )
 
+# returns binomial(n,k) using pre-computed table
+function binomial_coeff(n::Integer, k::Integer)
+    binomial_coeffs[n + 1][k + 1]
+end
+
 # returns 1/n!
 function inverse_factorial(n::Integer)
     inverse_factorials[n + 1]
@@ -131,7 +136,7 @@ function nsum(n::Integer, x::Float64)
     xn = one(x)
 
     for i in zero(n):(n - 3)
-        sum += binomial_coeffs[n - 1][i + 1]*xn*ncal(n - 2 - i, x)
+        sum += binomial_coeff(n - 2, i)*xn*ncal(n - 2 - i, x)
         xn *= -x
     end
 

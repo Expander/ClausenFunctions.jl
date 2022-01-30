@@ -74,7 +74,7 @@ const inverse_factorials = (
 )
 
 # zeta(n) for n = 2,...,9
-const zeta = (
+const zetas = (
     1.6449340668482264, 1.2020569031595943, 1.0823232337111382,
     1.0369277551433699, 1.0173430619844491, 1.0083492773819228,
     1.0040773561979443, 1.0020083928260822
@@ -85,6 +85,11 @@ function inverse_factorial(n::Integer)
     inverse_factorials[n + 1]
 end
 
+# returns zeta(n)
+function zeta(n::Integer)
+    zetas[n - 1]
+end
+
 # returns P_k(x)
 function pcal(k::Integer, x::Float64)
     sum = zero(x)
@@ -93,7 +98,7 @@ function pcal(k::Integer, x::Float64)
 
     for i in 3:2:k
         sgn = iseven(fl + (i - 1)÷2) ? 1.0 : -1.0
-        sum = x2*sum + sgn*zeta[i - 1]*inverse_factorial(k - i)
+        sum = x2*sum + sgn*zeta(i)*inverse_factorial(k - i)
     end
 
     if iseven(k)

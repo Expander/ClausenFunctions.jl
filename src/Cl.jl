@@ -125,17 +125,17 @@ function ncal(n::Integer, x::Float64)
     (xn1/(n + 1) + sum)/(n + 1)
 end
 
-# returns sum in Eq.(2.13)
+# returns sum in Eq.(2.13), n > 1
 function nsum(n::Integer, x::Float64)
     sum = zero(x)
     xn = one(x)
 
-    for i in zero(n):(n - 2)
+    for i in zero(n):(n - 3)
         sum += binomial_coeffs[n - 1][i + 1]*xn*ncal(n - 2 - i, x)
         xn *= -x
     end
 
-    sum
+    sum + xn*ncal(0, x)
 end
 
 # returns Cl(n,x) using the naive series expansion

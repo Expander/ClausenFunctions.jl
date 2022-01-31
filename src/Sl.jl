@@ -4,8 +4,8 @@ function sl_series(n::Integer, x::Float64)
 
     if iseven(n)
         co = cos(x)
-        co2 = 1.0 # cos((n-2)*x)
-        co1 = co  # cos((n-1)*x)
+        co2 = one(x) # cos((n-2)*x)
+        co1 = co     # cos((n-1)*x)
         sum = co
         for k in 2:kmax
             con = 2*co*co1 - co2 # cos(n*x)
@@ -16,8 +16,8 @@ function sl_series(n::Integer, x::Float64)
         sum
     else
         si, co = sincos(x)
-        si2 = 0.0 # sin((n-2)*x)
-        si1 = si  # sin((n-1)*x)
+        si2 = zero(x) # sin((n-2)*x)
+        si1 = si      # sin((n-1)*x)
         sum = si
         for k in 2:kmax
             si = 2*co*si1 - si2 # sin(n*x)

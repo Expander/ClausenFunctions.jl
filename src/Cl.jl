@@ -143,15 +143,33 @@ end
 
 # returns Cl(n,x) using the naive series expansion
 function cl_series(n::Integer, x::Float64)
-    f(x) = iseven(n) ? sin(x) : cos(x)
     kmax = ceil(Int64, eps(Float64)^(-inv(n)))
-    sum = f(x)
 
-    for k in 2:kmax
-        sum += f(k*x)/Float64(k)^n
+    if iseven(n)
+        si, co = sincos(x)
+        si2 = 0.0 # sin((n-2)*x)
+        si1 = si  # sin((n-1)*x)
+        sum = si
+        for k in 2:kmax
+            si = 2*co*si1 - si2 # sin(n*x)
+            si2 = si1
+            si1 = si
+            sum += si/Float64(k)^n
+        end
+        sum
+    else
+        co = cos(x)
+        co2 = 1.0 # cos((n-2)*x)
+        co1 = co  # cos((n-1)*x)
+        sum = co
+        for k in 2:kmax
+            con = 2*co*co1 - co2 # cos(n*x)
+            co2 = co1
+            co1 = con
+            sum += con/Float64(k)^n
+        end
+        sum
     end
-
-    sum
 end
 
 """

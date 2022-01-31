@@ -57,9 +57,7 @@ julia> sl(10, 1.0)
 ```
 """
 function sl(n::Integer, x::Float64)::Float64
-    if n < 1
-        throw(DomainError(n, "sl(n,x) undefined for n < 1"))
-    end
+    n < 1 && throw(DomainError(n, "sl(n,x) undefined for n < 1"))
 
     (x, sgn) = range_reduce(n + 1, x)
 

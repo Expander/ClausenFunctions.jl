@@ -1,8 +1,8 @@
 """
-    cl3(x::Float64)::Float64
+    cl3(x::Real)::Real
 
 Returns the value of the Clausen function ``\\operatorname{Cl}_3(x)``
-for a real angle ``x`` of type `Float64`.  This function is defined as
+for a real angle ``x`` of type `Real`.  This function is defined as
 
 ```math
 \\operatorname{Cl}_3(x) = \\Re[\\operatorname{Li}_3(e^{ix})] = \\sum_{k=1}^\\infty \\frac{\\cos(kx)}{k^3}
@@ -18,7 +18,13 @@ julia> cl3(1.0)
 0.44857300728001737
 ```
 """
-function cl3(x::Float64)::Float64
+cl3(x::Real) = _cl3(float(x))
+
+_cl3(x::Float16) = oftype(x, _cl3(Float32(x)))
+
+_cl3(x::Float32) = oftype(x, _cl3(Float64(x)))
+
+function _cl3(x::Float64)::Float64
     zeta3 = 1.2020569031595943
     pi28 = pi*pi/8.0
 

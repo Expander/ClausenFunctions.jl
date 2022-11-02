@@ -26,6 +26,8 @@
 
             @test ClausenFunctions.sl(n, x) == (-1)^n*ClausenFunctions.sl(n, -x)
             @test ClausenFunctions.sl(n, x) ≈ expected atol=1e-14
+            @test ClausenFunctions.sl(n, Float16(x)) ≈ Float16(expected) atol=30*eps(Float16) rtol=30*eps(Float16)
+            @test ClausenFunctions.sl(n, Float32(x)) ≈ Float32(expected) atol=30*eps(Float32) rtol=30*eps(Float32)
         end
     end
 

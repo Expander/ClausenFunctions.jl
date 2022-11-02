@@ -5,7 +5,7 @@ function range_reduce_odd(x::Float64)
     end
 
     if x >= 2.0*pi
-        x = mod2pi(x)
+        x = mod(x, 2pi)
     end
 
     if x > pi
@@ -27,7 +27,7 @@ function range_reduce_even(x::Float64)
     end
 
     if x >= 2.0*pi
-        x = mod2pi(x)
+        x = mod(x, 2pi)
     end
 
     if x > pi

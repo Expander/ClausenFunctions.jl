@@ -1,8 +1,8 @@
 """
-    cl6(x::Float64)::Float64
+    cl6(x::Real)::Real
 
 Returns the value of the Clausen function ``\\operatorname{Cl}_6(x)``
-for a real angle ``x`` of type `Float64`.  This function is defined as
+for a real angle ``x`` of type `Real`.  This function is defined as
 
 ```math
 \\operatorname{Cl}_6(x) = \\Im[\\operatorname{Li}_6(e^{ix})] = \\sum_{k=1}^\\infty \\frac{\\sin(kx)}{k^6}
@@ -18,7 +18,13 @@ julia> cl6(1.0)
 0.855629273183937
 ```
 """
-function cl6(x::Float64)::Float64
+cl6(x::Real) = _cl6(float(x))
+
+_cl6(x::Float16) = oftype(x, _cl6(Float32(x)))
+
+_cl6(x::Float32) = oftype(x, _cl6(Float64(x)))
+
+function _cl6(x::Float64)::Float64
     zeta3 = 1.2020569031595943
     pi28 = pi*pi/8.0
 

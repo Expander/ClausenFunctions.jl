@@ -13,6 +13,8 @@
 
             @test cl == clm
             @test cl ≈ expected atol=1e-14
+            @test ClausenFunctions.cl(n, Float16(x)) ≈ Float16(expected) atol=30*eps(Float16) rtol=30*eps(Float16)
+            @test ClausenFunctions.cl(n, Float32(x)) ≈ Float32(expected) atol=30*eps(Float32) rtol=30*eps(Float32)
         end
 
     end

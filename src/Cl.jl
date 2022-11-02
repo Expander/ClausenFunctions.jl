@@ -173,10 +173,10 @@ function cl_series(n::Integer, x::Float64)
 end
 
 """
-    cl(n::Integer, x::Float64)::Float64
+    cl(n::Integer, x::Real)::Real
 
 Returns the value of the Clausen function ``\\operatorname{Cl}_n(x)``
-for integers ``n > 0`` and a real angle ``x`` of type `Float64`.  This
+for integers ``n > 0`` and a real angle ``x`` of type `Real`.  This
 function is defined as
 
 ```math
@@ -204,7 +204,13 @@ julia> cl(10, 1.0)
 0.8423605391686301
 ```
 """
-function cl(n::Integer, x::Float64)::Float64
+cl(n::Integer, x::Real) = _cl(n, float(x))
+
+_cl(n::Integer, x::Float16) = oftype(x, _cl(n, Float32(x)))
+
+_cl(n::Integer, x::Float32) = oftype(x, _cl(n, Float64(x)))
+
+function _cl(n::Integer, x::Float64)::Float64
     n < 1  && throw(DomainError(n, "cl(n,x) undefined for n < 1"))
     n == 1 && return cl1(x)
     n == 2 && return cl2(x)

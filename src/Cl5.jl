@@ -1,8 +1,8 @@
 """
-    cl5(x::Float64)::Float64
+    cl5(x::Real)::Real
 
 Returns the value of the Clausen function ``\\operatorname{Cl}_5(x)``
-for a real angle ``x`` of type `Float64`.  This function is defined as
+for a real angle ``x`` of type `Real`.  This function is defined as
 
 ```math
 \\operatorname{Cl}_5(x) = \\Re[\\operatorname{Li}_5(e^{ix})] = \\sum_{k=1}^\\infty \\frac{\\cos(kx)}{k^5}
@@ -18,7 +18,13 @@ julia> cl5(1.0)
 0.5228208076420943
 ```
 """
-function cl5(x::Float64)::Float64
+cl5(x::Real) = _cl5(float(x))
+
+_cl5(x::Float16) = oftype(x, _cl5(Float32(x)))
+
+_cl5(x::Float32) = oftype(x, _cl5(Float64(x)))
+
+function _cl5(x::Float64)::Float64
     zeta5 = 1.0369277551433699
     pi28 = pi*pi/8.0
 

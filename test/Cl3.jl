@@ -14,4 +14,6 @@
         @test ClausenFunctions.cl3(Float16(x)) ≈ Float16(expected) atol=30*eps(Float16) rtol=30*eps(Float16)
         @test ClausenFunctions.cl3(Float32(x)) ≈ Float32(expected) atol=30*eps(Float32) rtol=30*eps(Float32)
     end
+
+    @test ClausenFunctions.cl3(1//2) ≈ 0.92769631047023043 atol=1e-14
 end

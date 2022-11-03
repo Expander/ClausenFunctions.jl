@@ -31,6 +31,13 @@
         end
     end
 
+    @test ClausenFunctions.sl(1, 1//2) ≈ 1.3207963267948966 atol=1e-14
+    @test ClausenFunctions.sl(2, 1//2) ≈ 0.92203590345077813 atol=1e-14
+    @test ClausenFunctions.sl(3, 1//2) ≈ 0.63653415924141781 atol=1e-14
+    @test ClausenFunctions.sl(4, 1//2) ≈ 0.90812931549667023 atol=1e-14
+    @test ClausenFunctions.sl(5, 1//2) ≈ 0.51085256423059275 atol=1e-14
+    @test ClausenFunctions.sl(6, 1//2) ≈ 0.88593812938731573 atol=1e-14
+
     @test_throws DomainError ClausenFunctions.sl(0, 1.0)
     @test_throws DomainError ClausenFunctions.sl(-1, 1.0)
     @test_throws DomainError ClausenFunctions.sl(-2, 1.0)

@@ -13,9 +13,18 @@
 
             @test cl == clm
             @test cl ≈ expected atol=1e-14
+            @test ClausenFunctions.cl(n, Float16(x)) ≈ Float16(expected) atol=30*eps(Float16) rtol=30*eps(Float16)
+            @test ClausenFunctions.cl(n, Float32(x)) ≈ Float32(expected) atol=30*eps(Float32) rtol=30*eps(Float32)
         end
 
     end
+
+    @test ClausenFunctions.cl(1, 1//2) ≈ 0.70358563513784466 atol=1e-14
+    @test ClausenFunctions.cl(2, 1//2) ≈ 0.84831187770367927 atol=1e-14
+    @test ClausenFunctions.cl(3, 1//2) ≈ 0.92769631047023043 atol=1e-14
+    @test ClausenFunctions.cl(4, 1//2) ≈ 0.54837172654589549 atol=1e-14
+    @test ClausenFunctions.cl(5, 1//2) ≈ 0.89390286951083851 atol=1e-14
+    @test ClausenFunctions.cl(6, 1//2) ≈ 0.49419627977618802 atol=1e-14
 
     @test_throws DomainError ClausenFunctions.cl(0, 1.0)
     @test_throws DomainError ClausenFunctions.cl(-1, 1.0)

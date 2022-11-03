@@ -30,11 +30,11 @@ function sl_series(n::Integer, x::Float64)
 end
 
 """
-    sl(n::Integer, x::Float64)::Float64
+    sl(n::Integer, x::Real)::Real
 
 Returns the value of the Glaisher-Clausen function
 ``\\operatorname{Sl}_n(x)`` for integers ``n > 0`` and a real angle
-``x`` of type `Float64`.  This function is defined as
+``x`` of type `Real`.  This function is defined as
 
 ```math
 \\begin{aligned}
@@ -56,7 +56,13 @@ julia> sl(10, 1.0)
 0.5398785706335891
 ```
 """
-function sl(n::Integer, x::Float64)::Float64
+sl(n::Integer, x::Real) = _sl(n, float(x))
+
+_sl(n::Integer, x::Float16) = oftype(x, _sl(n, Float32(x)))
+
+_sl(n::Integer, x::Float32) = oftype(x, _sl(n, Float64(x)))
+
+function _sl(n::Integer, x::Float64)::Float64
     n < 1 && throw(DomainError(n, "sl(n,x) undefined for n < 1"))
 
     (x, sgn) = range_reduce(n + 1, x)

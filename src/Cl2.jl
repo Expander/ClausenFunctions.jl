@@ -1,8 +1,8 @@
 """
-    cl2(x::Float64)::Float64
+    cl2(x::Real)::Real
 
 Returns the value of the Clausen function ``\\operatorname{Cl}_2(x)``
-for a real angle ``x`` of type `Float64`.  The Clausen function is
+for a real angle ``x`` of type `Real`.  The Clausen function is
 defined as
 
 ```math
@@ -19,7 +19,13 @@ julia> cl2(1.0)
 1.0139591323607684
 ```
 """
-function cl2(x::Float64)::Float64
+cl2(x::Real) = _cl2(float(x))
+
+_cl2(x::Float16) = oftype(x, _cl2(Float32(x)))
+
+_cl2(x::Float32) = oftype(x, _cl2(Float64(x)))
+
+function _cl2(x::Float64)::Float64
     pi28 = pi*pi/8.0
 
     (x, sgn) = range_reduce_even(x)

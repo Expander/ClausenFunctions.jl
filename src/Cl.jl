@@ -186,8 +186,8 @@ function is defined as
 \\end{aligned}
 ```
 
-Note: ``\\operatorname{Cl}_1(x)`` is not defined for ``x=2n\\pi`` with
-``n\\in\\mathbb{Z}``.
+Note: ``\\operatorname{Cl}_1(x)`` is not defined for ``x=2k\\pi`` with
+``k\\in\\mathbb{Z}``.
 
 The implementation follows the approach presented in [Jiming Wu,
 Xiaoping Zhang, Dongjie Liu, "An efficient calculation of the Clausen

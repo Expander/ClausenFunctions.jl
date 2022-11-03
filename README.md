@@ -30,21 +30,6 @@ Documentation
 [https://docs.juliahub.com/ClausenFunctions/](https://docs.juliahub.com/ClausenFunctions/)
 
 
-Citation
---------
-
-~~~.bibtex
-@software{ClausenFunctions.jl,
-    author       = {{Alexander Voigt}},
-    title        = {{ClausenFunctions.jl}},
-    year         = {2022},
-    version      = {1.9.0},
-    url          = {https://github.com/Expander/ClausenFunctions.jl},
-    note         = {[License: MIT]}
-}
-~~~
-
-
 Copying
 -------
 

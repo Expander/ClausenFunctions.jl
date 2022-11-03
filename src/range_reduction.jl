@@ -1,5 +1,5 @@
 # returns range-reduced x in [0,pi] for odd n
-function range_reduce_odd(x::Float64)
+function range_reduce_odd(x::Real)
     if x < zero(x)
         x = -x
     end
@@ -18,7 +18,7 @@ function range_reduce_odd(x::Float64)
 end
 
 # returns (x, sign) with range-reduced x in [0,pi] for even n
-function range_reduce_even(x::Float64)
+function range_reduce_even(x::Real)
     sgn = one(x)
 
     if x < zero(x)
@@ -41,7 +41,7 @@ function range_reduce_even(x::Float64)
 end
 
 # returns (x, sign) with range-reduced x in [0,pi]
-function range_reduce(n::Integer, x::Float64)
+function range_reduce(n::Integer, x::Real)
     if iseven(n)
         range_reduce_even(x)
     else

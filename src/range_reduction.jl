@@ -1,3 +1,10 @@
+# returns 2pi - x, avoiding catastrophic cancellation
+function two_pi_minus(x::Real)
+    p0 = 6.28125
+    p1 = 0.0019353071795864769253
+    (p0 - x) + p1
+end
+
 # returns range-reduced x in [0,pi] for odd n
 function range_reduce_odd(x::Real)
     if x < zero(x)
@@ -9,9 +16,7 @@ function range_reduce_odd(x::Real)
     end
 
     if x > pi
-        p0 = 6.28125
-        p1 = 0.0019353071795864769253
-        x = (p0 - x) + p1
+        x = two_pi_minus(x)
     end
 
     x
@@ -31,9 +36,7 @@ function range_reduce_even(x::Real)
     end
 
     if x > pi
-        p0 = 6.28125
-        p1 = 0.0019353071795864769253
-        x = (p0 - x) + p1
+        x = two_pi_minus(x)
         sgn = -sgn
     end
 

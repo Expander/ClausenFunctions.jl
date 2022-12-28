@@ -21,7 +21,9 @@ julia> cl1(1.0)
 0.04201950582536895
 ```
 """
-function cl1(x::Real)::Real
+cl1(x::Real) = _cl1(float(x))
+
+function _cl1(x::Real)::Real
     x = range_reduce_odd(x)
 
     if x == zero(x)

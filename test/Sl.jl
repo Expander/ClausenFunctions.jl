@@ -6,7 +6,7 @@
 
     n = 10
     x_min = 0.0
-    x_max = 2.0*pi
+    x_max = 2pi
     data = (x_max - x_min)*rand(Float64, n) + x_min*ones(n)
 
     for x in data

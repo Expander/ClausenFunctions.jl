@@ -8,8 +8,8 @@
 
         @test ClausenFunctions.cl6(x) ≈ expected atol=1e-14
         @test ClausenFunctions.cl6(-x) ≈ -expected atol=1e-14
-        @test ClausenFunctions.cl6(x - 2.0*pi) ≈ expected atol=1e-13
-        @test ClausenFunctions.cl6(x + 2.0*pi) ≈ expected atol=1e-13
+        @test ClausenFunctions.cl6(x - 2pi) ≈ expected atol=1e-13
+        @test ClausenFunctions.cl6(x + 2pi) ≈ expected atol=1e-13
 
         @test ClausenFunctions.cl6(Float16(x)) ≈ Float16(expected) atol=30*eps(Float16) rtol=30*eps(Float16)
         @test ClausenFunctions.cl6(Float32(x)) ≈ Float32(expected) atol=30*eps(Float32) rtol=30*eps(Float32)

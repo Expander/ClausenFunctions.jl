@@ -15,5 +15,7 @@
         @test ClausenFunctions.cl4(Float32(x)) ≈ Float32(expected) atol=30*eps(Float32) rtol=30*eps(Float32)
     end
 
+    @test ClausenFunctions.cl4(0.0) == 0.0
+    @test ClausenFunctions.cl4(pi) == 0.0
     @test ClausenFunctions.cl4(1//2) ≈ 0.54837172654589549 rtol=1e-14
 end

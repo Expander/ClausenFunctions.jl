@@ -1,10 +1,11 @@
 ClausenFunctions.jl
-==========
+===================
 
 [![test](https://github.com/Expander/ClausenFunctions.jl/actions/workflows/build.yml/badge.svg)](https://github.com/Expander/ClausenFunctions.jl/actions/workflows/build.yml)
 
 The ClausenFunctions.jl package provides Julia implementations of the
-Clausen functions.
+Standard Clausen functions and Glaisher-Clausen functions of integer
+order for real arguments.
 
 
 Example

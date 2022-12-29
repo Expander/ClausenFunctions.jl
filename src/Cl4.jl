@@ -25,15 +25,12 @@ _cl4(x::Float16) = oftype(x, _cl4(Float32(x)))
 _cl4(x::Float32) = oftype(x, _cl4(Float64(x)))
 
 function _cl4(x::Float64)::Float64
-    zeta3 = 1.2020569031595943
-
     (x, sgn) = range_reduce_even(x)
 
-    if x == zero(x) || x == pi
-        return zero(x)
-    end
-
-    if x < pi/2
+    if x == zero(x)
+        zero(x)
+    elseif x < pi/2
+        zeta3 = 1.2020569031595943
         P = (-3.0555555555555556e-01,  6.0521392328447206e-03,
              -1.9587493942041528e-05, -3.1137343767030358e-08)
         Q = (1.0000000000000000e+00, -2.2079728398400851e-02,

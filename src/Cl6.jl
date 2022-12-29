@@ -25,15 +25,11 @@ _cl6(x::Float16) = oftype(x, _cl6(Float32(x)))
 _cl6(x::Float32) = oftype(x, _cl6(Float64(x)))
 
 function _cl6(x::Float64)::Float64
-    zeta3 = 1.2020569031595943
-
     (x, sgn) = range_reduce_even(x)
 
-    if x == zero(x) || x == pi
-        return zero(x)
-    end
-
-    if x < pi/2
+    if x == zero(x)
+        zero(x)
+    elseif x < pi/2
         P = (1.0369277551433699e+00, -2.087195444107175e-01,
              2.0652251045312954e-02, -1.383438138256840e-04)
         Q = (1.0000000000000000e+00, -8.0784096827362542e-03,

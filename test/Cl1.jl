@@ -6,13 +6,13 @@
         x        = row[1]
         expected = row[2]
 
-        @test ClausenFunctions.cl1(x) ≈ expected atol=1e-14
-        @test ClausenFunctions.cl1(-x) ≈ expected atol=1e-14
-        @test ClausenFunctions.cl1(x - 2pi) ≈ expected atol=1e-12
-        @test ClausenFunctions.cl1(x + 2pi) ≈ expected atol=1e-12
+        @test ClausenFunctions.cl1(x) ≈ expected rtol=1e-13
+        @test ClausenFunctions.cl1(-x) ≈ expected rtol=1e-13
+        @test ClausenFunctions.cl1(x - 2pi) ≈ expected rtol=1e-12
+        @test ClausenFunctions.cl1(x + 2pi) ≈ expected rtol=1e-13
     end
 
-    @test ClausenFunctions.cl1(1//2) ≈ 0.70358563513784466 atol=1e-14
+    @test ClausenFunctions.cl1(1//2) ≈ 0.70358563513784466 rtol=1e-14
     @test ClausenFunctions.cl1(1) == ClausenFunctions.cl1(1.0)
     @test ClausenFunctions.cl1(0.0) == Inf
 end

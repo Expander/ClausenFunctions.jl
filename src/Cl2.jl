@@ -26,15 +26,13 @@ _cl2(x::Float16) = oftype(x, _cl2(Float32(x)))
 _cl2(x::Float32) = oftype(x, _cl2(Float64(x)))
 
 function _cl2(x::Float64)::Float64
-    pi28 = pi*pi/8.0
-
     (x, sgn) = range_reduce_even(x)
 
     if x == zero(x) || x == pi
         return zero(x)
     end
 
-    if x < 0.5*pi
+    if x < pi/2
         P = (1.3888888888888889e-02, -4.3286930203743071e-04,
              3.2779814789973427e-06, -3.6001540369575084e-09)
         Q = (1.0000000000000000e+00, -3.6166589746694121e-02,
@@ -52,7 +50,7 @@ function _cl2(x::Float64)::Float64
              2.2148751048467057e-02, -7.8183920462457496e-04,
              9.5432542196310670e-06, -1.8184302880448247e-08)
         y = pi - x
-        z = y*y - pi28
+        z = y*y - pi*pi/8
         z2 = z*z
         z4 = z2*z2
         p = P[1] + z * P[2] + z2 * (P[3] + z * P[4]) + z4 * (P[5] + z * P[6])

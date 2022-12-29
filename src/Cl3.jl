@@ -30,10 +30,8 @@ function _cl3(x::Float64)::Float64
     x = range_reduce_odd(x)
 
     if x == zero(x)
-        return zeta3
-    end
-
-    if x < pi/2
+        zeta3
+    elseif x < pi/2
         P = (-7.5000000000000001e-01,  1.5707637881835541e-02,
              -3.5426736843494423e-05, -2.4408931585123682e-07)
         Q = (1.0000000000000000e+00, -2.5573146805410089e-02,

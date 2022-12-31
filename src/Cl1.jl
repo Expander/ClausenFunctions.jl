@@ -23,7 +23,11 @@ julia> cl1(1.0)
 """
 cl1(x::Real) = _cl1(float(x))
 
-function _cl1(x::Real)::Real
+_cl1(x::Float16) = oftype(x, _cl1(Float32(x)))
+
+_cl1(x::Float32) = oftype(x, _cl1(Float64(x)))
+
+function _cl1(x::Float64)::Float64
     x = range_reduce_odd(x)
 
     if x == zero(x)

@@ -65,7 +65,6 @@ function cl1(z::Complex)
     rz,iz = reim(z)
     sz,cz = sincos(rz)
     ez = exp(iz)
-    -(log(hypot(one(rz) - cz/ez, sz/ez))
-      + log(hypot(one(rz) - cz*ez, sz*ez))
-      + im*(atan(-sz, ez - cz) + atan(sz, 1/ez - cz)))/2
+    Complex(-(log(hypot(one(rz) - cz/ez, sz/ez)) + log(hypot(one(rz) - cz*ez, sz*ez)))/2,
+            -(atan(-sz, ez - cz) + atan(sz, 1/ez - cz))/2)
 end

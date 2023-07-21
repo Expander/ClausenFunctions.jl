@@ -62,5 +62,9 @@ julia> cl1(1.0 + 1.0im)
 ```
 """
 function cl1(z::Complex)
-    -(log(one(z) - exp(im*z)) + log(one(z) - exp(-im*z)))/2
+    rz,iz = reim(z)
+    sz,cz = sincos(rz)
+    ez = exp(iz)
+    -(log(hypot(one(rz) - cz/ez, sz/ez)) + im*atan(-sz, ez - cz)
+      + log(hypot(one(rz) - cz*ez, sz*ez)) + im*atan(sz, 1/ez - cz))/2
 end

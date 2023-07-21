@@ -4,6 +4,7 @@ n = 10_000_000
 x_min = 0.0
 x_max = pi
 data = (x_max - x_min)*rand(Float64, n) + x_min*ones(n)
+cdata = (x_max - x_min)*rand(ComplexF64, n) + x_min*ones(n)
 
 println("Benchmarking cl1::Float64")
 
@@ -13,6 +14,13 @@ map(ClausenFunctions.cl1, data) # trigger compilation
 time_cl1(data)                  # trigger compilation
 time_cl1(data)
 time_cl1(data)
+
+println("Benchmarking cl1::ComplexF64")
+
+map(ClausenFunctions.cl1, cdata) # trigger compilation
+time_cl1(cdata)                  # trigger compilation
+time_cl1(cdata)
+time_cl1(cdata)
 
 println("Benchmarking cl2::Float64")
 

@@ -36,3 +36,31 @@ function _cl1(x::Float64)::Float64
 
     -log(2*sin(one(x)/2*x))
 end
+
+
+"""
+    cl1(z::Complex)
+
+Returns the value of the Clausen function ``\\operatorname{Cl}_1(z)``
+for an argument ``z`` of type `Complex`.  This function is defined as
+
+```math
+\\operatorname{Cl}_1(z) = -\\frac{1}{2}\\left[\\log(1 - e^{iz}) + \\log(1 - e^{-iz})\\right]
+```
+
+Note: ``\\operatorname{Cl}_1(z)`` is not defined for ``z=2k\\pi`` with
+``k\\in\\mathbb{Z}``.
+
+Author: Alexander Voigt
+
+License: MIT
+
+# Example
+```jldoctest; setup = :(using ClausenFunctions), output = false
+julia> cl1(1.0 + 1.0im)
+-0.3479608285425304 - 0.7021088550913619im
+```
+"""
+function cl1(z::Complex)
+    -(log(one(z) - exp(im*z)) + log(one(z) - exp(-im*z)))/2
+end

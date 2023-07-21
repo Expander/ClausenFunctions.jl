@@ -23,12 +23,16 @@
 
     # test complex Clausen function cl1
     @test ClausenFunctions.cl1(Complex(1/2)) ≈ 0.70358563513784466 rtol=1e-14
+    @test ClausenFunctions.cl1(Complex(1/2, 1)) ≈ -0.14296382186432422 - 1.06599896593689653im rtol=1e-14
+    @test ClausenFunctions.cl1(Complex(1/2, -1)) ≈ -0.14296382186432422 + 1.06599896593689653im rtol=1e-14
     @test ClausenFunctions.cl1(Complex(1, 0)) ≈ 0.042019505825368962 rtol=1e-14
     @test ClausenFunctions.cl1(Complex(1, 1)) ≈ -0.34796082854253047 - 0.70210885509136190im rtol=1e-14
     @test ClausenFunctions.cl1(Complex(2, 0)) ≈ -0.52054343429085363 rtol=1e-14
     @test ClausenFunctions.cl1(Complex(1.0, 0.0)) ≈ 0.042019505825368962 rtol=1e-14
     @test ClausenFunctions.cl1(Complex(1.0, 1.0)) ≈ -0.34796082854253047 - 0.70210885509136190im rtol=1e-14
     @test ClausenFunctions.cl1(Complex(2.0, 0.0)) ≈ -0.52054343429085363 rtol=1e-14
+    @test ClausenFunctions.cl1(Complex(2.0, 1.0)) ≈ -0.68284871442091651 - 0.28844676165196074im rtol=1e-14
+    @test ClausenFunctions.cl1(Complex(2.0, -1.0)) ≈ -0.68284871442091651 + 0.28844676165196074im rtol=1e-14
     @test imag(ClausenFunctions.cl1(Complex(2.0, eps(Float64)))) < 0.0
     @test imag(ClausenFunctions.cl1(Complex(2.0, -eps(Float64)))) > 0.0
     @test ClausenFunctions.cl1(Complex(2.0, -eps(Float64))) ≈ -0.52054343429085363 rtol=1e-14

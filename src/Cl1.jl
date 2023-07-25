@@ -42,7 +42,7 @@ function cl1(x::Float64)::Float64
 end
 
 function cl1(x::Real)
-    real(-log(one(x) - exp(im*x)))
+    -log(hypot(one(x) - cos(x), sin(x)))
 end
 
 function cl1(z::Complex)

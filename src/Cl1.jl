@@ -1,14 +1,15 @@
 """
-    cl1(x::Real)::Real
+    cl1(z)
 
-Returns the value of the Clausen function ``\\operatorname{Cl}_1(x)``
-for a real angle ``x`` of type `Real`.  This function is defined as
+Returns the value of the Clausen function ``\\operatorname{Cl}_1(z)``
+for an argument ``z`` of type `Real` or `Complex`.  This function is
+defined as
 
 ```math
-\\operatorname{Cl}_1(x) = \\Re[\\operatorname{Li}_1(e^{ix})] = \\Re[-\\log(1 - e^{ix})]
+\\operatorname{Cl}_1(z) = -\\frac{1}{2}\\left[\\log(1 - e^{iz}) + \\log(1 - e^{-iz})\\right]
 ```
 
-Note: ``\\operatorname{Cl}_1(x)`` is not defined for ``x=2k\\pi`` with
+Note: ``\\operatorname{Cl}_1(z)`` is not defined for ``z=2k\\pi`` with
 ``k\\in\\mathbb{Z}``.
 
 Author: Alexander Voigt
@@ -19,8 +20,13 @@ License: MIT
 ```jldoctest; setup = :(using ClausenFunctions), output = false
 julia> cl1(1.0)
 0.04201950582536895
+
+julia> cl1(1.0 + 1.0im)
+-0.3479608285425303 - 0.7021088550913619im
 ```
 """
+cl1
+
 cl1(x::Real) = _cl1(float(x))
 
 _cl1(x::Float16) = oftype(x, _cl1(Float32(x)))
@@ -38,29 +44,6 @@ function _cl1(x::Float64)::Float64
 end
 
 
-"""
-    cl1(z::Complex)
-
-Returns the value of the Clausen function ``\\operatorname{Cl}_1(z)``
-for an argument ``z`` of type `Complex`.  This function is defined as
-
-```math
-\\operatorname{Cl}_1(z) = -\\frac{1}{2}\\left[\\log(1 - e^{iz}) + \\log(1 - e^{-iz})\\right]
-```
-
-Note: ``\\operatorname{Cl}_1(z)`` is not defined for ``z=2k\\pi`` with
-``k\\in\\mathbb{Z}``.
-
-Author: Alexander Voigt
-
-License: MIT
-
-# Example
-```jldoctest; setup = :(using ClausenFunctions), output = false
-julia> cl1(1.0 + 1.0im)
--0.3479608285425303 - 0.7021088550913619im
-```
-"""
 function cl1(z::Complex)
     eiz = exp(im*z)
     -(log(one(z) - eiz) + log(one(z) - inv(eiz)))/2

@@ -18,7 +18,7 @@
     end
 
     @test ClausenFunctions.cl1(1//2) ≈ 0.70358563513784466 rtol=1e-14
-    @test ClausenFunctions.cl1(1) == ClausenFunctions.cl1(1.0)
+    @test ClausenFunctions.cl1(1) ≈ ClausenFunctions.cl1(1.0) rtol=1e-14
     @test ClausenFunctions.cl1(0.0) == Inf
 
     # test complex Clausen function cl1

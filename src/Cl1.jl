@@ -27,13 +27,11 @@ julia> cl1(1.0 + 1.0im)
 """
 cl1
 
-cl1(x::Real) = _cl1(float(x))
+cl1(x::Float16) = oftype(x, cl1(Float32(x)))
 
-_cl1(x::Float16) = oftype(x, _cl1(Float32(x)))
+cl1(x::Float32) = oftype(x, cl1(Float64(x)))
 
-_cl1(x::Float32) = oftype(x, _cl1(Float64(x)))
-
-function _cl1(x::Float64)::Float64
+function cl1(x::Float64)::Float64
     x = range_reduce_odd(x)
 
     if x == zero(x)
@@ -43,6 +41,9 @@ function _cl1(x::Float64)::Float64
     -log(2*sin(one(x)/2*x))
 end
 
+function cl1(x::Real)
+    real(-log(one(x) - exp(im*x)))
+end
 
 function cl1(z::Complex)
     eiz = exp(im*z)

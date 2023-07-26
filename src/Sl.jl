@@ -1,5 +1,5 @@
 # returns Sl(n,x) using the naive series expansion
-function sl_series(n::Integer, x::Float64)
+function sl_series(n::Integer, x::Number)
     kmax = ceil(typeof(n), eps(typeof(x))^(-inv(n)))
 
     if iseven(n)

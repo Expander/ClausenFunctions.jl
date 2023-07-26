@@ -1,6 +1,6 @@
 # returns Sl(n,x) using the naive series expansion
 function sl_series(n::Integer, x::Float64)
-    kmax = ceil(Int64, eps(Float64)^(-inv(n)))
+    kmax = ceil(typeof(n), eps(typeof(x))^(-inv(n)))
 
     if iseven(n)
         co = cos(x)
@@ -11,7 +11,7 @@ function sl_series(n::Integer, x::Float64)
             con = 2*co*co1 - co2 # cos(n*x)
             co2 = co1
             co1 = con
-            sum += con/Float64(k)^n
+            sum += con/oftype(x, k)^n
         end
         sum
     else
@@ -23,7 +23,7 @@ function sl_series(n::Integer, x::Float64)
             si = 2*co*si1 - si2 # sin(n*x)
             si2 = si1
             si1 = si
-            sum += si/Float64(k)^n
+            sum += si/oftype(x, k)^n
         end
         sum
     end
@@ -67,7 +67,7 @@ function _sl(n::Integer, x::Float64)::Float64
 
     (x, sgn) = range_reduce(n + 1, x)
 
-    n ==  1 && x == zero(Float64) && return zero(Float64)
+    n ==  1 && x == zero(x) && return zero(x)
     n ==  1 && return sgn*(pi/2 - 1/2*x)
     n ==  2 && return sgn*(pi^2/6 + (-1/2*pi + 1/4*x)*x)
     n ==  3 && return sgn*(x*(pi^2/6 + (-1/4*pi + 1/12*x)*x))

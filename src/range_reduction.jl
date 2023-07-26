@@ -1,5 +1,5 @@
 # returns 2pi - x, avoiding catastrophic cancellation
-function two_pi_minus(x::Real)
+function two_pi_minus(x::Float64)
     p0 = 6.28125
     p1 = 0.0019353071795864769253
     (p0 - x) + p1

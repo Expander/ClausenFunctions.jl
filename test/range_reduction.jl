@@ -27,7 +27,7 @@ end
 @testset "two_pi_minus" begin
     f(x) = ClausenFunctions.two_pi_minus(x)
 
-    @test f(2pi)               ≈ 0.0              atol=2*eps(Float64)
+    @test f(2pi)               ≈ zero(Float64)    atol=2*eps(Float64)
     @test f(nextfloat(2pi))    ≈ -eps(2pi)        atol=2*eps(Float64)
     @test f(nextfloat(2pi, 2)) ≈ -2*eps(2pi)      atol=2*eps(Float64)
     @test f(prevfloat(2pi))    ≈ eps(2pi)         atol=2*eps(Float64)

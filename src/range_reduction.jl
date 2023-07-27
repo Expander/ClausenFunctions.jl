@@ -1,4 +1,16 @@
-# returns 2pi - x, avoiding catastrophic cancellation
+"""
+Returns ``2\\pi - x``, avoiding a catastrophic cancellation.
+"""
+two_pi_minus
+
+function two_pi_minus(x::Float16)::Float16
+    2pi - x
+end
+
+function two_pi_minus(x::Float32)::Float32
+    2pi - x
+end
+
 function two_pi_minus(x::Float64)
     p0 = 6.28125
     p1 = 0.0019353071795864769253

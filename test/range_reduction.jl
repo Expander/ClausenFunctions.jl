@@ -27,6 +27,21 @@ end
 @testset "two_pi_minus" begin
     f(x) = ClausenFunctions.two_pi_minus(x)
 
+    # Float16
+    @test f(Float16(2pi))               ≈ zero(Float16)        atol=2*eps(Float16)
+    @test f(nextfloat(Float16(2pi)))    ≈ -eps(Float16(2pi))   atol=2*eps(Float16)
+    @test f(nextfloat(Float16(2pi), 2)) ≈ -2*eps(Float16(2pi)) atol=2*eps(Float16)
+    @test f(prevfloat(Float16(2pi)))    ≈ eps(Float16(2pi))    atol=2*eps(Float16)
+    @test f(prevfloat(Float16(2pi), 2)) ≈ 2*eps(Float16(2pi))  atol=2*eps(Float16)
+
+    # Float32
+    @test f(Float32(2pi))               ≈ zero(Float32)        atol=2*eps(Float32)
+    @test f(nextfloat(Float32(2pi)))    ≈ -eps(Float32(2pi))   atol=2*eps(Float32)
+    @test f(nextfloat(Float32(2pi), 2)) ≈ -2*eps(Float32(2pi)) atol=2*eps(Float32)
+    @test f(prevfloat(Float32(2pi)))    ≈ eps(Float32(2pi))    atol=2*eps(Float32)
+    @test f(prevfloat(Float32(2pi), 2)) ≈ 2*eps(Float32(2pi))  atol=2*eps(Float32)
+
+    # Float64
     @test f(2pi)               ≈ zero(Float64)    atol=2*eps(Float64)
     @test f(nextfloat(2pi))    ≈ -eps(2pi)        atol=2*eps(Float64)
     @test f(nextfloat(2pi, 2)) ≈ -2*eps(2pi)      atol=2*eps(Float64)

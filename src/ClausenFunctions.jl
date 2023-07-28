@@ -1,5 +1,7 @@
 module ClausenFunctions
 
+import PolyLog
+
 include("range_reduction.jl")
 include("Cl1.jl")
 include("Cl2.jl")

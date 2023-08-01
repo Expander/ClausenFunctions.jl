@@ -5,7 +5,7 @@ ClausenFunctions.jl
 
 The ClausenFunctions.jl package provides Julia implementations of the
 Standard Clausen functions and Glaisher-Clausen functions of integer
-order for real arguments.
+order for real or complex arguments.
 
 
 Example
@@ -14,6 +14,7 @@ Example
 ```.jl
 using ClausenFunctions
 
+# real arguments
 cl1(1.0)     # Standard Clausen function Cl_1(x)
 cl2(1.0)     # Standard Clausen function Cl_2(x)
 cl3(1.0)     # Standard Clausen function Cl_3(x)
@@ -22,6 +23,11 @@ cl5(1.0)     # Standard Clausen function Cl_5(x)
 cl6(1.0)     # Standard Clausen function Cl_6(x)
 cl(10, 1.0)  # Standard Clausen function Cl_n(x) for integer n > 0
 sl(10, 1.0)  # Glaisher-Clausen function Sl_n(x) for integer n > 0
+
+# complex arguments
+cl1(1.0 + 1.0im)    # Standard Clausen function Cl_1(x)
+cl(10, 1.0 + 1.0im) # Standard Clausen function Cl_n(x) for integer n > 0
+sl(10, 1.0 + 1.0im) # Glaisher-Clausen function Sl_n(x) for integer n > 0
 ```
 
 

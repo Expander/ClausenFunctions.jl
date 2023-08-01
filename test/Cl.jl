@@ -37,6 +37,8 @@
     @test ClausenFunctions.cl(5, Complex(1//2)) ≈ 0.89390286951083851 rtol=1e-14
     @test ClausenFunctions.cl(6, Complex(1//2)) ≈ 0.49419627977618802 rtol=1e-14
 
+    @test ClausenFunctions.cl(2, 0.0 + 1.0im) ≈ 1.5707963267948966 + 0.9861797794993302im rtol=1e-14
+    @test ClausenFunctions.cl(2, 0.0 - 1.0im) ≈ -1.5707963267948966 - 0.9861797794993302im rtol=1e-14
     @test ClausenFunctions.cl(2, 1.0 + 1.0im) ≈ 1.4107754938116412 - 0.1044778629291566im rtol=1e-14
     @test ClausenFunctions.cl(2, 1.0 - 1.0im) ≈ 1.4107754938116412 + 0.1044778629291566im rtol=1e-14
 

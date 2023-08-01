@@ -48,12 +48,14 @@
     @test ClausenFunctions.sl(5, Complex(1//2)) ≈ 0.51085256423059275 rtol=1e-14
     @test ClausenFunctions.sl(6, Complex(1//2)) ≈ 0.88593812938731573 rtol=1e-14
 
-    # @test ClausenFunctions.sl(1, 0.0 + 1.0im) ≈ -0.0413248546129181 - 1.5707963267948966im rtol=1e-14
-    # @test ClausenFunctions.sl(1, 0.0 - 1.0im) ≈ -0.0413248546129181 - 1.5707963267948966im rtol=1e-14
-    # @test ClausenFunctions.sl(2, 0.0 + 1.0im) ≈ 1.5707963267948966 + 0.9861797794993302im rtol=1e-14
-    # @test ClausenFunctions.sl(2, 0.0 - 1.0im) ≈ -1.5707963267948966 - 0.9861797794993302im rtol=1e-14
-    # @test ClausenFunctions.sl(2, 1.0 + 1.0im) ≈ 1.4107754938116412 - 0.1044778629291566im rtol=1e-14
-    # @test ClausenFunctions.sl(2, 1.0 - 1.0im) ≈ 1.4107754938116412 + 0.1044778629291566im rtol=1e-14
+    @test ClausenFunctions.sl(1, 0.0 + 1.0im) ≈ 1.5707963267948966 - 0.5im rtol=1e-14
+    @test ClausenFunctions.sl(1, 0.0 - 1.0im) ≈ -1.5707963267948966 + 0.5im rtol=1e-14 # @todo check
+    @test ClausenFunctions.sl(2, 0.0 + 1.0im) ≈ 1.3949340668482264 - 1.5707963267948966im rtol=1e-14
+    @test ClausenFunctions.sl(2, 0.0 - 1.0im) ≈ 1.3949340668482264 - 1.5707963267948966im rtol=1e-14 # @todo check
+    @test ClausenFunctions.sl(2, 1.0 + 1.0im) ≈ 0.07413774005332982 - 1.07079632679489662im rtol=1e-14
+    @test ClausenFunctions.sl(2, 1.0 - 1.0im) ≈ 0.07413774005332982 + 1.07079632679489662im rtol=1e-14
+    @test ClausenFunctions.sl(3, 0.0 + 1.0im) ≈ 0.7853981633974483 + 1.5616007335148931im rtol=1e-14
+    @test ClausenFunctions.sl(3, 0.0 - 1.0im) ≈ -0.7853981633974483 - 1.5616007335148931im rtol=1e-14 # @todo check
 
     @test_throws DomainError ClausenFunctions.sl(0, 1.0)
     @test_throws DomainError ClausenFunctions.sl(-1, 1.0)

@@ -113,7 +113,7 @@ end
 function sl(n::Integer, z::Complex)
     n < 1  && throw(DomainError(n, "sl(n,z) undefined for n < 1"))
 
-    if n == 1 && z == zero(z)
+    if n == one(n) && z == zero(z)
         zero(z)
     else
         eiz = exp(im*z)

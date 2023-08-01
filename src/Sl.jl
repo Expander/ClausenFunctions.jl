@@ -99,3 +99,15 @@ function _sl(n::Integer, x::Float64)::Float64
 
     sgn*sl_series(n, x)
 end
+
+function sl(n::Integer, z::Complex)
+    n < 1  && throw(DomainError(n, "sl(n,z) undefined for n < 1"))
+
+    eiz = exp(im*z)
+
+    if iseven(n)
+        (PolyLog.li(n, inv(eiz)) + PolyLog.li(n, eiz))/2
+    else
+        (PolyLog.li(n, inv(eiz)) - PolyLog.li(n, eiz))*im/2
+    end
+end

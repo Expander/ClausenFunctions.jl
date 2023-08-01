@@ -3,8 +3,12 @@ uuid = "1cc96f36-ef02-40ef-a648-5e2c13df3076"
 authors = ["Alexander Voigt <alexander.voigt@hs-flensburg.de>"]
 version = "1.11.0"
 
+[deps]
+PolyLog = "85e3b03c-9856-11eb-0374-4dc1f8670e7f"
+
 [compat]
 julia = "1.0"
+PolyLog = "2"
 
 [extras]
 DelimitedFiles = "8bb1440f-4735-579b-a4ab-409b98df4dab"

@@ -173,26 +173,33 @@ function cl_series(n::Integer, x::Float64)
 end
 
 """
-    cl(n::Integer, x::Real)::Real
+    cl(n, z)
 
-Returns the value of the Clausen function ``\\operatorname{Cl}_n(x)``
-for integers ``n > 0`` and a real angle ``x`` of type `Real`.  This
-function is defined as
-
+Returns the value of the Clausen function ``\\operatorname{Cl}_n(z)``
+for integers ``n > 0`` and arguments ``z`` of type `Real` or
+`Complex`.  For complex ``z\\in\\mathbb{C}`` this function is defined
+as
 ```math
 \\begin{aligned}
-\\operatorname{Cl}_n(x) &= \\Im[\\operatorname{Li}_n(e^{ix})] = \\sum_{k=1}^\\infty \\frac{\\sin(kx)}{k^n}, \\qquad \\text{for}~n~\\text{even}, \\\\
-\\operatorname{Cl}_n(x) &= \\Re[\\operatorname{Li}_n(e^{ix})] = \\sum_{k=1}^\\infty \\frac{\\cos(kx)}{k^n}, \\qquad \\text{for}~n~\\text{odd}.
+\\operatorname{Cl}_n(z) &= \\frac{i}{2}\\left[\\operatorname{Li}_n(e^{-iz}) - \\operatorname{Li}_n(e^{iz})\\right], \\qquad \\text{for}~n~\\text{even}, \\\\
+\\operatorname{Cl}_n(z) &= \\frac{1}{2}\\left[\\operatorname{Li}_n(e^{-iz}) + \\operatorname{Li}_n(e^{iz})\\right], \\qquad \\text{for}~n~\\text{odd}.
 \\end{aligned}
 ```
-
-Note: ``\\operatorname{Cl}_1(x)`` is not defined for ``x=2k\\pi`` with
+For real ``z\\in\\mathbb{R}`` the function simplifies to
+```math
+\\begin{aligned}
+\\operatorname{Cl}_n(z) &= \\Im[\\operatorname{Li}_n(e^{iz})] = \\sum_{k=1}^\\infty \\frac{\\sin(kz)}{k^n}, \\qquad \\text{for}~n~\\text{even}, \\\\
+\\operatorname{Cl}_n(z) &= \\Re[\\operatorname{Li}_n(e^{iz})] = \\sum_{k=1}^\\infty \\frac{\\cos(kz)}{k^n}, \\qquad \\text{for}~n~\\text{odd}.
+\\end{aligned}
+```
+Note: ``\\operatorname{Cl}_1(z)`` is not defined for ``z=2k\\pi`` with
 ``k\\in\\mathbb{Z}``.
 
-The implementation follows the approach presented in [Jiming Wu,
-Xiaoping Zhang, Dongjie Liu, "An efficient calculation of the Clausen
-functions Cl_n(0)(n >= 2)", Bit Numer Math 50, 193-206
-(2010) [https://doi.org/10.1007/s10543-009-0246-8](https://doi.org/10.1007/s10543-009-0246-8)].
+For ``z\\in\\mathbb{R}`` the implementation follows the approach
+presented in [Jiming Wu, Xiaoping Zhang, Dongjie Liu, "An efficient
+calculation of the Clausen functions Cl_n(0)(n >= 2)", Bit Numer Math
+50, 193-206 (2010)
+[https://doi.org/10.1007/s10543-009-0246-8](https://doi.org/10.1007/s10543-009-0246-8)].
 
 Author: Alexander Voigt
 
@@ -202,8 +209,13 @@ License: MIT
 ```jldoctest; setup = :(using ClausenFunctions), output = false
 julia> cl(10, 1.0)
 0.8423605391686301
+
+julia> cl(10, 1.0 + 1.0im)
+1.301796548970136 + 0.6333106255561783im
 ```
 """
+cl
+
 cl(n::Integer, x::Real) = _cl(n, float(x))
 
 _cl(n::Integer, x::Float16) = oftype(x, _cl(n, Float32(x)))
@@ -240,5 +252,17 @@ function _cl(n::Integer, x::Float64)::Float64
         sgn*(term1 + term2)
     else # n >= 10
         sgn*cl_series(n, x)
+    end
+end
+
+function cl(n::Integer, z::Complex)
+    n < 1  && throw(DomainError(n, "cl(n,z) undefined for n < 1"))
+
+    eiz = exp(im*z)
+
+    if iseven(n)
+        (PolyLog.li(n, inv(eiz)) - PolyLog.li(n, eiz))*im/2
+    else
+        (PolyLog.li(n, inv(eiz)) + PolyLog.li(n, eiz))/2
     end
 end

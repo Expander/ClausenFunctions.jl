@@ -103,11 +103,15 @@ end
 function sl(n::Integer, z::Complex)
     n < 1  && throw(DomainError(n, "sl(n,z) undefined for n < 1"))
 
-    eiz = exp(im*z)
-
-    if iseven(n)
-        (PolyLog.li(n, inv(eiz)) + PolyLog.li(n, eiz))/2
+    if n == 1 && z == zero(z)
+        zero(z)
     else
-        (PolyLog.li(n, inv(eiz)) - PolyLog.li(n, eiz))*im/2
+        eiz = exp(im*z)
+
+        if iseven(n)
+            (PolyLog.li(n, inv(eiz)) + PolyLog.li(n, eiz))/2
+        else
+            (PolyLog.li(n, inv(eiz)) - PolyLog.li(n, eiz))*im/2
+        end
     end
 end

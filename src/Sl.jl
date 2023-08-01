@@ -30,16 +30,23 @@ function sl_series(n::Integer, x::Number)
 end
 
 """
-    sl(n::Integer, x::Real)::Real
+    sl(n, z)
 
 Returns the value of the Glaisher-Clausen function
-``\\operatorname{Sl}_n(x)`` for integers ``n > 0`` and a real angle
-``x`` of type `Real`.  This function is defined as
-
+``\\operatorname{Sl}_n(z)`` for integers ``n > 0`` and arguments ``z``
+of type `Real` or `Complex`.  For complex ``z\\in\\mathbb{C}`` this
+function is defined as
 ```math
 \\begin{aligned}
-\\operatorname{Sl}_n(x) &= \\Re[\\operatorname{Li}_n(e^{ix})] = \\sum_{k=1}^\\infty \\frac{\\cos(kx)}{k^n}, \\qquad \\text{for}~n~\\text{even}, \\\\
-\\operatorname{Sl}_n(x) &= \\Im[\\operatorname{Li}_n(e^{ix})] = \\sum_{k=1}^\\infty \\frac{\\sin(kx)}{k^n}, \\qquad \\text{for}~n~\\text{odd}.
+\\operatorname{Sl}_n(z) &= \\frac{1}{2}\\left[\\operatorname{Li}_n(e^{-iz}) + \\operatorname{Li}_n(e^{iz})\\right], \\qquad \\text{for}~n~\\text{even}, \\\\
+\\operatorname{Sl}_n(z) &= \\frac{i}{2}\\left[\\operatorname{Li}_n(e^{-iz}) - \\operatorname{Li}_n(e^{iz})\\right], \\qquad \\text{for}~n~\\text{odd}.
+\\end{aligned}
+```
+For real ``z\\in\\mathbb{R}`` the function simplifies to
+```math
+\\begin{aligned}
+\\operatorname{Sl}_n(z) &= \\Re[\\operatorname{Li}_n(e^{iz})] = \\sum_{k=1}^\\infty \\frac{\\cos(kz)}{k^n}, \\qquad \\text{for}~n~\\text{even}, \\\\
+\\operatorname{Sl}_n(z) &= \\Im[\\operatorname{Li}_n(e^{iz})] = \\sum_{k=1}^\\infty \\frac{\\sin(kz)}{k^n}, \\qquad \\text{for}~n~\\text{odd}.
 \\end{aligned}
 ```
 
@@ -54,6 +61,9 @@ License: MIT
 ```jldoctest; setup = :(using ClausenFunctions), output = false
 julia> sl(10, 1.0)
 0.5398785706335891
+
+julia> sl(10, 1.0 + 1.0im)
+0.832020890646937 - 0.9921163924162678im
 ```
 """
 sl(n::Integer, x::Real) = _sl(n, float(x))
@@ -98,4 +108,20 @@ function _sl(n::Integer, x::Float64)::Float64
     n == 25 && return sgn*(x*((236364091*pi^24)/201919571963756521875 + x2*((-77683*pi^22)/40343570821929375 + x2*((174611*pi^20)/183759535834875000 + x2*((-43867*pi^18)/196455649219830000 + x2*((3617*pi^16)/118168811560800000 + x2*(-1/364105581840000*pi^14 + x2*((691*pi^12)/3976032953692800000 + x2*(-1/122339475498240000*pi^10 + x2*(pi^8/3361246195507200000 + x2*(-1/114954619886346240000*pi^6 + x2*(pi^4/4598184795453849600000 + x2*(-1/155112100433309859840000*pi^2 + (pi/1240896803466478878720000 - 1/31022420086661971968000000*x)*x)))))))))))))
 
     sgn*sl_series(n, x)
+end
+
+function sl(n::Integer, z::Complex)
+    n < 1  && throw(DomainError(n, "sl(n,z) undefined for n < 1"))
+
+    if n == one(n) && z == zero(z)
+        zero(z)
+    else
+        eiz = exp(im*z)
+
+        if iseven(n)
+            (PolyLog.li(n, inv(eiz)) + PolyLog.li(n, eiz))/2
+        else
+            (PolyLog.li(n, inv(eiz)) - PolyLog.li(n, eiz))*im/2
+        end
+    end
 end

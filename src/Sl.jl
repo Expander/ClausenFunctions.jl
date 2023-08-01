@@ -30,16 +30,23 @@ function sl_series(n::Integer, x::Number)
 end
 
 """
-    sl(n::Integer, x::Real)::Real
+    sl(n, z)
 
 Returns the value of the Glaisher-Clausen function
-``\\operatorname{Sl}_n(x)`` for integers ``n > 0`` and a real angle
-``x`` of type `Real`.  This function is defined as
-
+``\\operatorname{Sl}_n(z)`` for integers ``n > 0`` and arguments ``z``
+of type `Real` or `Complex`.  For complex ``z\\in\\mathbb{C}`` this
+function is defined as
 ```math
 \\begin{aligned}
-\\operatorname{Sl}_n(x) &= \\Re[\\operatorname{Li}_n(e^{ix})] = \\sum_{k=1}^\\infty \\frac{\\cos(kx)}{k^n}, \\qquad \\text{for}~n~\\text{even}, \\\\
-\\operatorname{Sl}_n(x) &= \\Im[\\operatorname{Li}_n(e^{ix})] = \\sum_{k=1}^\\infty \\frac{\\sin(kx)}{k^n}, \\qquad \\text{for}~n~\\text{odd}.
+\\operatorname{Sl}_n(z) &= \\frac{1}{2}\\left[\\operatorname{Li}_n(e^{-iz}) + \\operatorname{Li}_n(e^{iz})\\right], \\qquad \\text{for}~n~\\text{even}, \\\\
+\\operatorname{Sl}_n(z) &= \\frac{i}{2}\\left[\\operatorname{Li}_n(e^{-iz}) - \\operatorname{Li}_n(e^{iz})\\right], \\qquad \\text{for}~n~\\text{odd}.
+\\end{aligned}
+```
+For real ``z\\in\\mathbb{R}`` the function simplifies to
+```math
+\\begin{aligned}
+\\operatorname{Sl}_n(z) &= \\Re[\\operatorname{Li}_n(e^{iz})] = \\sum_{k=1}^\\infty \\frac{\\cos(kz)}{k^n}, \\qquad \\text{for}~n~\\text{even}, \\\\
+\\operatorname{Sl}_n(z) &= \\Im[\\operatorname{Li}_n(e^{iz})] = \\sum_{k=1}^\\infty \\frac{\\sin(kz)}{k^n}, \\qquad \\text{for}~n~\\text{odd}.
 \\end{aligned}
 ```
 
@@ -54,6 +61,9 @@ License: MIT
 ```jldoctest; setup = :(using ClausenFunctions), output = false
 julia> sl(10, 1.0)
 0.5398785706335891
+
+julia> sl(10, 1.0 + 1.0im)
+0.832020890646937 - 0.9921163924162678im
 ```
 """
 sl(n::Integer, x::Real) = _sl(n, float(x))

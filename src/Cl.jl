@@ -195,10 +195,10 @@ For real ``z\\in\\mathbb{R}`` the function simplifies to
 Note: ``\\operatorname{Cl}_1(z)`` is not defined for ``z=2k\\pi`` with
 ``k\\in\\mathbb{Z}``.
 
-For ``z\\in\\mathbb{R}`` the implementation follows the approach
-presented in [Jiming Wu, Xiaoping Zhang, Dongjie Liu, "An efficient
-calculation of the Clausen functions Cl_n(0)(n >= 2)", Bit Numer Math
-50, 193-206 (2010)
+For ``z`` of type `Float16`, `Float32` or `Float64` the implementation
+follows the approach presented in [Jiming Wu, Xiaoping Zhang, Dongjie
+Liu, "An efficient calculation of the Clausen functions Cl_n(0)(n >=
+2)", Bit Numer Math 50, 193-206 (2010)
 [https://doi.org/10.1007/s10543-009-0246-8](https://doi.org/10.1007/s10543-009-0246-8)].
 
 Author: Alexander Voigt
@@ -210,8 +210,14 @@ License: MIT
 julia> cl(10, 1.0)
 0.8423605391686301
 
+julia> cl(10, big"1")
+0.8423605391686302305168624869816554653186479602725762955247227248477087749849797
+
 julia> cl(10, 1.0 + 1.0im)
 1.301796548970136 + 0.6333106255561783im
+
+julia> cl(10, big"1" + 1im)
+1.301796548970136401486390838171927382622047488046695826621336318796926878116022 + 0.6333106255561785282041229828047700199791464296534659278461150656661132141323808im
 ```
 """
 cl

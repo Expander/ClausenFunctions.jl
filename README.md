@@ -39,6 +39,16 @@ Documentation
 [https://docs.juliahub.com/ClausenFunctions/](https://docs.juliahub.com/ClausenFunctions/)
 
 
+Notes
+-----
+
+The implementation of the Standard Clausen function `cl(n,x)` for real
+`x` follows the approach presented in [Jiming Wu, Xiaoping Zhang,
+Dongjie Liu, "An efficient calculation of the Clausen functions
+Cl_n(0)(n >= 2)", Bit Numer Math 50, 193-206 (2010)
+[https://doi.org/10.1007/s10543-009-0246-8](https://doi.org/10.1007/s10543-009-0246-8)].
+
+
 Copying
 -------
 

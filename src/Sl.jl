@@ -62,8 +62,14 @@ License: MIT
 julia> sl(10, 1.0)
 0.5398785706335891
 
+julia> sl(10, big"1")
+0.5398785706335893473201701431352733846690266746377581980285682505050227015352517
+
 julia> sl(10, 1.0 + 1.0im)
 0.832020890646937 - 0.9921163924162678im
+
+julia> sl(10, big"1" + 1im)
+0.832020890646937194384242195240640660735825609698824394209500978844042810286907 - 0.9921163924162683284596904585334878021171116435958891901780686447162617670776108im
 ```
 """
 sl(n::Integer, x::Real) = _sl(n, float(x))
@@ -110,10 +116,24 @@ function _sl(n::Integer, x::Float64)::Float64
     sgn*sl_series(n, x)
 end
 
+function _sl(n::Integer, x::Real)
+    n < 1  && throw(DomainError(n, "sl(n,x) undefined for n < 1"))
+
+    if n == one(n) && iszero(x)
+        zero(x)
+    else
+        if iseven(n)
+            real(PolyLog.li(n, exp(im*x)))
+        else
+            imag(PolyLog.li(n, exp(im*x)))
+        end
+    end
+end
+
 function sl(n::Integer, z::Complex)
     n < 1  && throw(DomainError(n, "sl(n,z) undefined for n < 1"))
 
-    if n == one(n) && z == zero(z)
+    if n == one(n) && iszero(z)
         zero(z)
     else
         eiz = exp(im*z)

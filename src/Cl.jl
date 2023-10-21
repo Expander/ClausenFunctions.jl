@@ -255,6 +255,16 @@ function _cl(n::Integer, x::Float64)::Float64
     end
 end
 
+function _cl(n::Integer, x::Real)
+    n < 1  && throw(DomainError(n, "cl(n,x) undefined for n < 1"))
+
+    if iseven(n)
+        imag(PolyLog.li(n, exp(im*x)))
+    else
+        real(PolyLog.li(n, exp(im*x)))
+    end
+end
+
 function cl(n::Integer, z::Complex)
     n < 1  && throw(DomainError(n, "cl(n,z) undefined for n < 1"))
 

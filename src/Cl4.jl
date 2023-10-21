@@ -27,7 +27,7 @@ _cl4(x::Float32) = oftype(x, _cl4(Float64(x)))
 function _cl4(x::Float64)::Float64
     (x, sgn) = range_reduce_even(x)
 
-    if x == zero(x)
+    if iszero(x)
         zero(x)
     elseif x < pi/2
         zeta3 = 1.2020569031595943

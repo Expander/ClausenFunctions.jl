@@ -239,15 +239,15 @@ function _cl(n::Integer, x::Float64)::Float64
 
     (x, sgn) = range_reduce(n, x)
 
-    if iseven(n) && (x == zero(x) || x == pi)
+    if iseven(n) && (iszero(x) || x == pi)
         zero(x)
     elseif n < 10
         sign1 = iseven((n + 1)÷2) ? 1.0 : -1.0;
 
         # first line in Eq.(2.13)
-        term1 = x == zero(x) ?
-                     zero(x) :
-                     sign1*x^(n - 1)*inverse_factorial(n - 1)*log(2*sin(x/2))
+        term1 = iszero(x) ?
+                zero(x) :
+                sign1*x^(n - 1)*inverse_factorial(n - 1)*log(2*sin(x/2))
 
         sign2 = iseven(n÷2) ? 1.0 : -1.0
 

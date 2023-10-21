@@ -83,7 +83,7 @@ function _sl(n::Integer, x::Float64)::Float64
 
     (x, sgn) = range_reduce(n + 1, x)
 
-    n ==  1 && x == zero(x) && return zero(x)
+    n ==  1 && iszero(x) && return zero(x)
     n ==  1 && return sgn*(pi/2 - 1/2*x)
     n ==  2 && return sgn*(pi^2/6 + (-1/2*pi + 1/4*x)*x)
     n ==  3 && return sgn*(x*(pi^2/6 + (-1/4*pi + 1/12*x)*x))

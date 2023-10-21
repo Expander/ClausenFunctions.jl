@@ -34,7 +34,7 @@ cl1(x::Float32) = oftype(x, cl1(Float64(x)))
 function cl1(x::Float64)::Float64
     x = range_reduce_odd(x)
 
-    if x == zero(x)
+    if iszero(x)
         return Inf
     end
 

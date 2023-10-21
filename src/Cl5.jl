@@ -27,7 +27,7 @@ _cl5(x::Float32) = oftype(x, _cl5(Float64(x)))
 function _cl5(x::Float64)::Float64
     x = range_reduce_odd(x)
 
-    if x == zero(x)
+    if iszero(x)
         1.0369277551433699 # zeta(5)
     elseif x < pi/2
         P = (1.0369277551433699e+00, -6.1354800479984468e-01,

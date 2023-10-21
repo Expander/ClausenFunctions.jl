@@ -27,7 +27,7 @@ _cl6(x::Float32) = oftype(x, _cl6(Float64(x)))
 function _cl6(x::Float64)::Float64
     (x, sgn) = range_reduce_even(x)
 
-    if x == zero(x)
+    if iszero(x)
         zero(x)
     elseif x < pi/2
         P = (1.0369277551433699e+00, -2.087195444107175e-01,

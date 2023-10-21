@@ -22,12 +22,14 @@ cl4(1.0)        # Standard Clausen function Cl_4(x)
 cl5(1.0)        # Standard Clausen function Cl_5(x)
 cl6(1.0)        # Standard Clausen function Cl_6(x)
 cl(10, 1.0)     # Standard Clausen function Cl_n(x) for integer n > 0
+cl(10, big"1")  # Standard Clausen function Cl_n(x) for integer n > 0
 sl(10, 1.0)     # Glaisher-Clausen function Sl_n(x) for integer n > 0
 sl(10, big"1")  # Glaisher-Clausen function Sl_n(x) for integer n > 0
 
 # complex arguments
 cl1(1.0 + 1.0im)      # Standard Clausen function Cl_1(x)
 cl(10, 1.0 + 1.0im)   # Standard Clausen function Cl_n(x) for integer n > 0
+cl(10, big"1" + 1im)  # Standard Clausen function Cl_n(x) for integer n > 0
 sl(10, 1.0 + 1.0im)   # Glaisher-Clausen function Sl_n(x) for integer n > 0
 sl(10, big"1" + 1im)  # Glaisher-Clausen function Sl_n(x) for integer n > 0
 ```

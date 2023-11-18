@@ -48,8 +48,4 @@
     @test ClausenFunctions.cl(1, big(1) + 0im) ≈ BigFloat("0.04201950582536896172579838403790203712454") rtol=1e-40
     @test ClausenFunctions.cl(2, big(1))       ≈ BigFloat("1.0139591323607685042945743388859146875612") rtol=1e-40
     @test ClausenFunctions.cl(2, big(1) + 0im) ≈ BigFloat("1.0139591323607685042945743388859146875612") rtol=1e-40
-
-    @test_throws DomainError ClausenFunctions.cl(0, 1.0)
-    @test_throws DomainError ClausenFunctions.cl(-1, 1.0)
-    @test_throws DomainError ClausenFunctions.cl(-2, 1.0)
 end

@@ -229,7 +229,7 @@ _cl(n::Integer, x::Float16) = oftype(x, _cl(n, Float32(x)))
 _cl(n::Integer, x::Float32) = oftype(x, _cl(n, Float64(x)))
 
 function _cl(n::Integer, x::Float64)::Float64
-    n < 1  && throw(DomainError(n, "cl(n,x) undefined for n < 1"))
+    n < 1  && return invoke(_cl, Tuple{Integer, Real}, n, x)
     n == 1 && return cl1(x)
     n == 2 && return cl2(x)
     n == 3 && return cl3(x)
@@ -262,8 +262,6 @@ function _cl(n::Integer, x::Float64)::Float64
 end
 
 function _cl(n::Integer, x::Real)
-    n < 1  && throw(DomainError(n, "cl(n,x) undefined for n < 1"))
-
     if iseven(n)
         imag(PolyLog.li(n, exp(im*x)))
     else
@@ -272,8 +270,6 @@ function _cl(n::Integer, x::Real)
 end
 
 function cl(n::Integer, z::Complex)
-    n < 1  && throw(DomainError(n, "cl(n,z) undefined for n < 1"))
-
     eiz = exp(im*z)
 
     if iseven(n)

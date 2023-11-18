@@ -79,7 +79,7 @@ _sl(n::Integer, x::Float16) = oftype(x, _sl(n, Float32(x)))
 _sl(n::Integer, x::Float32) = oftype(x, _sl(n, Float64(x)))
 
 function _sl(n::Integer, x::Float64)::Float64
-    n < 1 && throw(DomainError(n, "sl(n,x) undefined for n < 1"))
+    n < 1 && return invoke(_sl, Tuple{Integer, Real}, n, x)
 
     (x, sgn) = range_reduce(n + 1, x)
 
@@ -117,8 +117,6 @@ function _sl(n::Integer, x::Float64)::Float64
 end
 
 function _sl(n::Integer, x::Real)
-    n < 1  && throw(DomainError(n, "sl(n,x) undefined for n < 1"))
-
     if n == one(n) && iszero(x)
         zero(x)
     else
@@ -131,8 +129,6 @@ function _sl(n::Integer, x::Real)
 end
 
 function sl(n::Integer, z::Complex)
-    n < 1  && throw(DomainError(n, "sl(n,z) undefined for n < 1"))
-
     if n == one(n) && iszero(z)
         zero(z)
     else

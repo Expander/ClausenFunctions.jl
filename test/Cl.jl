@@ -1,5 +1,5 @@
 @testset "cl" begin
-    for n in vcat(collect(1:16), [1000, 1001, 1_000_000, 0, -1])
+    for n in vcat(collect(1:16), [1000, 1001, 1_000_000, 0, -1, -2])
         data = open(readdlm, joinpath(@__DIR__, "data", "Cl$(n).txt"))
 
         for r in 1:size(data, 1)

@@ -57,6 +57,12 @@
     @test ClausenFunctions.sl(3, 0.0 + 1.0im) ≈ 0.7853981633974483 + 1.5616007335148931im rtol=1e-14
     @test ClausenFunctions.sl(3, 0.0 - 1.0im) ≈ -0.7853981633974483 - 1.5616007335148931im rtol=1e-14 # @todo check
 
+    @test ClausenFunctions.sl(-2, big(1))       == 0
+    @test ClausenFunctions.sl(-2, big(1) + 0im) == 0
+    @test ClausenFunctions.sl(-1, big(1))       == 0
+    @test ClausenFunctions.sl(-1, big(1) + 0im) == 0
+    @test ClausenFunctions.sl(0, big(1))       ≈ -BigFloat("0.5") rtol=1e-40
+    @test ClausenFunctions.sl(0, big(1) + 0im) ≈ -BigFloat("0.5") rtol=1e-40
     @test ClausenFunctions.sl(1, big(0))       == BigFloat(0)
     @test ClausenFunctions.sl(1, big(1))       ≈ BigFloat("1.07079632679489661923132169163975144209858") rtol=1e-40
     @test ClausenFunctions.sl(1, big(1) + 0im) ≈ BigFloat("1.07079632679489661923132169163975144209858") rtol=1e-40

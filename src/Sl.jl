@@ -120,7 +120,7 @@ end
 function _sl(n::Integer, x::Real)
     if n < 0
         zero(x)
-    elseif n == 0
+    elseif iszero(n)
         -one(x)/2
     elseif n == one(n) && iszero(x)
         zero(x)
@@ -134,7 +134,7 @@ end
 function sl(n::Integer, z::Complex)
     if n < 0
         zero(z)
-    elseif n == 0
+    elseif iszero(n)
         -one(z)/2
     elseif n == one(n) && iszero(z)
         zero(z)

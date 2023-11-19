@@ -1,5 +1,5 @@
 @testset "cl" begin
-    for n in vcat(collect(1:16), [1000, 1001, 1_000_000])
+    for n in vcat(collect(1:16), [1000, 1001, 1_000_000, 0])
         data = open(readdlm, joinpath(@__DIR__, "data", "Cl$(n).txt"))
 
         for r in 1:size(data, 1)
@@ -15,10 +15,12 @@
             @test cl == clm
             @test cl ≈ expected rtol=1e-14 atol=1e-14
             @test ccl ≈ expected rtol=1e-14 atol=1e-14
-            @test ClausenFunctions.cl(n, Float16(x)) ≈ Float16(expected) atol=30*eps(Float16) rtol=30*eps(Float16)
-            @test ClausenFunctions.cl(n, Float32(x)) ≈ Float32(expected) atol=30*eps(Float32) rtol=30*eps(Float32)
-            @test ClausenFunctions.cl(n, Complex(Float16(x))) ≈ Float16(expected) atol=30*eps(Float16) rtol=30*eps(Float16)
-            @test ClausenFunctions.cl(n, Complex(Float32(x))) ≈ Float32(expected) atol=30*eps(Float32) rtol=30*eps(Float32)
+            if n > 0
+                @test ClausenFunctions.cl(n, Float16(x)) ≈ Float16(expected) atol=30*eps(Float16) rtol=30*eps(Float16)
+                @test ClausenFunctions.cl(n, Float32(x)) ≈ Float32(expected) atol=30*eps(Float32) rtol=30*eps(Float32)
+                @test ClausenFunctions.cl(n, Complex(Float16(x))) ≈ Float16(expected) atol=30*eps(Float16) rtol=30*eps(Float16)
+                @test ClausenFunctions.cl(n, Complex(Float32(x))) ≈ Float32(expected) atol=30*eps(Float32) rtol=30*eps(Float32)
+            end
         end
 
     end

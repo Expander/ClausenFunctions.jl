@@ -33,9 +33,9 @@ end
     sl(n, z)
 
 Returns the value of the Glaisher-Clausen function
-``\\operatorname{Sl}_n(z)`` for integers ``n > 0`` and arguments ``z``
-of type `Real` or `Complex`.  For complex ``z\\in\\mathbb{C}`` this
-function is defined as
+``\\operatorname{Sl}_n(z)`` for all integers ``n\\in\\mathbb{N{`` and
+arguments ``z`` of type `Real` or `Complex`.  For complex
+``z\\in\\mathbb{C}`` this function is defined as
 ```math
 \\begin{aligned}
 \\operatorname{Sl}_n(z) &= \\frac{1}{2}\\left[\\operatorname{Li}_n(e^{-iz}) + \\operatorname{Li}_n(e^{iz})\\right], \\qquad \\text{for}~n~\\text{even}, \\\\
@@ -45,8 +45,8 @@ function is defined as
 For real ``z\\in\\mathbb{R}`` the function simplifies to
 ```math
 \\begin{aligned}
-\\operatorname{Sl}_n(z) &= \\Re[\\operatorname{Li}_n(e^{iz})] = \\sum_{k=1}^\\infty \\frac{\\cos(kz)}{k^n}, \\qquad \\text{for}~n~\\text{even}, \\\\
-\\operatorname{Sl}_n(z) &= \\Im[\\operatorname{Li}_n(e^{iz})] = \\sum_{k=1}^\\infty \\frac{\\sin(kz)}{k^n}, \\qquad \\text{for}~n~\\text{odd}.
+\\operatorname{Sl}_n(z) &= \\Re[\\operatorname{Li}_n(e^{iz})] = \\sum_{k=1}^\\infty \\frac{\\cos(kz)}{k^n}, \\qquad \\text{for even}~n>0, \\\\
+\\operatorname{Sl}_n(z) &= \\Im[\\operatorname{Li}_n(e^{iz})] = \\sum_{k=1}^\\infty \\frac{\\sin(kz)}{k^n}, \\qquad \\text{for odd}~n>0.
 \\end{aligned}
 ```
 

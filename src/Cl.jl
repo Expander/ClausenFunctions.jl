@@ -176,9 +176,9 @@ end
     cl(n, z)
 
 Returns the value of the Clausen function ``\\operatorname{Cl}_n(z)``
-for integers ``n > 0`` and arguments ``z`` of type `Real` or
-`Complex`.  For complex ``z\\in\\mathbb{C}`` this function is defined
-as
+for all integers ``n\\in\\mathbb{Z}`` and arguments ``z`` of type
+`Real` or `Complex`.  For complex ``z\\in\\mathbb{C}`` this function
+is defined as
 ```math
 \\begin{aligned}
 \\operatorname{Cl}_n(z) &= \\frac{i}{2}\\left[\\operatorname{Li}_n(e^{-iz}) - \\operatorname{Li}_n(e^{iz})\\right], \\qquad \\text{for}~n~\\text{even}, \\\\
@@ -188,8 +188,8 @@ as
 For real ``z\\in\\mathbb{R}`` the function simplifies to
 ```math
 \\begin{aligned}
-\\operatorname{Cl}_n(z) &= \\Im[\\operatorname{Li}_n(e^{iz})] = \\sum_{k=1}^\\infty \\frac{\\sin(kz)}{k^n}, \\qquad \\text{for}~n~\\text{even}, \\\\
-\\operatorname{Cl}_n(z) &= \\Re[\\operatorname{Li}_n(e^{iz})] = \\sum_{k=1}^\\infty \\frac{\\cos(kz)}{k^n}, \\qquad \\text{for}~n~\\text{odd}.
+\\operatorname{Cl}_n(z) &= \\Im[\\operatorname{Li}_n(e^{iz})] = \\sum_{k=1}^\\infty \\frac{\\sin(kz)}{k^n}, \\qquad \\text{for even}~n>0, \\\\
+\\operatorname{Cl}_n(z) &= \\Re[\\operatorname{Li}_n(e^{iz})] = \\sum_{k=1}^\\infty \\frac{\\cos(kz)}{k^n}, \\qquad \\text{for odd}~n>0.
 \\end{aligned}
 ```
 Note: ``\\operatorname{Cl}_1(z)`` is not defined for ``z=2k\\pi`` with

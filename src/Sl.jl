@@ -33,7 +33,7 @@ end
     sl(n, z)
 
 Returns the value of the Glaisher-Clausen function
-``\\operatorname{Sl}_n(z)`` for all integers ``n\\in\\mathbb{N{`` and
+``\\operatorname{Sl}_n(z)`` for all integers ``n\\in\\mathbb{Z}`` and
 arguments ``z`` of type `Real` or `Complex`.  For complex
 ``z\\in\\mathbb{C}`` this function is defined as
 ```math

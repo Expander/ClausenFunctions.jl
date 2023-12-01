@@ -2,6 +2,7 @@ ClausenFunctions.jl
 ===================
 
 [![test](https://github.com/Expander/ClausenFunctions.jl/actions/workflows/build.yml/badge.svg)](https://github.com/Expander/ClausenFunctions.jl/actions/workflows/build.yml)
+[![coverage](https://coveralls.io/repos/github/Expander/ClausenFunctions.jl/badge.svg)](https://coveralls.io/github/Expander/ClausenFunctions.jl)
 
 The ClausenFunctions.jl package provides Julia implementations of the
 Standard Clausen functions and Glaisher-Clausen functions of integer

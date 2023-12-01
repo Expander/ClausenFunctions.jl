@@ -24,48 +24,53 @@
             x        = row[1]
             expected = row[2]
 
-            @test ClausenFunctions.sl(n, x) == (-1)^n*ClausenFunctions.sl(n, -x)
-            @test ClausenFunctions.sl(n, x) ≈ expected rtol=1e-14 atol=1e-14
-            @test ClausenFunctions.sl(n, Float16(x)) ≈ Float16(expected) atol=30*eps(Float16) rtol=30*eps(Float16)
-            @test ClausenFunctions.sl(n, Float32(x)) ≈ Float32(expected) atol=30*eps(Float32) rtol=30*eps(Float32)
-            @test ClausenFunctions.sl(n, Complex(x)) ≈ expected rtol=1e-14 atol=1e-14
-            @test ClausenFunctions.sl(n, Complex(Float16(x))) ≈ Float16(expected) atol=30*eps(Float16) rtol=30*eps(Float16)
-            @test ClausenFunctions.sl(n, Complex(Float32(x))) ≈ Float32(expected) atol=30*eps(Float32) rtol=30*eps(Float32)
+            for TN in (Int8, Int16, Int32, Int64, Int128)
+                (n > typemax(TN) || n < typemin(TN)) && continue
+                @test ClausenFunctions.sl(TN(n), x) == (-1)^TN(n)*ClausenFunctions.sl(TN(n), -x)
+                @test ClausenFunctions.sl(TN(n), x) ≈ expected rtol=1e-14 atol=1e-14
+                @test ClausenFunctions.sl(TN(n), Float16(x)) ≈ Float16(expected) atol=30*eps(Float16) rtol=30*eps(Float16)
+                @test ClausenFunctions.sl(TN(n), Float32(x)) ≈ Float32(expected) atol=30*eps(Float32) rtol=30*eps(Float32)
+                @test ClausenFunctions.sl(TN(n), Complex(x)) ≈ expected rtol=1e-14 atol=1e-14
+                @test ClausenFunctions.sl(TN(n), Complex(Float16(x))) ≈ Float16(expected) atol=30*eps(Float16) rtol=30*eps(Float16)
+                @test ClausenFunctions.sl(TN(n), Complex(Float32(x))) ≈ Float32(expected) atol=30*eps(Float32) rtol=30*eps(Float32)
+            end
         end
     end
 
-    @test ClausenFunctions.sl(1, 1//2) ≈ 1.3207963267948966 rtol=1e-14
-    @test ClausenFunctions.sl(2, 1//2) ≈ 0.92203590345077813 rtol=1e-14
-    @test ClausenFunctions.sl(3, 1//2) ≈ 0.63653415924141781 rtol=1e-14
-    @test ClausenFunctions.sl(4, 1//2) ≈ 0.90812931549667023 rtol=1e-14
-    @test ClausenFunctions.sl(5, 1//2) ≈ 0.51085256423059275 rtol=1e-14
-    @test ClausenFunctions.sl(6, 1//2) ≈ 0.88593812938731573 rtol=1e-14
+    for TN in (Int8, Int16, Int32, Int64, Int128)
+        @test ClausenFunctions.sl(TN(1), 1//2) ≈ 1.3207963267948966 rtol=1e-14
+        @test ClausenFunctions.sl(TN(2), 1//2) ≈ 0.92203590345077813 rtol=1e-14
+        @test ClausenFunctions.sl(TN(3), 1//2) ≈ 0.63653415924141781 rtol=1e-14
+        @test ClausenFunctions.sl(TN(4), 1//2) ≈ 0.90812931549667023 rtol=1e-14
+        @test ClausenFunctions.sl(TN(5), 1//2) ≈ 0.51085256423059275 rtol=1e-14
+        @test ClausenFunctions.sl(TN(6), 1//2) ≈ 0.88593812938731573 rtol=1e-14
 
-    @test ClausenFunctions.sl(1, Complex(1//2)) ≈ 1.3207963267948966 rtol=1e-14
-    @test ClausenFunctions.sl(2, Complex(1//2)) ≈ 0.92203590345077813 rtol=1e-14
-    @test ClausenFunctions.sl(3, Complex(1//2)) ≈ 0.63653415924141781 rtol=1e-14
-    @test ClausenFunctions.sl(4, Complex(1//2)) ≈ 0.90812931549667023 rtol=1e-14
-    @test ClausenFunctions.sl(5, Complex(1//2)) ≈ 0.51085256423059275 rtol=1e-14
-    @test ClausenFunctions.sl(6, Complex(1//2)) ≈ 0.88593812938731573 rtol=1e-14
+        @test ClausenFunctions.sl(TN(1), Complex(1//2)) ≈ 1.3207963267948966 rtol=1e-14
+        @test ClausenFunctions.sl(TN(2), Complex(1//2)) ≈ 0.92203590345077813 rtol=1e-14
+        @test ClausenFunctions.sl(TN(3), Complex(1//2)) ≈ 0.63653415924141781 rtol=1e-14
+        @test ClausenFunctions.sl(TN(4), Complex(1//2)) ≈ 0.90812931549667023 rtol=1e-14
+        @test ClausenFunctions.sl(TN(5), Complex(1//2)) ≈ 0.51085256423059275 rtol=1e-14
+        @test ClausenFunctions.sl(TN(6), Complex(1//2)) ≈ 0.88593812938731573 rtol=1e-14
 
-    @test ClausenFunctions.sl(1, 0.0 + 1.0im) ≈ 1.5707963267948966 - 0.5im rtol=1e-14
-    @test ClausenFunctions.sl(1, 0.0 - 1.0im) ≈ -1.5707963267948966 + 0.5im rtol=1e-14 # @todo check
-    @test ClausenFunctions.sl(2, 0.0 + 1.0im) ≈ 1.3949340668482264 - 1.5707963267948966im rtol=1e-14
-    @test ClausenFunctions.sl(2, 0.0 - 1.0im) ≈ 1.3949340668482264 - 1.5707963267948966im rtol=1e-14 # @todo check
-    @test ClausenFunctions.sl(2, 1.0 + 1.0im) ≈ 0.07413774005332982 - 1.07079632679489662im rtol=1e-14
-    @test ClausenFunctions.sl(2, 1.0 - 1.0im) ≈ 0.07413774005332982 + 1.07079632679489662im rtol=1e-14
-    @test ClausenFunctions.sl(3, 0.0 + 1.0im) ≈ 0.7853981633974483 + 1.5616007335148931im rtol=1e-14
-    @test ClausenFunctions.sl(3, 0.0 - 1.0im) ≈ -0.7853981633974483 - 1.5616007335148931im rtol=1e-14 # @todo check
+        @test ClausenFunctions.sl(TN(1), 0.0 + 1.0im) ≈ 1.5707963267948966 - 0.5im rtol=1e-14
+        @test ClausenFunctions.sl(TN(1), 0.0 - 1.0im) ≈ -1.5707963267948966 + 0.5im rtol=1e-14 # @todo check
+        @test ClausenFunctions.sl(TN(2), 0.0 + 1.0im) ≈ 1.3949340668482264 - 1.5707963267948966im rtol=1e-14
+        @test ClausenFunctions.sl(TN(2), 0.0 - 1.0im) ≈ 1.3949340668482264 - 1.5707963267948966im rtol=1e-14 # @todo check
+        @test ClausenFunctions.sl(TN(2), 1.0 + 1.0im) ≈ 0.07413774005332982 - 1.07079632679489662im rtol=1e-14
+        @test ClausenFunctions.sl(TN(2), 1.0 - 1.0im) ≈ 0.07413774005332982 + 1.07079632679489662im rtol=1e-14
+        @test ClausenFunctions.sl(TN(3), 0.0 + 1.0im) ≈ 0.7853981633974483 + 1.5616007335148931im rtol=1e-14
+        @test ClausenFunctions.sl(TN(3), 0.0 - 1.0im) ≈ -0.7853981633974483 - 1.5616007335148931im rtol=1e-14 # @todo check
 
-    @test ClausenFunctions.sl(-2, big(1))       == 0
-    @test ClausenFunctions.sl(-2, big(1) + 0im) == 0
-    @test ClausenFunctions.sl(-1, big(1))       == 0
-    @test ClausenFunctions.sl(-1, big(1) + 0im) == 0
-    @test ClausenFunctions.sl(0, big(1))       ≈ -BigFloat("0.5") rtol=1e-40
-    @test ClausenFunctions.sl(0, big(1) + 0im) ≈ -BigFloat("0.5") rtol=1e-40
-    @test ClausenFunctions.sl(1, big(0))       == BigFloat(0)
-    @test ClausenFunctions.sl(1, big(1))       ≈ BigFloat("1.07079632679489661923132169163975144209858") rtol=1e-40
-    @test ClausenFunctions.sl(1, big(1) + 0im) ≈ BigFloat("1.07079632679489661923132169163975144209858") rtol=1e-40
-    @test ClausenFunctions.sl(2, big(1))       ≈ BigFloat("0.324137740053329817241093475006273747120365") rtol=1e-40
-    @test ClausenFunctions.sl(2, big(1) + 0im) ≈ BigFloat("0.324137740053329817241093475006273747120365") rtol=1e-40
+        @test ClausenFunctions.sl(TN(-2), big(1))       == 0
+        @test ClausenFunctions.sl(TN(-2), big(1) + 0im) == 0
+        @test ClausenFunctions.sl(TN(-1), big(1))       == 0
+        @test ClausenFunctions.sl(TN(-1), big(1) + 0im) == 0
+        @test ClausenFunctions.sl(TN( 0), big(1))       ≈ -BigFloat("0.5") rtol=1e-40
+        @test ClausenFunctions.sl(TN( 0), big(1) + 0im) ≈ -BigFloat("0.5") rtol=1e-40
+        @test ClausenFunctions.sl(TN( 1), big(0))       == BigFloat(0)
+        @test ClausenFunctions.sl(TN( 1), big(1))       ≈ BigFloat("1.07079632679489661923132169163975144209858") rtol=1e-40
+        @test ClausenFunctions.sl(TN( 1), big(1) + 0im) ≈ BigFloat("1.07079632679489661923132169163975144209858") rtol=1e-40
+        @test ClausenFunctions.sl(TN( 2), big(1))       ≈ BigFloat("0.324137740053329817241093475006273747120365") rtol=1e-40
+        @test ClausenFunctions.sl(TN( 2), big(1) + 0im) ≈ BigFloat("0.324137740053329817241093475006273747120365") rtol=1e-40
+    end
 end

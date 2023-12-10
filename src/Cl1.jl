@@ -52,6 +52,6 @@ function cl1(x::Real)
 end
 
 function cl1(z::Complex)
-    eiz = exp(im*z)
+    eiz = cis(z)
     -(log(one(z) - eiz) + log(one(z) - inv(eiz)))/2
 end

@@ -103,9 +103,9 @@ function _sl(n::Integer, x::Real)
     elseif n == one(n) && iszero(x)
         zero(x)
     elseif iseven(n)
-        real(PolyLog.li(n, exp(im*x)))
+        real(PolyLog.li(n, cis(x)))
     else
-        imag(PolyLog.li(n, exp(im*x)))
+        imag(PolyLog.li(n, cis(x)))
     end
 end
 
@@ -117,7 +117,7 @@ function sl(n::Integer, z::Complex)
     elseif n == one(n) && iszero(z)
         zero(z)
     else
-        eiz = exp(im*z)
+        eiz = cis(z)
 
         if iseven(n)
             (PolyLog.li(n, inv(eiz)) + PolyLog.li(n, eiz))/2

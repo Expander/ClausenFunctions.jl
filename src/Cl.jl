@@ -241,14 +241,14 @@ end
 
 function _cl(n::Integer, x::Real)
     if iseven(n)
-        imag(PolyLog.li(n, exp(im*x)))
+        imag(PolyLog.li(n, cis(x)))
     else
-        real(PolyLog.li(n, exp(im*x)))
+        real(PolyLog.li(n, cis(x)))
     end
 end
 
 function cl(n::Integer, z::Complex)
-    eiz = exp(im*z)
+    eiz = cis(z)
 
     if iseven(n)
         (PolyLog.li(n, inv(eiz)) - PolyLog.li(n, eiz))*im/2

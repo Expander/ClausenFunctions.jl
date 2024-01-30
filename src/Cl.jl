@@ -175,7 +175,7 @@ Note: ``\\operatorname{Cl}_1(z)`` is not defined for ``z=2k\\pi`` with
 
 For ``z`` of type `Float16`, `Float32` or `Float64` the implementation
 follows the approach presented in [Jiming Wu, Xiaoping Zhang, Dongjie
-Liu, "An efficient calculation of the Clausen functions Cl_n(0)(n >=
+Liu, "An efficient calculation of the Clausen functions Cl_n(θ)(n >=
 2)", Bit Numer Math 50, 193-206 (2010)
 [https://doi.org/10.1007/s10543-009-0246-8](https://doi.org/10.1007/s10543-009-0246-8)].
 

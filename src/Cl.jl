@@ -219,7 +219,7 @@ function _cl(n::Integer, x::Float64)::Float64
 
     if iseven(n) && iszero(x)
         x
-    elseif iseven(n) && x == pi
+    elseif iseven(n) && x == convert(Float64, pi)
         zero(x)
     elseif n < 10
         sign1 = iseven((n + 1)÷2) ? 1.0 : -1.0;

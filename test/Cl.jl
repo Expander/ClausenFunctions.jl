@@ -28,6 +28,11 @@
 
     end
 
+    # test zeros at pi
+    for n in 2:2:20
+        @test iszero(ClausenFunctions.cl(TN(n), pi))
+    end
+
     @test ClausenFunctions.cl(TN(1), 1//2) ≈ 0.70358563513784466 rtol=1e-14
     @test ClausenFunctions.cl(TN(2), 1//2) ≈ 0.84831187770367927 rtol=1e-14
     @test ClausenFunctions.cl(TN(3), 1//2) ≈ 0.92769631047023043 rtol=1e-14

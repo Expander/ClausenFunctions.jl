@@ -19,4 +19,8 @@
     @test ClausenFunctions.cl2(pi) == 0.0
     @test ClausenFunctions.cl2(pi/2) ≈ 0.915965594177219015054603514932384110 rtol=1e-14
     @test ClausenFunctions.cl2(1//2) ≈ 0.84831187770367927 rtol=1e-14
+
+    # test handling of negative zero
+    @test !signbit(ClausenFunctions.cl2(0.0))
+    @test signbit(ClausenFunctions.cl2(-0.0))
 end

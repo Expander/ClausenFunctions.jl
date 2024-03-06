@@ -29,7 +29,7 @@ function _cl2(x::Float64)::Float64
     (x, sgn) = range_reduce_even(x)
 
     if iszero(x)
-        zero(x)
+        x
     elseif x < pi/2
         P = (1.3888888888888889e-02, -4.3286930203743071e-04,
              3.2779814789973427e-06, -3.6001540369575084e-09)

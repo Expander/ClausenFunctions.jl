@@ -28,7 +28,7 @@ function _cl4(x::Float64)::Float64
     (x, sgn) = range_reduce_even(x)
 
     if iszero(x)
-        zero(x)
+        x
     elseif x < pi/2
         zeta3 = 1.2020569031595943
         P = (-3.0555555555555556e-01,  6.0521392328447206e-03,

@@ -65,4 +65,21 @@
     @test ClausenFunctions.cl(TN( 1), big(1) + 0im) ≈ BigFloat("0.04201950582536896172579838403790203712454") rtol=1e-40
     @test ClausenFunctions.cl(TN( 2), big(1))       ≈ BigFloat("1.0139591323607685042945743388859146875612") rtol=1e-40
     @test ClausenFunctions.cl(TN( 2), big(1) + 0im) ≈ BigFloat("1.0139591323607685042945743388859146875612") rtol=1e-40
+
+    # test handling of negative zero
+    for n in -100:2:100
+        @test !signbit(ClausenFunctions.cl(TN(n), 0.0))
+        @test signbit(ClausenFunctions.cl(TN(n), -0.0))
+        @test !signbit(ClausenFunctions.cl(TN(n), BigFloat("0.0")))
+        @test signbit(ClausenFunctions.cl(TN(n), BigFloat("-0.0")))
+
+        @test !signbit(real(ClausenFunctions.cl(TN(n), Complex(0.0, 0.0))))
+        @test !signbit(imag(ClausenFunctions.cl(TN(n), Complex(0.0, 0.0))))
+        @test !signbit(real(ClausenFunctions.cl(TN(n), Complex(0.0, -0.0))))
+        @test signbit(imag(ClausenFunctions.cl(TN(n), Complex(0.0, -0.0))))
+        @test signbit(real(ClausenFunctions.cl(TN(n), Complex(-0.0, 0.0))))
+        @test !signbit(imag(ClausenFunctions.cl(TN(n), Complex(-0.0, 0.0))))
+        @test signbit(real(ClausenFunctions.cl(TN(n), Complex(-0.0, -0.0))))
+        @test signbit(imag(ClausenFunctions.cl(TN(n), Complex(-0.0, -0.0))))
+    end
 end

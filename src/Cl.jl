@@ -217,7 +217,9 @@ function _cl(n::Integer, x::Float64)::Float64
 
     (x, sgn) = range_reduce(n, x)
 
-    if iseven(n) && (iszero(x) || x == pi)
+    if iseven(n) && iszero(x)
+        x
+    elseif iseven(n) && x == pi
         zero(x)
     elseif n < 10
         sign1 = iseven((n + 1)÷2) ? 1.0 : -1.0;
@@ -251,7 +253,11 @@ function cl(n::Integer, z::Complex)
     eiz = cis(z)
 
     if iseven(n)
-        (PolyLog.li(n, inv(eiz)) - PolyLog.li(n, eiz))*im/2
+        if iszero(z)
+            z
+        else
+            (PolyLog.li(n, inv(eiz)) - PolyLog.li(n, eiz))*im/2
+        end
     else
         (PolyLog.li(n, inv(eiz)) + PolyLog.li(n, eiz))/2
     end

@@ -250,15 +250,15 @@ function _cl(n::Integer, x::Real)
 end
 
 function cl(n::Integer, z::Complex)
-    eiz = cis(z)
-
     if iseven(n)
         if iszero(z)
             z
         else
+            eiz = cis(z)
             (PolyLog.li(n, inv(eiz)) - PolyLog.li(n, eiz))*im/2
         end
     else
+        eiz = cis(z)
         (PolyLog.li(n, inv(eiz)) + PolyLog.li(n, eiz))/2
     end
 end

@@ -10,6 +10,7 @@ include("Cl4.jl")
 include("Cl5.jl")
 include("Cl6.jl")
 include("Cl.jl")
+include("Missing.jl")
 include("Series.jl")
 include("Sl.jl")
 

@@ -3,6 +3,5 @@ for f in (:cl1, :cl2, :cl3, :cl4, :cl5, :cl6)
 end
 
 for f in (:cl, :sl)
-    @eval $(f)(::Number, ::Missing) = missing
-    @eval $(f)(::Missing, ::Number) = missing
+    @eval $(f)(::Integer, ::Missing) = missing
 end

@@ -37,8 +37,8 @@ function _cl2(x::Float64)::Float64
              3.6015827281202639e-04, -8.3646182842184428e-07)
         y = x*x
         y2 = y*y
-        p = P[1] + y * P[2] + y2 * (P[3] + y * P[4])
-        q = Q[1] + y * Q[2] + y2 * (Q[3] + y * Q[4])
+        p = muladd(y, P[2], P[1]) + y2*muladd(y, P[4], P[3])
+        q = muladd(y, Q[2], Q[1]) + y2*muladd(y, Q[4], Q[3])
         sgn*x*(1.0 - log(x) + y*p/q)
     elseif x < pi
         P = (6.4005702446195512e-01, -2.0641655351338783e-01,
@@ -51,8 +51,8 @@ function _cl2(x::Float64)::Float64
         z = y*y - pi*pi/8
         z2 = z*z
         z4 = z2*z2
-        p = P[1] + z * P[2] + z2 * (P[3] + z * P[4]) + z4 * (P[5] + z * P[6])
-        q = Q[1] + z * Q[2] + z2 * (Q[3] + z * Q[4]) + z4 * (Q[5] + z * Q[6])
+        p = muladd(z, P[2], P[1]) + z2*muladd(z, P[4], P[3]) + z4*muladd(z, P[6], P[5])
+        q = muladd(z, Q[2], Q[1]) + z2*muladd(z, Q[4], Q[3]) + z4*muladd(z, Q[6], Q[5])
         sgn*y*p/q
     end
 end

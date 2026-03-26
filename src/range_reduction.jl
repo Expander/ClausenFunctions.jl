@@ -15,17 +15,24 @@ function two_pi_minus(x::Float64)
     (p0 - x) + p1
 end
 
+# Generic fallback for BigFloat and other arbitrary-precision types
+function two_pi_minus(x::Real)
+    2*oftype(x, pi) - x
+end
+
 # returns range-reduced x in [0,pi] for odd n
 function range_reduce_odd(x::Real)
     if x < zero(x)
         x = -x
     end
 
-    if x >= 2pi
-        x = mod(x, 2pi)
+    twopi = 2*oftype(x, pi)
+
+    if x >= twopi
+        x = mod(x, twopi)
     end
 
-    if x > pi
+    if x > oftype(x, pi)
         x = two_pi_minus(x)
     end
 
@@ -41,11 +48,13 @@ function range_reduce_even(x::Real)
         sgn = -one(x)
     end
 
-    if x >= 2pi
-        x = mod(x, 2pi)
+    twopi = 2*oftype(x, pi)
+
+    if x >= twopi
+        x = mod(x, twopi)
     end
 
-    if x > pi
+    if x > oftype(x, pi)
         x = two_pi_minus(x)
         sgn = -sgn
     end

@@ -56,3 +56,128 @@ function _cl2(x::Float64)::Float64
         sgn*y*p/q
     end
 end
+
+
+# BigFloat Cl₂ via Kummer-accelerated Bernoulli series:
+#
+# Cl₂(θ)/θ = 3 - log[θ(1 - θ²/(4π²))] - (2π/θ)log((2π+θ)/(2π-θ))
+#           + Σ_{n=1}^K (ζ(2n)-1)/(n(2n+1))  (θ/(2π))^{2n}
+#
+# valid for |θ| < 2π (always true after range reduction to [0, π]).
+#
+# Rewriting in the θ^{2n} basis avoids large intermediate values:
+#
+#   d_n = (ζ(2n)-1)/(n(2n+1)(2π)^{2n})
+#       = |B_{2n}|/(2n(2n+1)(2n)!)  -  1/(n(2n+1)(2π)^{2n})
+#
+# The first term is exactly the standard Bernoulli coefficient (cheap,
+# small values); the second is a trivial geometric correction.
+#
+# Compared to the unaccelerated series, ζ(2n)-1 ≈ 1/4^n roughly halves
+# K at the worst case θ = π, while the coefficient computation stays
+# as cheap as the original.
+#
+# Convergence rate: (θ/(4π))² per term (for large n).
+# At θ = π (worst case): ~1.2 digits per term → K ≈ 0.83P for P digits.
+# At θ = π/4: ~2.4 digits per term → K ≈ 0.42P.
+
+# Cache: stores d_n for n = 1, ..., K.
+const _cl2_coeff_cache = Ref{Vector{BigFloat}}(BigFloat[])
+const _cl2_coeff_prec = Ref{Int}(0)
+const _cl2_coeff_K = Ref{Int}(0)
+
+
+function _cl2(x::BigFloat)
+    (x, sgn) = range_reduce_even(x)
+
+    iszero(x) && return x
+    x == BigFloat(pi) && return zero(x)
+
+    prec_bits = precision(BigFloat)
+    target_digits = ceil(Int, prec_bits*0.30103) + 10
+
+    twopi = 2*BigFloat(pi)
+    v = x*x
+
+    # ≈ -2log₁₀(θ/(2π)) + 0.6 digits per term (the 0.6 from ζ(2n)-1 ∼ 1/4ⁿ)
+    ratio = Float64(x)/(2*Float64(pi))
+    digits_per_term = max(-2*log10(ratio) + 0.6, 0.5)
+    K = ceil(Int, target_digits/digits_per_term) + 30
+
+    c = _cl2_ensure_coeffs(K)
+
+    # Horner: S = v(d₁ + v(d₂ + ... + v dₖ))
+    s = c[K]
+    for k in (K - 1):-1:1
+        s = s*v + c[k]
+    end
+    s *= v
+
+    # Prefix: 3 - log[θ(1 - θ²/(4π²))] - (2π/θ)log((2π+θ)/(2π-θ))
+    # log1p avoids cancellation for small θ where (2π+θ)/(2π-θ) ≈ 1.
+    prefix = 3 - log(x*(one(x) - v/twopi^2)) - (twopi/x)*log1p(2*x/(twopi - x))
+
+    sgn*x*(prefix + s)
+end
+
+
+# Compute Bernoulli numbers B_0, B_2, ..., B_{2K} via the standard recurrence.
+function _bernoulli_even(K::Int)
+    n = 2K
+    B = zeros(BigFloat, n + 1)
+    B[1] = one(BigFloat)
+    B[2] = -one(BigFloat)/2
+
+    for m in 2:n
+        s = zero(BigFloat)
+        binom = one(BigFloat)
+        for k in 0:m-1
+            s += binom*B[k + 1]
+            binom = binom*(m + 1 - k)/(k + 1)
+        end
+        B[m + 1] = -s/(m + 1)
+    end
+
+    Beven = Vector{BigFloat}(undef, K + 1)
+
+    for i in 0:K
+        Beven[i + 1] = B[2i + 1]
+    end
+
+    Beven
+end
+
+
+# Compute and cache d_n = |B_{2n}|/(2n(2n+1)(2n)!) - 1/(n(2n+1)(2π)^{2n})
+# for n = 1,...,K.
+function _cl2_ensure_coeffs(K::Int)
+    prec = precision(BigFloat)
+
+    if _cl2_coeff_prec[] >= prec && _cl2_coeff_K[] >= K
+        _cl2_coeff_cache[]
+    else
+        Beven = _bernoulli_even(K)
+
+        inv_twopi_sq = 1/(2*BigFloat(pi))^2
+        c = Vector{BigFloat}(undef, K)
+        fac = one(BigFloat)
+        inv_twopi_pow = one(BigFloat)
+
+        for k in 1:K
+            m = 2k
+            fac *= (m - 1)*m # (2k)!
+            inv_twopi_pow *= inv_twopi_sq # 1/(2π)^{2k}
+            # Standard Bernoulli coefficient: |B_{2k}|/(2k(2k+1)(2k)!)
+            orig = abs(Beven[k + 1])/(m*(m + 1)*fac)
+            # Kummer correction: 1/(k(2k+1)(2π)^{2k})
+            corr = inv_twopi_pow/(k*(m + 1))
+            c[k] = orig - corr
+        end
+
+        _cl2_coeff_cache[] = c
+        _cl2_coeff_prec[] = prec
+        _cl2_coeff_K[] = K
+
+        c
+    end
+end

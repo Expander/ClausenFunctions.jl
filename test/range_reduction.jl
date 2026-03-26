@@ -50,9 +50,13 @@ end
 
     # BigFloat
     twopi = 2*BigFloat(pi)
-    @test f(twopi)               ≈ zero(BigFloat)   atol=2*eps(BigFloat)
-    @test f(nextfloat(twopi))    ≈ -eps(twopi)      atol=2*eps(BigFloat)
-    @test f(nextfloat(twopi, 2)) ≈ -2*eps(twopi)    atol=2*eps(BigFloat)
-    @test f(prevfloat(twopi))    ≈ eps(twopi)       atol=2*eps(BigFloat)
-    @test f(prevfloat(twopi, 2)) ≈ 2*eps(twopi)     atol=2*eps(BigFloat)
+    @test f(twopi)             ≈ zero(BigFloat)   atol=2*eps(BigFloat)
+    if isdefined(Base, :nextfloat)
+        @test f(nextfloat(twopi))    ≈ -eps(twopi)   atol=2*eps(BigFloat)
+        @test f(nextfloat(twopi, 2)) ≈ -2*eps(twopi) atol=2*eps(BigFloat)
+    end
+    if isdefined(Base, :prevfloat)
+        @test f(prevfloat(twopi))    ≈ eps(twopi)    atol=2*eps(BigFloat)
+        @test f(prevfloat(twopi, 2)) ≈ 2*eps(twopi)  atol=2*eps(BigFloat)
+    end
 end

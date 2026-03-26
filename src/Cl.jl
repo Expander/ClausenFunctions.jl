@@ -242,7 +242,9 @@ function _cl(n::Integer, x::Float64)::Float64
 end
 
 function _cl(n::Integer, x::Real)
-    if iseven(n)
+    if n == 2 && typeof(x) == BigFloat
+        cl2(x) # use faster BigFloat overload for n = 2
+    elseif iseven(n)
         imag(PolyLog.li(n, cis(x)))
     else
         real(PolyLog.li(n, cis(x)))

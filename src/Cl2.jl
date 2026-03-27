@@ -132,7 +132,7 @@ function _bernoulli_even(K::Int)
         s = zero(BigFloat)
         binom = one(BigFloat)
         for k in 0:m-1
-            s += binom*B[k + 1]
+            s = binom*B[k + 1] + s
             binom = binom*(m + 1 - k)/(k + 1)
         end
         B[m + 1] = -s/(m + 1)

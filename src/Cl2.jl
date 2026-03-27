@@ -109,7 +109,7 @@ function _cl2(x::BigFloat)
     # Horner: S = v(d₁ + v(d₂ + ... + v dₖ))
     s = c[K]
     for k in (K - 1):-1:1
-        s = s*v + c[k]
+         s = muladd(s, v, c[k])
     end
     s *= v
 

@@ -77,6 +77,8 @@ end
 @testset "cl2 BigFloat thread safety" begin
     # Hammer _cl2_ensure_coeffs from multiple threads with varying
     # precisions to exercise the cache lock.
+
+    # reference value, calculated sequentially in the main thread
     ref_256 = setprecision(BigFloat, 256) do
         ClausenFunctions.cl2(BigFloat(pi)/4)
     end
@@ -84,6 +86,7 @@ end
         ClausenFunctions.cl2(BigFloat(pi)/4)
     end
 
+    # values calculated in parallel in multiple threads
     results = Vector{Tuple{BigFloat,BigFloat}}(undef, 64)
     Threads.@threads for i in 1:64
         r256 = setprecision(BigFloat, 256) do
@@ -95,8 +98,13 @@ end
         results[i] = (r256, r512)
     end
 
+    # test equality
     for (r256, r512) in results
-        @test BigFloat(r256, precision=256) == BigFloat(ref_256, precision=256)
-        @test BigFloat(r512, precision=512) == BigFloat(ref_512, precision=512)
+        setprecision(BigFloat, 256) do
+            @test BigFloat(r256) == BigFloat(ref_256)
+        end
+        setprecision(BigFloat, 512) do
+            @test BigFloat(r512) == BigFloat(ref_512)
+        end
     end
 end

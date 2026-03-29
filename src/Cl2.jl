@@ -93,15 +93,23 @@ function _cl2(x::BigFloat)
     iszero(x) && return x
     x == BigFloat(pi) && return zero(x)
 
-    prec_bits = precision(BigFloat)
-    target_digits = ceil(Int, prec_bits*0.30103) + 10
+    # +10: guard digits to absorb rounding in the Horner loop and prefix.
+    target_digits = ceil(Int, precision(BigFloat)*log10(2)) + 10
 
     twopi = 2*BigFloat(pi)
     v = x*x
 
-    # ≈ -2log₁₀(θ/(2π)) + 0.6 digits per term (the 0.6 from ζ(2n)-1 ∼ 1/4ⁿ)
+    # Each series term decays by a factor of u = (θ/(2π))², giving
+    # -2·log₁₀(θ/(2π)) decimal digits per term.  The Kummer acceleration
+    # replaces ζ(2n) with ζ(2n)-1 ≈ 1/2^{2n} = 1/4ⁿ, contributing an
+    # extra log₁₀(4) ≈ 0.602 digits per term (rounded down to 0.6).
+    # The floor of 0.5 prevents division by zero for θ near 2π (which
+    # cannot occur after range reduction to [0, π], but is defensive).
     ratio = Float64(x)/(2*Float64(pi))
     digits_per_term = max(-2*log10(ratio) + 0.6, 0.5)
+    # +30: safety margin covering (a) the first ~10 terms where
+    # ζ(2n)-1 ≫ 1/4ⁿ so convergence is slower than the asymptotic
+    # estimate, and (b) any rounding in the Float64 K estimate.
     K = ceil(Int, target_digits/digits_per_term) + 30
 
     c = _cl2_ensure_coeffs(K)

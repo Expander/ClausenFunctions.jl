@@ -47,4 +47,12 @@ end
     @test f(nextfloat(2pi, 2)) ≈ -2*eps(2pi)      atol=2*eps(Float64)
     @test f(prevfloat(2pi))    ≈ eps(2pi)         atol=2*eps(Float64)
     @test f(prevfloat(2pi, 2)) ≈ 2*eps(2pi)       atol=2*eps(Float64)
+
+    # BigFloat
+    twopi = 2*BigFloat(pi)
+    @test f(twopi)                       ≈ zero(BigFloat) atol=2*eps(BigFloat)
+    @test f(nextfloat(twopi))            ≈ -eps(twopi)    atol=2*eps(BigFloat)
+    @test f(nextfloat(nextfloat(twopi))) ≈ -2*eps(twopi)  atol=2*eps(BigFloat)
+    @test f(prevfloat(twopi))            ≈ eps(twopi)     atol=2*eps(BigFloat)
+    @test f(prevfloat(prevfloat(twopi))) ≈ 2*eps(twopi)   atol=2*eps(BigFloat)
 end

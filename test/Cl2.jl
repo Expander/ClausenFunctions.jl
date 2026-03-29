@@ -72,3 +72,31 @@ end
         @test ClausenFunctions.cl(2,BigFloat("1"))  ≈ BigFloat("1.01395913236076850429457433888591468756117928007771731687704851226813781234607955733638821865477122042157440086434150311308425232269856980238591034316884447292797795707328765622668664434914352893878283") rtol=eps
     end
 end
+
+
+@testset "cl2 BigFloat thread safety" begin
+    # Hammer _cl2_ensure_coeffs from multiple threads with varying
+    # precisions to exercise the cache lock.
+    ref_256 = setprecision(BigFloat, 256) do
+        ClausenFunctions.cl2(BigFloat(pi)/4)
+    end
+    ref_512 = setprecision(BigFloat, 512) do
+        ClausenFunctions.cl2(BigFloat(pi)/4)
+    end
+
+    results = Vector{Tuple{BigFloat,BigFloat}}(undef, 64)
+    Threads.@threads for i in 1:64
+        r256 = setprecision(BigFloat, 256) do
+            ClausenFunctions.cl2(BigFloat(pi)/4)
+        end
+        r512 = setprecision(BigFloat, 512) do
+            ClausenFunctions.cl2(BigFloat(pi)/4)
+        end
+        results[i] = (r256, r512)
+    end
+
+    for (r256, r512) in results
+        @test BigFloat(r256, precision=256) == BigFloat(ref_256, precision=256)
+        @test BigFloat(r512, precision=512) == BigFloat(ref_512, precision=512)
+    end
+end

@@ -85,6 +85,7 @@ end
 const _cl2_coeff_cache = Ref{Vector{BigFloat}}(BigFloat[])
 const _cl2_coeff_prec = Ref{Int}(0)
 const _cl2_coeff_K = Ref{Int}(0)
+const _cl2_coeff_lock = ReentrantLock()
 
 
 function _cl2(x::BigFloat)
@@ -161,31 +162,33 @@ end
 function _cl2_ensure_coeffs(K::Int)
     prec = precision(BigFloat)
 
-    if _cl2_coeff_prec[] >= prec && _cl2_coeff_K[] >= K
-        _cl2_coeff_cache[]
-    else
-        Beven = _bernoulli_even(K)
+    lock(_cl2_coeff_lock) do
+        if _cl2_coeff_prec[] >= prec && _cl2_coeff_K[] >= K
+            _cl2_coeff_cache[]
+        else
+            Beven = _bernoulli_even(K)
 
-        inv_twopi_sq = 1/(2*BigFloat(pi))^2
-        c = Vector{BigFloat}(undef, K)
-        fac = one(BigFloat)
-        inv_twopi_pow = one(BigFloat)
+            inv_twopi_sq = 1/(2*BigFloat(pi))^2
+            c = Vector{BigFloat}(undef, K)
+            fac = one(BigFloat)
+            inv_twopi_pow = one(BigFloat)
 
-        for k in 1:K
-            m = 2k
-            fac *= (m - 1)*m # (2k)!
-            inv_twopi_pow *= inv_twopi_sq # 1/(2π)^{2k}
-            # Standard Bernoulli coefficient: |B_{2k}|/(2k(2k+1)(2k)!)
-            orig = abs(Beven[k + 1])/(m*(m + 1)*fac)
-            # Kummer correction: 1/(k(2k+1)(2π)^{2k})
-            corr = inv_twopi_pow/(k*(m + 1))
-            c[k] = orig - corr
+            for k in 1:K
+                m = 2k
+                fac *= (m - 1)*m # (2k)!
+                inv_twopi_pow *= inv_twopi_sq # 1/(2π)^{2k}
+                # Standard Bernoulli coefficient: |B_{2k}|/(2k(2k+1)(2k)!)
+                orig = abs(Beven[k + 1])/(m*(m + 1)*fac)
+                # Kummer correction: 1/(k(2k+1)(2π)^{2k})
+                corr = inv_twopi_pow/(k*(m + 1))
+                c[k] = orig - corr
+            end
+
+            _cl2_coeff_cache[] = c
+            _cl2_coeff_prec[] = prec
+            _cl2_coeff_K[] = K
+
+            c
         end
-
-        _cl2_coeff_cache[] = c
-        _cl2_coeff_prec[] = prec
-        _cl2_coeff_K[] = K
-
-        c
     end
 end

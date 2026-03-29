@@ -52,6 +52,13 @@ Cl_n(θ)(n >= 2)", Bit Numer Math 50, 193-206 (2010)
 [https://doi.org/10.1007/s10543-009-0246-8](https://doi.org/10.1007/s10543-009-0246-8)].
 
 
+Contributors
+------------
+
+* @NAThompson: Implementation of the series acceleration for the real
+  Clausen function `cl2(::BigFloat)` and `cl(2,::BigFloat)`.
+
+
 Copying
 -------
 

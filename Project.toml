@@ -1,6 +1,6 @@
 name = "ClausenFunctions"
 uuid = "1cc96f36-ef02-40ef-a648-5e2c13df3076"
-version = "1.16.1"
+version = "1.17.0"
 authors = ["Alexander Voigt <ahgv@mailbox.org>"]
 
 [deps]

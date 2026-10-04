@@ -56,3 +56,34 @@ end
     @test f(prevfloat(twopi))            ≈ eps(twopi)     atol=2*eps(BigFloat)
     @test f(prevfloat(prevfloat(twopi))) ≈ 2*eps(twopi)   atol=2*eps(BigFloat)
 end
+
+@testset "rem_pio2_large" begin
+    # reference: x - k π/2 with k = round(x 2/π), and k mod 4
+    function ref(x)
+        setprecision(BigFloat, 3000) do
+            X = BigFloat(x)
+            k = round(X/(BigFloat(pi)/2))
+            (Int(mod(k, 4)), X - k*BigFloat(pi)/2)
+        end
+    end
+    # error of the angle n π/2 + y, modulo 2π, relative to the reduced argument
+    function relerr(x)
+        (n, yh, yl) = ClausenFunctions.rem_pio2_large(x)
+        (nr, yr) = ref(x)
+        setprecision(BigFloat, 3000) do
+            d = (n - nr)*BigFloat(pi)/2 + (BigFloat(yh) + BigFloat(yl)) - yr
+            d -= round(d/(2*BigFloat(pi)))*2*BigFloat(pi)
+            Float64(abs(d)/abs(yr))
+        end
+    end
+
+    xs = [s*ldexp(1 + k/8, e) for e in 14:1023 for k in 0:7 for s in (-1, 1)]
+    append!(xs, [2.0^14, prevfloat(2.0^15), floatmax(Float64), -floatmax(Float64),
+                 6381956970095103*2.0^797, -6381956970095103*2.0^797]) # closest to a multiple of π/2
+    for x in xs
+        @test relerr(x) < 2.0^-60
+        (n, yh, yl) = ClausenFunctions.rem_pio2_large(x)
+        @test abs(yh) <= 0.786
+        @test abs(yl) <= eps(yh)/2
+    end
+end

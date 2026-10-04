@@ -29,9 +29,11 @@
     end
 
     # test zeros at pi
-    for n in 2:2:20
+    for n in 4:2:20
         @test iszero(ClausenFunctions.cl(TN(n), pi))
     end
+    # cl2 is evaluated for the exact Float64 argument, which is not π
+    @test ClausenFunctions.cl(TN(2), pi) ≈ 8.488604760107494e-17 rtol=2*eps(Float64)
 
     @test ClausenFunctions.cl(TN(1), 1//2) ≈ 0.70358563513784466 rtol=1e-14
     @test ClausenFunctions.cl(TN(2), 1//2) ≈ 0.84831187770367927 rtol=1e-14

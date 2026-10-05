@@ -72,6 +72,19 @@ end
 end
 
 
+@testset "cl2 Float64 vs. reference implementation" begin
+    # The reference implementation has an absolute error of up to
+    # ~1e-14 near the zeros of Cl₂, e.g. it returns 0 for x = Float64(2π)
+    # instead of Cl₂(Float64(2π)) ≈ -9.05e-15.
+    for x in range(-2pi, stop=2pi, length=4001)
+        @test ClausenFunctions.cl2(x) ≈ cl2_reference(x) rtol=1e-14 atol=1e-14
+    end
+    for x in (0.5, 1.0, 2.0, 3.0, 10.0, 100.0, -1e3, 1e-5, 1e-100)
+        @test ClausenFunctions.cl2(x) ≈ cl2_reference(x) rtol=1e-14
+    end
+end
+
+
 @testset "cl2 BigFloat large arguments" begin
     # Cl₂ is 2π-periodic; the argument reduction must not lose precision
     # for large |x| or near multiples of 2π
@@ -81,7 +94,7 @@ end
                   twopi - big"1e-50", 7*BigFloat(pi) + big"1e-60")
             # reference: reduce the exact x to [0, 2π) at much higher precision
             r = setprecision(BigFloat, 4096) do
-                mod(BigFloat(x; precision=4096), 2*BigFloat(pi))
+                mod(x, 2*BigFloat(pi))
             end
             @test ClausenFunctions.cl2(x) ≈ ClausenFunctions.cl2(r) rtol=10*eps(BigFloat)
         end
@@ -94,24 +107,27 @@ end
 end
 
 
-@testset "cl2 ForwardDiff" begin
-    # d/dx Cl₂(x) = Cl₁(x) = -log|2 sin(x/2)|
-    for x in (0.1, 1.0, 2.0, 3.0, -1.0, 7.0, 1e3)
-        @test ForwardDiff.derivative(ClausenFunctions.cl2, x) ≈ ClausenFunctions.cl1(x) rtol=1e-14
-        @test ForwardDiff.derivative(ClausenFunctions.cl2, x) ≈ -log(abs(2*sin(x/2))) rtol=1e-12
+# the ForwardDiff overload is a package extension (requires Julia ≥ 1.9)
+if isdefined(Base, :get_extension)
+    @testset "cl2 ForwardDiff" begin
+        # d/dx Cl₂(x) = Cl₁(x) = -log|2 sin(x/2)|
+        for x in (0.1, 1.0, 2.0, 3.0, -1.0, 7.0, 1e3)
+            @test ForwardDiff.derivative(ClausenFunctions.cl2, x) ≈ ClausenFunctions.cl1(x) rtol=1e-14
+            @test ForwardDiff.derivative(ClausenFunctions.cl2, x) ≈ -log(abs(2*sin(x/2))) rtol=1e-12
+        end
+        # second derivative: d²/dx² Cl₂(x) = -cot(x/2)/2
+        for x in (0.1, 1.0, 2.0, 3.0)
+            d2 = ForwardDiff.derivative(y -> ForwardDiff.derivative(ClausenFunctions.cl2, y), x)
+            @test d2 ≈ -cot(x/2)/2 rtol=1e-12
+        end
+        # BigFloat dual numbers
+        setprecision(BigFloat, 256) do
+            x = BigFloat(1)
+            @test ForwardDiff.derivative(ClausenFunctions.cl2, x) ≈ ClausenFunctions.cl1(x) rtol=10*eps(BigFloat)
+        end
+        # Float32
+        @test ForwardDiff.derivative(ClausenFunctions.cl2, 1.0f0) isa Float32
     end
-    # second derivative: d²/dx² Cl₂(x) = -cot(x/2)/2
-    for x in (0.1, 1.0, 2.0, 3.0)
-        d2 = ForwardDiff.derivative(y -> ForwardDiff.derivative(ClausenFunctions.cl2, y), x)
-        @test d2 ≈ -cot(x/2)/2 rtol=1e-12
-    end
-    # BigFloat dual numbers
-    setprecision(BigFloat, 256) do
-        x = BigFloat(1)
-        @test ForwardDiff.derivative(ClausenFunctions.cl2, x) ≈ ClausenFunctions.cl1(x) rtol=10*eps(BigFloat)
-    end
-    # Float32
-    @test ForwardDiff.derivative(ClausenFunctions.cl2, 1.0f0) isa Float32
 end
 
 

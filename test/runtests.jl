@@ -3,6 +3,8 @@ using DelimitedFiles
 import ForwardDiff
 import ClausenFunctions
 
+include("Cl2_reference.jl")
+
 include("Cl1.jl")
 include("Cl2.jl")
 include("Cl3.jl")

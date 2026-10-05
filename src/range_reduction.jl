@@ -118,7 +118,8 @@ const _PH_IMAX = 60   # covers |x| < 2^1024
 
 function _ph_table()
     setprecision(BigFloat, 2048) do
-        limb(v, bits) = Float64(BigFloat(v; precision = bits))
+        # v rounded to `bits` bits (v + 0 rounds to the current precision)
+        limb(v, bits) = Float64(setprecision(() -> v + 0, BigFloat, bits))
         map(_PH_IMIN:_PH_IMAX) do i
             a = big(2.0)^(_PH_M*i)/BigFloat(pi)
             v = big(2.0)^_PH_N*(i >= 0 ? a - round(a) : big(0.25) + a)

@@ -56,7 +56,9 @@ Contributors
 ------------
 
 * @NAThompson: Implementation of the series acceleration for the real
-  Clausen function `cl2(::BigFloat)` and `cl(2,::BigFloat)`.
+  Clausen function `cl2(::BigFloat)` and `cl(2,::BigFloat)`. More
+  accurate argument reduction, faster Float64 kernels, ForwardDiff
+  extension.
 
 
 Copying

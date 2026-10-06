@@ -16,13 +16,118 @@
     end
 
     @test ClausenFunctions.cl2(0.0) == 0.0
-    @test ClausenFunctions.cl2(pi) == 0.0
+    # Float64(π) = π - 1.2246467991473532e-16, so Cl₂(Float64(π)) ≈ 1.2246e-16 log(2)
+    @test ClausenFunctions.cl2(pi) ≈ 8.488604760107494e-17 rtol=2*eps(Float64)
+    @test ClausenFunctions.cl2(-pi) ≈ -8.488604760107494e-17 rtol=2*eps(Float64)
     @test ClausenFunctions.cl2(pi/2) ≈ 0.915965594177219015054603514932384110 rtol=1e-14
     @test ClausenFunctions.cl2(1//2) ≈ 0.84831187770367927 rtol=1e-14
 
     # test handling of negative zero
     @test !signbit(ClausenFunctions.cl2(0.0))
     @test signbit(ClausenFunctions.cl2(-0.0))
+end
+
+
+
+@testset "cl2 Float64 accuracy" begin
+    # reference value of Cl₂ for the exact Float64 argument x
+    ref(x) = setprecision(BigFloat, 256) do
+        Float64(ClausenFunctions.cl2(BigFloat(x)))
+    end
+    # error in units of the last place of the reference value
+    ulps(x) = (r = ref(x); abs(ClausenFunctions.cl2(x) - r)/eps(r))
+
+    # random arguments, also beyond [-π,π]
+    for x in range(-4pi, stop=4pi, length=2001)
+        @test ulps(x) < 2
+    end
+
+    # arguments near 0, π, 2π, 3π and large multiples of π, approached
+    # from both sides: the result has a small magnitude there, so
+    # argument reduction errors would be amplified
+    for k in (0, 1, 2, 3, -1, -2, 101, 2^20, 10^8), e in -15:-1, s in (-1, 1)
+        x = k*pi + s*10.0^e
+        iszero(x) && continue
+        @test ulps(x) < 2
+    end
+
+    # large arguments (reference with enough bits to reduce |x| ≤ 1e300)
+    ref_big(x) = setprecision(BigFloat, 2048) do
+        Float64(ClausenFunctions.cl2(BigFloat(x)))
+    end
+    for x in (1e3, -1e3, 12345.678, 1e6, 1e8, -1e15, 1e100, 1e300)
+        r = ref_big(x)
+        @test abs(ClausenFunctions.cl2(x) - r)/eps(r) < 2
+    end
+
+    # tiny and subnormal arguments
+    for x in (1e-300, 5e-324, nextfloat(0.0, 100), 2.0^-1000)
+        @test ulps(x) < 2
+        @test ClausenFunctions.cl2(-x) == -ClausenFunctions.cl2(x)
+    end
+
+    @test isnan(ClausenFunctions.cl2(NaN))
+    @test isnan(ClausenFunctions.cl2(Inf))
+    @test isnan(ClausenFunctions.cl2(-Inf))
+end
+
+
+@testset "cl2 Float64 vs. reference implementation" begin
+    # The reference implementation has an absolute error of up to
+    # ~1e-14 near the zeros of Cl₂, e.g. it returns 0 for x = Float64(2π)
+    # instead of Cl₂(Float64(2π)) ≈ -9.05e-15.
+    for x in range(-2pi, stop=2pi, length=4001)
+        @test ClausenFunctions.cl2(x) ≈ cl2_reference(x) rtol=1e-14 atol=1e-14
+    end
+    for x in (0.5, 1.0, 2.0, 3.0, 10.0, 100.0, -1e3, 1e-5, 1e-100)
+        @test ClausenFunctions.cl2(x) ≈ cl2_reference(x) rtol=1e-14
+    end
+end
+
+
+@testset "cl2 BigFloat large arguments" begin
+    # Cl₂ is 2π-periodic; the argument reduction must not lose precision
+    # for large |x| or near multiples of 2π
+    setprecision(BigFloat, 256) do
+        twopi = 2*BigFloat(pi)
+        for x in (big"1e100", -big"1e30", big"123456.789", twopi*1000 + big"1e-40",
+                  twopi - big"1e-50", 7*BigFloat(pi) + big"1e-60")
+            # reference: reduce the exact x to [0, 2π) at much higher precision
+            r = setprecision(BigFloat, 4096) do
+                mod(x, 2*BigFloat(pi))
+            end
+            @test ClausenFunctions.cl2(x) ≈ ClausenFunctions.cl2(r) rtol=10*eps(BigFloat)
+        end
+        # input with more precision than the working precision
+        x = setprecision(BigFloat, 2000) do
+            2*BigFloat(pi)*1000 + big"1e-200"
+        end
+        @test ClausenFunctions.cl2(x) ≈ ClausenFunctions.cl2(big"1e-200") rtol=10*eps(BigFloat)
+    end
+end
+
+
+# the ForwardDiff overload is a package extension (requires Julia ≥ 1.9)
+if isdefined(Base, :get_extension)
+    @testset "cl2 ForwardDiff" begin
+        # d/dx Cl₂(x) = Cl₁(x) = -log|2 sin(x/2)|
+        for x in (0.1, 1.0, 2.0, 3.0, -1.0, 7.0, 1e3)
+            @test ForwardDiff.derivative(ClausenFunctions.cl2, x) ≈ ClausenFunctions.cl1(x) rtol=1e-14
+            @test ForwardDiff.derivative(ClausenFunctions.cl2, x) ≈ -log(abs(2*sin(x/2))) rtol=1e-12
+        end
+        # second derivative: d²/dx² Cl₂(x) = -cot(x/2)/2
+        for x in (0.1, 1.0, 2.0, 3.0)
+            d2 = ForwardDiff.derivative(y -> ForwardDiff.derivative(ClausenFunctions.cl2, y), x)
+            @test d2 ≈ -cot(x/2)/2 rtol=1e-12
+        end
+        # BigFloat dual numbers
+        setprecision(BigFloat, 256) do
+            x = BigFloat(1)
+            @test ForwardDiff.derivative(ClausenFunctions.cl2, x) ≈ ClausenFunctions.cl1(x) rtol=10*eps(BigFloat)
+        end
+        # Float32
+        @test ForwardDiff.derivative(ClausenFunctions.cl2, 1.0f0) isa Float32
+    end
 end
 
 

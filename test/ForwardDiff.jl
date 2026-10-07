@@ -28,4 +28,28 @@ if isdefined(Base, :get_extension)
         @test ForwardDiff.derivative(ClausenFunctions.cl2, 1.0f0) isa Float32
     end
 
+    @testset "cl3 ForwardDiff (Float64)" begin
+        for x in (0.1, 1.0, 2.0, 3.0, -1.0, 7.0, 1e3)
+            @test ForwardDiff.derivative(ClausenFunctions.cl3, x) ≈ -ClausenFunctions.cl2(x) rtol=eps(Float64)
+        end
+    end
+
+    @testset "cl4 ForwardDiff (Float64)" begin
+        for x in (0.1, 1.0, 2.0, 3.0, -1.0, 7.0, 1e3)
+            @test ForwardDiff.derivative(ClausenFunctions.cl4, x) ≈ ClausenFunctions.cl3(x) rtol=eps(Float64)
+        end
+    end
+
+    @testset "cl5 ForwardDiff (Float64)" begin
+        for x in (0.1, 1.0, 2.0, 3.0, -1.0, 7.0, 1e3)
+            @test ForwardDiff.derivative(ClausenFunctions.cl5, x) ≈ -ClausenFunctions.cl4(x) rtol=eps(Float64)
+        end
+    end
+
+    @testset "cl6 ForwardDiff (Float64)" begin
+        for x in (0.1, 1.0, 2.0, 3.0, -1.0, 7.0, 1e3)
+            @test ForwardDiff.derivative(ClausenFunctions.cl6, x) ≈ ClausenFunctions.cl5(x) rtol=eps(Float64)
+        end
+    end
+
 end

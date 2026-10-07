@@ -1,5 +1,13 @@
 if isdefined(Base, :get_extension)
 
+    cl0(x) = cot(x/2)/2
+
+    @testset "cl1 ForwardDiff ($T)" for T in (Float16, Float32, Float64, BigFloat)
+        for x in (0.1, 1.0, 2.0, 3.0, -1.0, 7.0, 1e3)
+            @test ForwardDiff.derivative(ClausenFunctions.cl1, T(x)) ≈ -cl0(T(x)) rtol=eps(T)
+        end
+    end
+
     @testset "cl2 ForwardDiff" begin
         # d/dx Cl₂(x) = Cl₁(x) = -log|2 sin(x/2)|
         for x in (0.1, 1.0, 2.0, 3.0, -1.0, 7.0, 1e3)
@@ -9,7 +17,7 @@ if isdefined(Base, :get_extension)
         # second derivative: d²/dx² Cl₂(x) = -cot(x/2)/2
         for x in (0.1, 1.0, 2.0, 3.0)
             d2 = ForwardDiff.derivative(y -> ForwardDiff.derivative(ClausenFunctions.cl2, y), x)
-            @test d2 ≈ -cot(x/2)/2 rtol=1e-12
+            @test d2 ≈ -cl0(x) rtol=1e-12
         end
         # BigFloat dual numbers
         setprecision(BigFloat, 256) do

@@ -46,6 +46,12 @@ if isdefined(Base, :get_extension)
         end
     end
 
+    @testset "cl6 ForwardDiff (Float64)" begin
+        for x in (0.1, 1.0, 2.0, 3.0, -1.0, 7.0, 1e3)
+            @test ForwardDiff.derivative(ClausenFunctions.cl6, x) ≈ ClausenFunctions.cl5(x) rtol=eps(Float64)
+        end
+    end
+
     @testset "cl ForwardDiff ($T)" for T in (Float16, Float32, Float64, BigFloat)
         for x in (0.1, 1.0, 2.0, 3.0, -1.0, 7.0, 1e3), n in -10:30
             sgn = iseven(n) ? 1 : -1

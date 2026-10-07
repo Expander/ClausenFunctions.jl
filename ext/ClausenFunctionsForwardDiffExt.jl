@@ -28,7 +28,7 @@ function ClausenFunctions.cl4(d::ForwardDiff.Dual{T}) where T
     ForwardDiff.Dual{T}(ClausenFunctions.cl4(x), ClausenFunctions.cl3(x)*ForwardDiff.partials(d))
 end
 
-# d/dx Cl5(x) = Cl4(x)
+# d/dx Cl5(x) = -Cl4(x)
 function ClausenFunctions.cl5(d::ForwardDiff.Dual{T}) where T
     x = ForwardDiff.value(d)
     ForwardDiff.Dual{T}(ClausenFunctions.cl5(x), -ClausenFunctions.cl4(x)*ForwardDiff.partials(d))

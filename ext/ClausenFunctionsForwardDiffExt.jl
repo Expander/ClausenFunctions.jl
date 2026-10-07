@@ -40,4 +40,18 @@ function ClausenFunctions.cl6(d::ForwardDiff.Dual{T}) where T
     ForwardDiff.Dual{T}(ClausenFunctions.cl6(x), ClausenFunctions.cl5(x)*ForwardDiff.partials(d))
 end
 
+# d/dx Cl_{2n+2}(x) = Cl_{2n+1}(x), d/dx Cl_{2n+1}(x) = -Cl_{2n}(x)
+function ClausenFunctions.cl(n::Integer, d::ForwardDiff.Dual{T}) where T
+    x = ForwardDiff.value(d)
+    sgn = iseven(n) ? 1 : -1
+    ForwardDiff.Dual{T}(ClausenFunctions.cl(n,x), flipsign(ClausenFunctions.cl(n-1,x),sgn)*ForwardDiff.partials(d))
+end
+
+# d/dx Sl_{2n+2}(x) = -Sl_{2n+1}(x), d/dx Sl_{2n+1}(x) = Sl_{2n}(x)
+function ClausenFunctions.sl(n::Integer, d::ForwardDiff.Dual{T}) where T
+    x = ForwardDiff.value(d)
+    sgn = iseven(n) ? -1 : 1
+    ForwardDiff.Dual{T}(ClausenFunctions.sl(n,x), flipsign(ClausenFunctions.sl(n-1,x),sgn)*ForwardDiff.partials(d))
+end
+
 end

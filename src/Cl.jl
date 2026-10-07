@@ -101,7 +101,7 @@ function pcal(n::Integer, x::Float64)
 
     for i in 3:2:n
         sgn = iseven(fl + (i - 1)÷2) ? 1.0 : -1.0
-        sum = x2*sum + sgn*zeta(i)*inverse_factorial(n - i)
+        sum = x2*sum + flipsign(zeta(i)*inverse_factorial(n - i), sgn)
     end
 
     if iseven(n)
@@ -227,17 +227,17 @@ function _cl(n::Integer, x::Float64)::Float64
         # first line in Eq.(2.13)
         term1 = iszero(x) ?
                 zero(x) :
-                sign1*x^(n - 1)*inverse_factorial(n - 1)*log(2*sin(x/2))
+                flipsign(x^(n - 1)*inverse_factorial(n - 1)*log(2*sin(x/2)), sign1)
 
         sign2 = iseven(n÷2) ? 1.0 : -1.0
 
         # second line in Eq.(2.13)
-        term2 = pcal(n, x) - sign2*inverse_factorial(n - 2)*nsum(n, x)
+        term2 = pcal(n, x) - flipsign(inverse_factorial(n - 2)*nsum(n, x), sign2)
 
         # Eq.(2.13)
-        sgn*(term1 + term2)
+        flipsign(term1 + term2, sgn)
     else # n >= 10
-        sgn*cl_series(n, x)
+        flipsign(cl_series(n, x), sgn)
     end
 end
 
